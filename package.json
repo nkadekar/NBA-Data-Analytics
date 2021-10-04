@@ -1,0 +1,25 @@
+{
+  "name": "cs180project-022-xyzcoders",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies":{
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "express":  "^4.17.1",
+      "nodemon": "^2.0.13"
+    },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders.git"
+  },
+  "author": "XYZcoders",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders/issues"
+  },
+  "homepage": "https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders#readme"
+}
