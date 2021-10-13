@@ -45,6 +45,6 @@ app.post('/index', (req, res) => {
 
 filterplayerData(playerData, 10)
 var East = EasternConferencePrint(rankingData, teamData)
-console.log(East)
+console.log("East Teams: ", East)
 var West = WesternConferencePrint(rankingData, teamData)
-console.log(West)
+console.log("West Teams:" , West)
