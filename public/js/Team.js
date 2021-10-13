@@ -1,7 +1,4 @@
 
-
-
-
 function WesternConferenceArray(rankingData) { 
     var West = new Set()
     for (var i = 0; i < 30; i++) {
