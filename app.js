@@ -92,7 +92,7 @@ app.listen(3000, () => {
 
 
 
-filterplayerData(playerData, 10)
+var listOfPlayer = filterplayerData(playerData, 10)
 var East = EasternConferencePrint(rankingData, teamData)
 console.log("East Teams: ", East)
 var West = WesternConferencePrint(rankingData, teamData)
