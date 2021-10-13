@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="app.js"></script>
+    <title>Players</title>
+</head>
+<body>
+    <h1>Wins Per Team</h1>
+    <h2>This query will give the number of wins per team in a given season</h2>
+    <form action="/winsQuery" method="post">
+        <input type="text" name= "year" placeholder="Enter year ...">
+        <button type="submit">Submit</button>
+    </form>
+
+    <form method = "get" action = "/back">
+        <button type="submit">Back</button>
+    </form>
+</body>
+</html>

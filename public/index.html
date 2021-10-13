@@ -4,16 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Main</title>
     <script src="app.js"></script>
+<<<<<<< HEAD
     <script type="text/javascript" src="players.json"></script>
 
+=======
+    <script type="text" src="./data/games_details.csv"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+>>>>>>> GUI-Branch
 </head>
 <body>
-<form action="http://localhost:3000/index" method="POST">
-    Message:<br>
-    <input type="text" name="message" placeholder="message">
-    <button type="submit" id="test_button">Click to Send Message to Server</button>
-</form>
+    <h1>Select Query:</h1>
+    <form method = "get" action = "/getPlayers">
+        <button type="submit">Query 1</button>
+    </form>
+
+    <form method = "get" action = "/getTeams">
+        <button type="submit">Query 2</button>
+    </form> 
+
+    <form method = "get" action = "/getWins">
+        <button type="submit">Query 3</button>
+    </form>
+
+    <form method = "get" action = "/getHome">
+        <button type="submit">Query 4</button>
+    </form>
 </body>
 </html>
