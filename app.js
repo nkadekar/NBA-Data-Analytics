@@ -4,9 +4,9 @@ const playerData = require('./data/json/players.json');
 const teamData = require('./data/json/team.json');
 const rankingData = require('./data/json/ranking.json')
 
-const filterplayerData = require("./public/Player")
-var EasternConferencePrint = require("./public/Team")
-var WesternConferencePrint = require("./public/Team")
+const filterplayerData = require("./public/js/Player")
+var EasternConferencePrint = require("./public/js/Team")
+var WesternConferencePrint = require("./public/js/Team")
 
 
 
@@ -28,7 +28,7 @@ app.use(cors())
 const path = require('path');
 
 app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname , 'public/index.html'));
+    res.sendFile(path.join(__dirname , 'public/html/index.html'));
 });
 
 app.post('/', (req, res) => {
@@ -41,23 +41,23 @@ app.post('/', (req, res) => {
 //   console.log(`Example app listening on port ${port}!`)
 // });
 app.get('/players', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/players.html'));
+  res.sendFile(path.join(__dirname, 'public/html/players.html'));
 });
 
 app.route('/getPlayers').get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/players.html'));
+  res.sendFile(path.join(__dirname, 'public/html/players.html'));
 });
 
 app.route('/getTeams').get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/teams.html'));
+  res.sendFile(path.join(__dirname, 'public/html/teams.html'));
 });
 
 app.route('/getWins').get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/wins.html'));
+  res.sendFile(path.join(__dirname, 'public/html/wins.html'));
 });
 
 app.route('/getHome').get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/home.html'));
+  res.sendFile(path.join(__dirname, 'public/html/home.html'));
 });
 
 app.post('/playersQuery', (req, res) => {
@@ -98,7 +98,7 @@ console.log("East Teams: ", East)
 var West = WesternConferencePrint(rankingData, teamData)
 console.log("West Teams:" , West)
 app.route('/back'). get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, 'public/html/index.html'));
 });
 
 
