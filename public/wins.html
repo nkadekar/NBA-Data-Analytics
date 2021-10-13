@@ -9,5 +9,14 @@
 </head>
 <body>
     <h1>Wins Per Team</h1>
+    <h2>This query will give the number of wins per team in a given season</h2>
+    <form action="/winsQuery" method="post">
+        <input type="text" name= "year" placeholder="Enter year ...">
+        <button type="submit">Submit</button>
+    </form>
+
+    <form method = "get" action = "/back">
+        <button type="submit">Back</button>
+    </form>
 </body>
 </html>

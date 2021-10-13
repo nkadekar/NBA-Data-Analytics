@@ -14,7 +14,6 @@ app.use(cors())
 
 const path = require('path');
 
-
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname , 'public/index.html'));
 });
@@ -25,21 +24,54 @@ app.post('/', (req, res) => {
     console.log(message);
 });
 
-app.get('/players', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/players.html'));
+app.route('/back'). get((req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.post('/players', (req, res) => {
-  
+app.get('/players', function(req, res){
+  res.sendFile(path.join(__dirname, 'public/players.html'));
 });
 
 app.route('/getPlayers').get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/players.html'));
 });
 
-// app.get('/wins', (req, res) => {
-//     res.sendFile(path.join(_dirname, 'public/wins.html'));
-// })
+app.route('/getTeams').get((req, res) => {
+  res.sendFile(path.join(__dirname, 'public/teams.html'));
+});
+
+app.route('/getWins').get((req, res) => {
+  res.sendFile(path.join(__dirname, 'public/wins.html'));
+});
+
+app.route('/getHome').get((req, res) => {
+  res.sendFile(path.join(__dirname, 'public/home.html'));
+});
+
+app.post('/playersQuery', (req, res) => {
+  let year = req.body.year;
+  res.send(`Year: ${year}`);
+  console.log(year);
+});
+
+app.post('/homeQuery', (req, res) => {
+  let year = req.body.year;
+  res.send(`Message: ${year}`);
+  console.log(year)
+});
+
+app.post('/teamsQuery', (req, res) => {
+  let year = req.body.year  
+  res.send(`Message: ${year}`);
+  console.log(year)
+});
+
+app.post('/winsQuery', (req, res) => {
+  let year = req.body.year;
+  res.send(`Message: ${year}`);
+  console.log(year)
+});
+
 
 
 app.listen(3000, () => {
@@ -47,28 +79,28 @@ app.listen(3000, () => {
 });
 
 
-var csvFilePath = "./data/players.csv"
-var playerData
+// var csvFilePath = "./data/players.csv"
+// var playerData
 
-function resolveAfterSeconds() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve('resolved');
+// function resolveAfterSeconds() {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve('resolved');
       
-    }, 2000);
-  });
-}
+//     }, 2000);
+//   });
+// }
 
- function getJSON() {
-const result = await resolveAfterSeconds();
-csv()
-.fromFile(csvFilePath)
-.then((jsonObj)=>{
-    playerData = jsonObj;
-    console.log(playerData)
-})
+//  function getJSON() {
+// const result = await resolveAfterSeconds();
+// csv()
+// .fromFile(csvFilePath)
+// .then((jsonObj)=>{
+//     playerData = jsonObj;
+//     console.log(playerData)
+// })
 
-}
+// }
 
 
 

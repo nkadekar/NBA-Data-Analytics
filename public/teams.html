@@ -9,5 +9,14 @@
 </head>
 <body>
     <h1>Teams page</h1>
+    <h2>This query will give the list of teams in the league</h2>
+    <form action="/teamsQuery" method="post">
+        <input type="text" name="year" placeholder="Enter year ...">
+        <button type="submit">Submit</button>
+    </form>
+
+    <form method = "get" action = "/back">
+        <button type="submit">Back</button>
+    </form>
 </body>
 </html>
