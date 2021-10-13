@@ -1,10 +1,10 @@
 
-const playerData = require('../players.json');
 
-function filterPrint(playerDdata, value) { 
+function filterplayerData(playerData, value) { 
     for (var i = 0; i < value; i++) {
-        console.log(data[i].PLAYER_NAME)
+        console.log(playerData[i].PLAYER_NAME)
     }
 }
 
-filterPrint(playerData, 30)
+
+module.exports = filterplayerData;

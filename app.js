@@ -1,8 +1,21 @@
+
+
+const playerData = require('./data/json/players.json');
+const teamData = require('./data/json/team.json');
+const rankingData = require('./data/json/ranking.json')
+
+const filterplayerData = require("./public/Player")
+var EasternConferencePrint = require("./public/Team")
+var WesternConferencePrint = require("./public/Team")
+
+
+
 const express = require('express');
 const app = express();
 const port = 3000;
 const cors = require('cors')
 const bodyParser = require('body-parser')
+
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 
@@ -13,9 +26,8 @@ app.use(cors())
 
 const path = require('path');
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// });
+
+
 
 app.get('/index', function(req, res){
     res.sendFile(path.join(__dirname , 'public/index.html'));
@@ -27,45 +39,12 @@ app.post('/index', (req, res) => {
     console.log(message);
 });
 
-app.listen(3000, () => {
-  console.log(`Example app listening on port ${port}!`)
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//var csv is the CSV file with headers
-
-
-
-
-// app.post('/index', (req, res) =>{
-//     console.log(req.body.message);
+// app.listen(3000, () => {
+//   console.log(`Example app listening on port ${port}!`)
 // });
 
+filterplayerData(playerData, 10)
+var East = EasternConferencePrint(rankingData, teamData)
+console.log(East)
+var West = WesternConferencePrint(rankingData, teamData)
+console.log(West)
