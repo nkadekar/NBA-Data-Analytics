@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Main</title>
     <script src="app.js"></script>
+    <script type="text" src="./data/games_details.csv"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
-<form action="http://localhost:3000/index" method="POST">
-    Message:<br>
-    <input type="text" name="message" placeholder="message">
-    <button type="submit" id="test_button">Click to Send Message to Server</button>
-</form>
+    <h1>Select Query:</h1>
+    <form method = "get" action = "/getPlayers">
+        <button type="button">Query 1</button>
+    </form>
+
+    <form method = "post" action = "/getTeams">
+        <button type="button">Query 2</button>
+    </form> 
+
+    <form method = "post" action = "/getWins">
+        <button type="button">Query 3</button>
+    </form>
+
+    <form method = "post" action = "/getHome">
+        <button type="button">Query 4</button>
+    </form>
 </body>
 </html>
