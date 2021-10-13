@@ -40,16 +40,6 @@ app.post('/', (req, res) => {
 // app.listen(3000, () => {
 //   console.log(`Example app listening on port ${port}!`)
 // });
-
-filterplayerData(playerData, 10)
-var East = EasternConferencePrint(rankingData, teamData)
-console.log("East Teams: ", East)
-var West = WesternConferencePrint(rankingData, teamData)
-console.log("West Teams:" , West)
-app.route('/back'). get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
 app.get('/players', function(req, res){
   res.sendFile(path.join(__dirname, 'public/players.html'));
 });
@@ -101,28 +91,17 @@ app.listen(3000, () => {
 });
 
 
-// var csvFilePath = "./data/players.csv"
-// var playerData
 
-// function resolveAfterSeconds() {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve('resolved');
-      
-//     }, 2000);
-//   });
-// }
+filterplayerData(playerData, 10)
+var East = EasternConferencePrint(rankingData, teamData)
+console.log("East Teams: ", East)
+var West = WesternConferencePrint(rankingData, teamData)
+console.log("West Teams:" , West)
+app.route('/back'). get((req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
-//  function getJSON() {
-// const result = await resolveAfterSeconds();
-// csv()
-// .fromFile(csvFilePath)
-// .then((jsonObj)=>{
-//     playerData = jsonObj;
-//     console.log(playerData)
-// })
 
-// }
 
 
 
