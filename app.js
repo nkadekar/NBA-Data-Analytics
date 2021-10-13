@@ -31,6 +31,40 @@ app.listen(3000, () => {
   console.log(`Example app listening on port ${port}!`)
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//var csv is the CSV file with headers
+
+
+
+
 // app.post('/index', (req, res) =>{
 //     console.log(req.body.message);
 // });
