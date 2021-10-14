@@ -19,10 +19,13 @@ function getHomeWinsPerTeam(rankingData, season, games) {
 
 
 function PrintHomeTeamWins(rankingData, season){
+    var res = []
     var seasonList = getHomeWinsPerTeam(rankingData, season, 82)
     for (var i = 0; i < seasonList.length; i++) {
-        console.log(seasonList[i].TEAM, ":", seasonList[i].HOME_RECORD)
+        res.push(seasonList[i].TEAM + " : " + seasonList[i].HOME_RECORD)
     }
+    return res
 }
 
-PrintHomeTeamWins(rankingData, "2010")
+
+module.exports = PrintHomeTeamWins

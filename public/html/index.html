@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main</title>
-    <script src="app.js"></script>
+    <script src="app.js" type="module"></script>
     <script type="text/javascript" src="players.json"></script>
     <script type="text" src="./data/games_details.csv"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -13,19 +13,19 @@
 <body>
     <h1>Select Query:</h1>
     <form method = "get" action = "/getPlayers">
-        <button type="submit">Query 1</button>
+        <button type="submit">Player List</button>
     </form>
 
     <form method = "get" action = "/getTeams">
-        <button type="submit">Query 2</button>
+        <button type="submit">Conference</button>
     </form> 
 
     <form method = "get" action = "/getWins">
-        <button type="submit">Query 3</button>
+        <button type="submit">Team Wins</button>
     </form>
 
     <form method = "get" action = "/getHome">
-        <button type="submit">Query 4</button>
+        <button type="submit">Home Wins</button>
     </form>
 </body>
 </html>

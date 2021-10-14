@@ -12,17 +12,14 @@ function getWinsPerTeam(rankingData, season, games) {
             }
         } 
     }
-    console.log(visited.length)
     return arr;
 }
-
-// function getWinsPerTeam2019(rankingData){}
-
 function PrintTeamWins(rankingData, season){
-    var seasonList = getWinsPerTeam(rankingData, season)
+    var seasonList = getWinsPerTeam(rankingData, season, 82)
+    var res = []
     for (var i = 0; i < seasonList.length; i++) {
-        console.log(seasonList[i].TEAM, ":", seasonList[i].W)
+        res.push(seasonList[i].TEAM + ": " +  seasonList[i].W)
     }
+    return res
 }
-
-PrintTeamWins(rankingData, "2010")
+module.exports = PrintTeamWins
