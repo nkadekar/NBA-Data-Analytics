@@ -20,7 +20,7 @@ const app = express();
 const port = 3000;
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const csv=require('csvtojson')
+const csv = require('csvtojson')
 
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -39,9 +39,10 @@ app.get('/', function(req, res){
 app.post('/', (req, res) => {
 });
 
-app.get('/players', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/html/players.html'));
-});
+const players = require('./public/js/Player')
+app.use('/players', players)
+
+
 
 app.route('/getPlayers').get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/players.html'));
@@ -103,3 +104,5 @@ app.listen(3000, () => {
 app.route('/back'). get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/index.html'));
 });
+
+module.exports = express;
