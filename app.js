@@ -12,19 +12,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
 app.use(cors())
 
-
-app.route('/insertButton').get((req, res) => {
-    res.sendFile(path.join(__dirname , 'public/html/insertData.html'));
-});
-
-app.route('/updateButton').get((req, res) => {
-    res.sendFile(path.join(__dirname , 'public/html/updateData.html'));
-});
-
-app.route('/deleteButton').get((req, res) => {
-    res.sendFile(path.join(__dirname , 'public/html/deleteData.html'));
-});
-
 app
 	.route('/')
 	.get((req, res) => {
@@ -35,18 +22,27 @@ app.route('/back'). get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/index.html'));
 });
 
-const players = require('./public/js/Player')
+const players = require('./public/js/players')
 app.use('/players', players)
 
 const teams = require('./public/js/teams')
 app.use('/teams', teams)
 
-const teamWins = require('./public/js/TeamWins')
+const teamWins = require('./public/js/wins')
 app.use('/wins', teamWins)
 
-const home = require('./public/js/HomeRecord')
+const home = require('./public/js/homeRecord')
 app.use('/home', home)
 
+const deleteData = require('./public/js/deleteData')
+app.use('/deleteButton', deleteData)
+
+const updateData = require('./public/js/updateData')
+app.use('/updateButton', updateData)
+
+const insertData = require('./public/js/insertData')
+app.use('/insertButton', insertData)
+
 app.listen(3000, () => {
-  console.log(`Example app listening on port ${port}!`)
+  (`Example app listening on port ${port}!`)
 });
