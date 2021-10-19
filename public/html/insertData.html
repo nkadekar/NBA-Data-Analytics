@@ -12,13 +12,15 @@
 <body>
     <label for="Insert">Choose a Record:</label>
 
-    <select name="insertSelect" id="insertSelect" onChange="CheckVal()">
-      <option value="Players">Players</option>
+    <select value="Select Choice"  id="insertSelect" onChange="CheckVal()">
+      <option value="Players" >Players</option>
       <option value="Teams">Teams</option>
       <option value="Ranking">Ranking</option>
+      
     </select>
+    
 
-      <form action="" id="userInput"></form>
+      <form action="/" id="userInput"></form>
     
 
     
@@ -26,13 +28,13 @@
 </body>
 
 <script>
- function func() {
-     console.log(document.getElementById("PlayerID").value)
- }
+  function func() {
+    console.log("test")
+    alert("sucessfully added a new entry")
+  }
+
   function CheckVal() {
     var val = $('#insertSelect').val();
-    var container = document.getElementById("userInput")
-
   
      if (val == "Players") {
           document.getElementById("userInput").innerHTML = 
@@ -40,7 +42,7 @@
           "<h3>TeamID:</h3> <input > </input> <br>" +
           "<h3>PlayerName:</h3> <input > </input> <br>" +
           "<h3>Season Played:</h3> <input></input> <br>" +
-          "<button>Submit</button>" 
+          "<input type=\"Submit\" onClick=func()>" 
 
           var playerIDButton = document.getElementById("PlayerID")
           console.log(playerIDButton.value)
