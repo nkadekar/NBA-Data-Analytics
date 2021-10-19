@@ -1,67 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="app.js"></script> -->
+    <script type="text/javascript" src="../js/test.js"></script>
     <title>Document</title>
     <h1>Insert Stuff</h1>
 </head>
 <body>
+	<form action="/" id="userInput"></form>
     <label for="Insert">Choose a Record:</label>
-
-    <select value="Empty"  id="insertSelect" onChange="CheckVal()">
-      <option value="Empty"> -- select an option -- </option>
-      <option value="Players" >Players</option>
-      <option value="Teams">Teams</option>
-      <option value="Ranking">Ranking</option>
-      
+    <select className="playerSelect" value="Empty"  id="insertSelect" onchange="CheckVal()">
+		<option value="Empty"> -- select an option -- </option>
+		<option value="Players" >Players</option>
+		<option value="Teams">Teams</option>
+		<option value="Ranking">Ranking</option>
     </select>
-    
-
-      <form action="/" id="userInput"></form>
-    
-
     <form method="get" action="/back">
       <button type="submit">Back</button>
     </form>
-
 </body>
 
 <script>
-  function func() {
-    console.log(document.getElementById('PlayerID').value) 
-    console.log(document.getElementById('TeamID').value)
-    console.log(document.getElementById('PlayerName').value)
-    console.log(document.getElementById('SeasonPlayed').value)
-    alert("sucessfully added a new entry")
-  }
-
-  function CheckVal() {
-    var val = $('#insertSelect').val();
-  
-     if (val == "Players") {
-          document.getElementById("userInput").innerHTML = 
-          "<h3>PlayerID:</h3> <input id=\"PlayerID\" > </input> <br>" + 
-          "<h3>TeamID:</h3> <input id=\"TeamID\" > </input> <br>" +
-          "<h3>PlayerName:</h3> <input id=\"PlayerName\"> </input> <br>" +
-          "<h3>Season Played:</h3> <input id = \"SeasonPlayed\"></input> <br>" +
-          "<input type=\"Submit\" onClick=func()>" 
-
-          var playerIDButton = document.getElementById("PlayerID")
-          console.log(playerIDButton.value)
-
-          
-      }
-        
-    else if (val == "Teams") {
-          document.getElementById("userInput").innerHTML =
-         "Team Name: <input > </input>"
-    }
-
-  }
+	function func() {
+		var playerName = document.getElementById('PlayerName').value
+		var teamID = document.getElementById('TeamID').value
+		var playerID = document.getElementById('PlayerID').value
+		var seasonPlayed = document.getElementById('SeasonPlayed').value
+		var playerJSON = 
+			{
+				"PLAYER_NAME": playerName,
+				"TEAM_ID": teamID,
+				"SEASON": seasonPlayed,
+				"PLAYER_ID": playerID
+			}
+		alert("sucessfully added a new entry")
+		return playerJSON
+	}
 </script>
 
 </html>

@@ -6,8 +6,6 @@ const bodyParser = require('body-parser')
 const path = require('path');
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
-
-
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
 app.use(cors())
@@ -18,9 +16,11 @@ app
     	res.sendFile(path.join(__dirname , 'public/html/index.html'));
 	});
 
-app.route('/back'). get((req, res) => {
-  res.sendFile(path.join(__dirname, 'public/html/index.html'));
-});
+app
+	.route('/back')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/html/index.html'));
+	});
 
 const players = require('./public/js/players')
 app.use('/players', players)
