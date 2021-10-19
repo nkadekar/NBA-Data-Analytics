@@ -1,4 +1,21 @@
+const express = require('express')
+const router = express.Router()
+const path = require('path')
 const rankingData = require('../../data/json/ranking.json')
+
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname, '../html/wins.html'));
+  });
+
+router
+    .route('/winsQuery')
+    .post((req, res) => {
+        let year = req.body.year;
+        var winsPerTeam = PrintTeamWins(rankingData, year, 82)
+        res.send(winsPerTeam);
+  });
 
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
@@ -14,6 +31,7 @@ function getWinsPerTeam(rankingData, season, games) {
     }
     return arr;
 }
+
 function PrintTeamWins(rankingData, season){
     var seasonList = getWinsPerTeam(rankingData, season, 82)
     var res = []
@@ -22,4 +40,5 @@ function PrintTeamWins(rankingData, season){
     }
     return res
 }
-module.exports = PrintTeamWins
+
+module.exports = router
