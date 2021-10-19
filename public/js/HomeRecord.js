@@ -6,7 +6,7 @@ const rankingData = require('../../data/json/ranking.json')
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../html/home.html'))
+        res.sendFile(path.join(__dirname, '../html/homeRecord.html'))
     });
 
 router
@@ -14,7 +14,6 @@ router
     .post((req, res) => {
         let year = req.body.year;
         var homeRecord = PrintHomeTeamWins(rankingData, year, 82)
-        console.log(homeRecord)
         res.send(homeRecord)
     });
 
@@ -30,7 +29,6 @@ function getHomeWinsPerTeam(rankingData, season, games) {
             }
         } 
     }
-    console.log(visited.length)
     return arr;
 }
 

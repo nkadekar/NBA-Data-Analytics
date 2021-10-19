@@ -12,8 +12,8 @@
 <body>
     <label for="Insert">Choose a Record:</label>
 
-    <select value="Select Choice"  id="insertSelect" onChange="CheckVal()">
-      <option disabled selected value> -- select an option -- </option>
+    <select value="Empty"  id="insertSelect" onChange="CheckVal()">
+      <option value="Empty"> -- select an option -- </option>
       <option value="Players" >Players</option>
       <option value="Teams">Teams</option>
       <option value="Ranking">Ranking</option>
@@ -24,7 +24,9 @@
       <form action="/" id="userInput"></form>
     
 
-    
+    <form method="get" action="/back">
+      <button type="submit">Back</button>
+    </form>
 
 </body>
 
@@ -55,10 +57,7 @@
           document.getElementById("userInput").innerHTML =
          "Team Name: <input > </input>"
     }
-    // else if (val == "Ranking" && !flag) {
-    //   flag = true;
-    //   $("#show").html("75$")
-    // }
+
   }
 </script>
 
