@@ -20,7 +20,7 @@ const app = express();
 const port = 3000;
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const csv=require('csvtojson')
+// const csv=require('csvtojson')
 
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -32,16 +32,29 @@ app.use(cors())
 
 const path = require('path');
 
-app.get('/', function(req, res){
+app.route('/').get((req, res) => {
     res.sendFile(path.join(__dirname , 'public/html/index.html'));
 });
 
 app.post('/', (req, res) => {
 });
 
+app.route('/insertButton').get((req, res) => {
+    res.sendFile(path.join(__dirname , 'public/html/insertData.html'));
+});
+
+app.route('/updateButton').get((req, res) => {
+    res.sendFile(path.join(__dirname , 'public/html/updateData.html'));
+});
+
+app.route('/deleteButton').get((req, res) => {
+    res.sendFile(path.join(__dirname , 'public/html/deleteData.html'));
+});
+
 app.get('/players', function(req, res){
   res.sendFile(path.join(__dirname, 'public/html/players.html'));
 });
+
 
 app.route('/getPlayers').get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/players.html'));
@@ -62,6 +75,8 @@ app.route('/getWins').get((req, res) => {
 app.route('/getHome').get((req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/home.html'));
 });
+
+
 
 app.post('/playersQuery', (req, res) => {
   let numberOfPlayers = req.body.numberOfPlayers;

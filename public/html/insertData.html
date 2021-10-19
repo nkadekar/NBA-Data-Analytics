@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>Insert Stuff</h1>
+</head>
+<body>
+    <label for="Insert">Choose a Record:</label>
+
+    <select name="insertSelect" id="insertSelect" onChange="CheckVal()">
+      <option value="Players">Players</option>
+      <option value="Teams">Teams</option>
+      <option value="Ranking">Ranking</option>
+    </select>
+
+      <form action="" id="userInput"></form>
+    
+
+    
+
+</body>
+
+<script>
+ function func() {
+     console.log(document.getElementById("PlayerID").value)
+ }
+  function CheckVal() {
+    var val = $('#insertSelect').val();
+    var container = document.getElementById("userInput")
+
+  
+     if (val == "Players") {
+          document.getElementById("userInput").innerHTML = 
+          "<h3>PlayerID:</h3> <input id=\"PlayerID\" > </input> <br>" + 
+          "<h3>TeamID:</h3> <input > </input> <br>" +
+          "<h3>PlayerName:</h3> <input > </input> <br>" +
+          "<h3>Season Played:</h3> <input></input> <br>" +
+          "<button>Submit</button>" 
+
+          var playerIDButton = document.getElementById("PlayerID")
+          console.log(playerIDButton.value)
+
+          
+      }
+        
+    else if (val == "Teams") {
+          document.getElementById("userInput").innerHTML =
+         "Team Name: <input > </input>"
+    }
+    // else if (val == "Ranking" && !flag) {
+    //   flag = true;
+    //   $("#show").html("75$")
+    // }
+  }
+</script>
+
+</html>

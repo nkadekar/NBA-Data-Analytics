@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main</title>
-    <script src="app.js" type="module"></script>
+    <script src="../app.js" type="module"></script>
     <script type="text/javascript" src="players.json"></script>
     <script type="text" src="./data/games_details.csv"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -27,5 +27,20 @@
     <form method = "get" action = "/getHome">
         <button type="submit">Home Wins</button>
     </form>
+
+    <h1>Manipulate Data:</h1>
+
+    <form method = "get" action = "/insertButton">
+        <button id="insert-button" type="submit">Insert</button>
+    </form>
+
+    <form method = "get" action = "/updateButton">
+        <button id="update-button" type="submit">Update</button>
+    </form>
+
+    <form method = "get" action = "/deleteButton">
+        <button id="delete-button" type="submit">Delete</button>
+    </form>
+
 </body>
 </html>
