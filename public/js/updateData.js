@@ -2,6 +2,17 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 
+const backupAndPush = require('./fileHandler')
+
+const playerFileName = __dirname + '/../../data/json/players.json'
+const playerBackupName = __dirname + '/../../data/backup/players.json'
+
+const teamFileName = __dirname + '/../../data/json/team.json'
+const teamBackupName = __dirname + '/../../data/backup/team.json'
+
+const rankingFileName = __dirname + '/../../data/json/ranking.json'
+const rankingBackupName = __dirname + '/../../data/backup/ranking.json'
+
 router
     .route('/')
     .get((req, res) => {
@@ -17,17 +28,20 @@ router
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
         const seasonPlayed = req.body.SeasonPlayed
-        
-        for(var i = 0; i < playerData.length; i++){
-            if(playerData[i].PLAYER_NAME == oldPlayerName){
-                playerData[i].PLAYER_NAME = newPlayerName
-                playerData[i].TEAM_ID = teamID
-                playerData[i].PLAYER_ID = playerID
-                playerData[i].SEASON = seasonPlayed
-                break;
-            }
+
+
+        const index = playerData.findIndex(x => x.PLAYER_NAME === oldPlayerName);
+        if (index !== undefined) playerData.splice(index, 1);
+        var playerJSON = 
+        {
+            "PLAYER_NAME": newPlayerName,
+            "TEAM_ID": teamID,
+            "SEASON": seasonPlayed,
+            "PLAYER_ID": playerID
         }
+        backupAndPush.backupAndPush(playerFileName, playerBackupName, playerJSON)
         // alert('Successfully added player')
+        
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -40,21 +54,31 @@ router
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
         const city = req.body.city
-        console.log(teamData[0].NICKNAME)
 
-        for(var i = 0; i < teamData.length; i++){
-            if(teamData[i].NICKNAME == oldTeamName){
-                teamData[i].NICKNAME = newTeamName
-                teamData[i].ABBREVIATION = teamAbbreviation
-                teamData[i].YEARFOUNDED = yearFounded
-                teamData[i].CITY = city
-                break;
-            }
-        }
-
-        console.log(teamData[0].NICKNAME)
+        const index = teamData.findIndex(x => x.NICKNAME === oldTeamName);
+        if (index !== undefined) teamData.splice(index, 1);
+        var teamJSON = 
+            {
+                "NICKNAME": newTeamName,
+                "ABBREVIATION": teamAbbreviation,
+                "YEARFOUNDED": yearFounded,
+                "CITY": city,
+                "LEAGUE_ID": '',
+                "TEAM_ID": '',
+                "MIN_YEAR": '',
+                "MAX_YEAR": '',
+                "ARENA": '',
+                "ARENACAPACITY": '',
+                "OWNER": '',
+                "GENERALMANAGER": '',
+                "HEADCOACH": '',
+                "DLEAGUEAFFILIATION": ''
+            } 
+        backupAndPush.backupAndPush(teamFileName, teamBackupName, teamJSON)
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'));
+ 
+     
     });
 
 router
@@ -68,17 +92,28 @@ router
         const homeRecord = req.body.homeRecord
         const awayRecord = req.body.awayRecord
 
+        const index = rankingData.findIndex(x => (x.TEAM === teamName && x.SEASON_ID === season));
+        if (index !== undefined) rankingData.splice(index, 1);
 
+        var rankingJSON = 
+            {
+                "TEAM": teamName,  //Phoenix
+                "TEAM_ID": "46565456",  //46565456
+                "LEAGUE_ID": '',
+                "STANDINGSDATE": '',
+                "W_PCT": '',
+                "RETURNTOPLAY": '',
+                "CONFERENCE": '',
+                "ROAD_RECORD": awayRecord,
+                "HOME_RECORD": homeRecord,
+                "SEASON_ID": "2" + season, //22015
+                "G": '82',
+                "W": wins,
+                "L": loses
+            } 
 
-        for(var i = 0; i < rankingData.length; i++){
-            if((rankingData[i].TEAM == teamName) && (rankingData[i].SEASON_ID.substring(1) == season)){
-                rankingData[i].HOME_RECORD = homeRecord
-                rankingData[i].W = wins
-                rankingData[i].L = loses
-                rankingData[i].ROAD_RECORD = awayRecord
-                break;
-            }
-        }
+        backupAndPush.backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
+
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });

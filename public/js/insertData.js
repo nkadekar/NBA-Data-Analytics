@@ -34,7 +34,7 @@ router
                 "SEASON": seasonPlayed,
                 "PLAYER_ID": playerID
             }
-        backupAndPush(playerFileName, playerBackupName, playerJSON)
+        backupAndPush.backupAndPush(playerFileName, playerBackupName, playerJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -64,7 +64,7 @@ router
                 "DLEAGUEAFFILIATION": '', 
                 
             } 
-        backupAndPush(teamFileName, teamBackupName, teamJSON)
+        backupAndPush.backupAndPush(teamFileName, teamBackupName, teamJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -95,13 +95,12 @@ router
                 "G": '82',
                 "W": wins,
                 "L": loses
-                
             } 
         // console.log(ranking[ranking.length - 1])
         // ranking.push(rankingJSON)
         // console.log(ranking[ranking.length - 1])
         // // alert('Successfully added player')
-        backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
+        backupAndPush.backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 

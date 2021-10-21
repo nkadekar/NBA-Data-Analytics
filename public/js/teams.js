@@ -27,7 +27,7 @@ router
 
 function WesternConferenceArray(rankingData) { 
     var West = new Set()
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < rankingData.length-1; i++) {
         if (rankingData[i].CONFERENCE == "West") {
             West.add(rankingData[i].TEAM_ID);
         }
@@ -41,7 +41,7 @@ function WesternConferencePrint(rankingData, teamData) {
     var temp = [...West]
     var count = 0
     for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 30; j++) {
+        for (var j = 0; j < teamData.length; j++) {
             if (temp[i] == (teamData[j].TEAM_ID)) {
                 WestTeams.push(teamData[j].NICKNAME)
             }
@@ -67,7 +67,7 @@ function EasternConferencePrint(rankingData, teamData) {
     var temp = [...East]
     var count = 0
     for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 30; j++) {
+        for (var j = 0; j < teamData.length; j++) {
             if (temp[i] == (teamData[j].TEAM_ID)) {
                 EastTeam.push(teamData[j].NICKNAME)
             }
