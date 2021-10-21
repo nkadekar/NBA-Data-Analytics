@@ -2,19 +2,9 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 
-const playerFileName = __dirname + '/../../data/json/players.json'
-const playerBackupName = __dirname + '/../../data/backup/players.json'
-
-const teamFileName = __dirname + '/../../data/json/team.json'
-const teamBackupName = __dirname + '/../../data/backup/team.json'
-
-const rankingFileName = __dirname + '/../../data/json/ranking.json'
-const rankingBackupName = __dirname + '/../../data/backup/ranking.json'
-
 const funcs = require("./fileHandler")
 
 router
-
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../html/deleteData.html'))
@@ -23,13 +13,11 @@ router
 router
     .route('/deletePlayerQuery')
     .post((req, res) => {
-        var playerData = require('../../data/json/players.json');
+        var playerData = require('./parser').playerData;
         const playerName = req.body.PlayerName
         
         const index = playerData.findIndex(x => x.PLAYER_NAME === playerName);
         if (index !== undefined) playerData.splice(index, 1);
-
-        funcs.backup(playerFileName, playerBackupName)        
 
         // // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'));
@@ -38,14 +26,12 @@ router
 router
     .route('/deleteTeamQuery')
     .post((req, res) => {
-        const teamData = require('../../data/json/team.json')
+        const teamData = require('./parser').teamData
         const teamName = req.body.TeamName
         console.log(teamData[0].NICKNAME)
 
         const index = teamData.findIndex(x => x.NICKNAME === teamName);
         if (index !== undefined) teamData.splice(index, 1);
-
-        funcs.backup(teamFileName, teamBackupName)   
 
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'));
@@ -54,28 +40,15 @@ router
 router
     .route('/deleteRankingQuery')
     .post((req, res) => {
-        const rankingData = require('../../data/json/ranking.json')
+        const rankingData = require('./parser').rankingData
         const teamName = req.body.TeamName
         const season = req.body.Season
 
-        // for(var i = 0; i < rankingData.length; i++){
-        //     if((rankingData[i].TEAM == teamName) && (rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == '82')) {
-        //         rankingData.splice(i, 1)
-        //     }
-        // }
-        const index = rankingData.findIndex(x => x.TEAM=== teamName);
-        if (index !== undefined) rankingData.splice(index, 1);
-        
-        funcs.backup(rankingFileName, rankingBackupName)   
-      //  var index = rankingData.findIndex(x => (x.TEAM == teamName) && (x.SEASON_ID.substring(1) == season) && (x.G == '82'));
-      //  if (index !== undefined) rankingData.splice(index, 1);
-        
-
-     /*   var index = rankingData.findIndex(x => (x.TEAM == teamName) && (x.SEASON_ID.substring(1) == season) && (x.G == '82'));
-        console.log(rankingData[index])
-        if (index !== undefined) rankingData.splice(index, 1);
-        console.log(rankingData[index])
-    */
+        for(var i = 0; i < rankingData.length; i++){
+            if((rankingData[i].TEAM == teamName) && (rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == '82')) {
+                rankingData.splice(i, 1)
+            }
+        }
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });

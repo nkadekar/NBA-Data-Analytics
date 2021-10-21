@@ -41,7 +41,7 @@ router
 router
     .route('/insertTeamQuery')
     .post((req, res) => {
-        const team = require('../../data/json/team.json')
+        var team = require("./parser").teamsData
         const nickname = req.body.nickname
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
@@ -64,7 +64,7 @@ router
                 "DLEAGUEAFFILIATION": '', 
                 
             } 
-        backupAndPush.backupAndPush(teamFileName, teamBackupName, teamJSON)
+        team.push(teamJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -72,7 +72,7 @@ router
 router
     .route('/insertRankingQuery')
     .post((req, res) => {
-        //const ranking = require('../../data/json/ranking.json')
+        var ranking = require('./parser').rankingData
         const team = req.body.team
         const teamID= req.body.teamID
         const awayRecord = req.body.awayRecord
@@ -80,6 +80,7 @@ router
         const season = req.body.season
         const wins = req.body.wins
         const loses = req.body.loses
+        console.log(ranking[ranking.length - 1])
         var rankingJSON = 
             {
                 "TEAM": team,  //Phoenix
@@ -96,11 +97,8 @@ router
                 "W": wins,
                 "L": loses
             } 
-        // console.log(ranking[ranking.length - 1])
-        // ranking.push(rankingJSON)
-        // console.log(ranking[ranking.length - 1])
-        // // alert('Successfully added player')
-        backupAndPush.backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
+        ranking.push(rankingJSON)
+        console.log(ranking[ranking.length - 1])
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -136,4 +134,4 @@ function checkInsertDropdown(){
     }
 }
 
-module.exports = {router}
+module.exports = router

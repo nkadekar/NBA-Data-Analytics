@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-const playerData = require('../../data/json/players.json');
+var playerData = require("./parser").playerData
 
 router
     .route('/')

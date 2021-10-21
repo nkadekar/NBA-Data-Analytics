@@ -16,22 +16,32 @@ function csvJSON(csv){
         }
         result.push(obj);
     }
-    for (let i = 0; i < result.length; i++){
-        finalString += "\t" + JSON.stringify(result[i]);
-        if (i != result.length - 1){
-            finalString += "," + "\n";
-        }
-    }
-    finalString += "\n]"
-    return finalString;
+    return result
 }
 
-const players = fs.readFileSync("players.csv").toString();
-const content = csvJSON(players);
-
-fs.writeFile('players.json', content, err => {
-    if (err) {
-        console.error(err);
-        return;
+function jsonCSV(json) {
+    var lines = json.split("\n");
+    var result = [];
+    var finalString = "[\n";
+    var headers = lines[0].split(",");
+  
+    for(var i = 1; i < lines.length; i++){
+  
+        var obj = {};
+        var currentline = lines[i].split(",");
+  
+        for(var j=0; j < headers.length; j++){
+            obj[headers[j]] = currentline[j];
+        }
+        result.push(obj);
     }
-})
+    return result
+}
+
+const playerData = csvJSON(fs.readFileSync("../../data/csv/players.csv").toString())
+const gamesData = csvJSON(fs.readFileSync("../../data/csv/games.csv").toString())
+const gamesDetailsData = csvJSON(fs.readFileSync("../../data/csv/games_details.csv").toString())
+const rankingData = csvJSON(fs.readFileSync("../../data/csv/ranking.csv").toString())
+const teamsData = csvJSON(fs.readFileSync("../../data/csv/teams.csv").toString())
+
+module.exports = {playerData, gamesData, gamesDetailsData, rankingData, teamsData}

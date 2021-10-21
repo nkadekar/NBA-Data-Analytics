@@ -65,7 +65,13 @@ const updateData = require('./public/js/updateData')
 app.use('/updateButton', updateData)
 
 const insertData = require('./public/js/insertData')
-app.use('/insertButton', insertData.router)
+app.use('/insertButton', insertData)
+
+app
+	.route('/saveButton')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/html/index.html'));
+	});
 
 app.listen(3000, () => {
 	console.log(`Example app listening on port ${port}!`)

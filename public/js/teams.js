@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-const rankingData = require('../../data/json/ranking.json')
-const teamData = require('../../data/json/team.json')
+var rankingData = require("./parser").rankingData
+var teamData = require("./parser").teamsData
 
 var West = WesternConferencePrint(rankingData, teamData)
 var East = EasternConferencePrint(rankingData, teamData)

@@ -4,15 +4,6 @@ const path = require('path')
 
 const backupAndPush = require('./fileHandler')
 
-const playerFileName = __dirname + '/../../data/json/players.json'
-const playerBackupName = __dirname + '/../../data/backup/players.json'
-
-const teamFileName = __dirname + '/../../data/json/team.json'
-const teamBackupName = __dirname + '/../../data/backup/team.json'
-
-const rankingFileName = __dirname + '/../../data/json/ranking.json'
-const rankingBackupName = __dirname + '/../../data/backup/ranking.json'
-
 router
     .route('/')
     .get((req, res) => {
@@ -22,7 +13,7 @@ router
 router
     .route('/updatePlayerQuery')
     .post((req, res) => {
-        const playerData = require('../../data/json/players.json')
+        var playerData = require("./parser").playerData
         const oldPlayerName = req.body.oldPlayerName
         const newPlayerName = req.body.newPlayerName
         const teamID = req.body.TeamID
@@ -39,7 +30,6 @@ router
             "SEASON": seasonPlayed,
             "PLAYER_ID": playerID
         }
-        backupAndPush.backupAndPush(playerFileName, playerBackupName, playerJSON)
         // alert('Successfully added player')
         
         res.sendFile(path.join(__dirname, '../html/index.html'))
@@ -48,7 +38,7 @@ router
 router
     .route('/updateTeamQuery')
     .post((req, res) => {
-        const teamData = require('../../data/json/team.json')
+        var teamData = require("./parser").teamsData
         const oldTeamName = req.body.oldTeamName
         const newTeamName = req.body.newTeamName
         const teamAbbreviation = req.body.teamAbbreviation
@@ -74,17 +64,14 @@ router
                 "HEADCOACH": '',
                 "DLEAGUEAFFILIATION": ''
             } 
-        backupAndPush.backupAndPush(teamFileName, teamBackupName, teamJSON)
         // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'));
- 
-     
+        res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
 router
     .route('/updateRankingQuery')
     .post((req, res) => {
-        const rankingData = require('../../data/json/ranking.json')
+        var rankingData = require("./parser").rankingData
         const teamName = req.body.teamName
         const season = req.body.season
         const wins = req.body.wins
@@ -111,8 +98,7 @@ router
                 "W": wins,
                 "L": loses
             } 
-
-        backupAndPush.backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
+            rankingData.push(rankingJSON)
 
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))
