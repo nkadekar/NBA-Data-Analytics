@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var playerData = "testing"
+  </script>
+
+	<script src="http://localhost:3000/public/js/insertData.js"></script>
+	<script id="testing" src="http://localhost:3000/data/json/players.json"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="app.js"></script> -->
-    <script type="text/javascript" src="../js/test.js"></script>
     <title>Document</title>
     <h1>Insert Stuff</h1>
 </head>
 <body>
-	<form action="/" id="userInput"></form>
-    <label for="Insert">Choose a Record:</label>
-    <select className="playerSelect" value="Empty"  id="insertSelect" onchange="CheckVal()">
-		<option value="Empty"> -- select an option -- </option>
-		<option value="Players" >Players</option>
-		<option value="Teams">Teams</option>
-		<option value="Ranking">Ranking</option>
-    </select>
-    <form method="get" action="/back">
-      <button type="submit">Back</button>
-    </form>
+	<div id="test"></div>
+	<form  method="post" action="/insertButton/insertPlayerQuery" id="userInput1">
+  </form>
+  <form method="post" action="/insertButton/insertTeamQuery" id="userInput2">
+  </form>
+  <form method="post" action="/insertButton/insertRankingQuery" id="userInput3">
+  </form>
+
+
+  <label for="Insert">Choose a Record:</label>
+  <select className="playerSelect" value="Empty"  id="insertSelect" onchange="checkInsertDropdown()">
+  <option value="Empty"> -- select an option -- </option>
+  <option value="Players" >Players</option>
+  <option value="Teams">Teams</option>
+  <option value="Ranking">Ranking</option>
+  </select>
+  <form method="get" action="/back">
+    <button type="submit">Back</button>
+  </form>
 </body>
 
 <script>
-	function func() {
-		var playerName = document.getElementById('PlayerName').value
-		var teamID = document.getElementById('TeamID').value
-		var playerID = document.getElementById('PlayerID').value
-		var seasonPlayed = document.getElementById('SeasonPlayed').value
-		var playerJSON = 
-			{
-				"PLAYER_NAME": playerName,
-				"TEAM_ID": teamID,
-				"SEASON": seasonPlayed,
-				"PLAYER_ID": playerID
-			}
-		alert("sucessfully added a new entry")
-		return playerJSON
-	}
+
+
 </script>
 
 </html>

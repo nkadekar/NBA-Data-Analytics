@@ -14,7 +14,7 @@ router
     .post((req, res) => {
         let year = req.body.year;
         var winsPerTeam = PrintTeamWins(rankingData, year, 82)
-        res.send(winsPerTeam);
+        res.send(makeTable(winsPerTeam));
   });
 
 function getWinsPerTeam(rankingData, season, games) {
@@ -39,6 +39,18 @@ function PrintTeamWins(rankingData, season){
         res.push(seasonList[i].TEAM + ": " +  seasonList[i].W)
     }
     return res
+}
+
+function makeTable(myArray) {
+    var result = "<table border=1>";
+    for(var i=0; i<myArray.length; i++) {
+        result += "<tr>";
+        result += "<td>"+myArray[i]+"</td>";
+        result += "</tr>";
+    }
+    result += "</table>";
+
+    return result;
 }
 
 module.exports = router

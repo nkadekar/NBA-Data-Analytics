@@ -22,6 +22,30 @@ app
 		res.sendFile(path.join(__dirname, 'public/html/index.html'));
 	});
 
+app
+	.route('/public/js/insertData.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/insertData.js'));
+	});
+
+app
+	.route('/public/js/updateData.js')
+	. get((req, res) => {
+	res.sendFile(path.join(__dirname, 'public/js/updateData.js'));
+});
+
+app
+	.route('/public/js/deleteData.js')
+	. get((req, res) => {
+	res.sendFile(path.join(__dirname, 'public/js/deleteData.js'));
+});
+
+app
+	.route('/data/json/players.json')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'data/json/players.json'));
+	});
+
 const players = require('./public/js/players')
 app.use('/players', players)
 
@@ -41,8 +65,8 @@ const updateData = require('./public/js/updateData')
 app.use('/updateButton', updateData)
 
 const insertData = require('./public/js/insertData')
-app.use('/insertButton', insertData)
+app.use('/insertButton', insertData.router)
 
 app.listen(3000, () => {
-  (`Example app listening on port ${port}!`)
+	console.log(`Example app listening on port ${port}!`)
 });

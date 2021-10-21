@@ -18,10 +18,10 @@ router
     .post((req, res) => {
         var choice = req.body.conf
         if(choice == 'west' || choice == "West") {
-            res.send(West)
+            res.send(makeTable(West))
         }
         else if(choice == 'east' || choice == "East"){
-            res.send(East)
+            res.send(makeTable(East))
         }
     });
 
@@ -74,6 +74,18 @@ function EasternConferencePrint(rankingData, teamData) {
         }
     }
     return EastTeam
+}
+
+function makeTable(myArray) {
+    var result = "<table border=1>";
+    for(var i=0; i<myArray.length; i++) {
+        result += "<tr>";
+        result += "<td>"+myArray[i]+"</td>";
+        result += "</tr>";
+    }
+    result += "</table>";
+
+    return result;
 }
 
 module.exports = router

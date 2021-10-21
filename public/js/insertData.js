@@ -1,29 +1,133 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
+const alert = require('alert');
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/insertData.html'))
+        res.sendFile(path.join(__dirname, '../html/insertData.html'));
     });
 
-function CheckVal(){
-    var val = $('#insertSelect').val();
+router
+    .route('/insertPlayerQuery')
+    .post((req, res) => {
+        const playerData = require('../../data/json/players.json');
+        const playerName = req.body.PlayerName
+        const teamID = req.body.TeamID
+        const playerID = req.body.PlayerID
+        const seasonPlayed = req.body.SeasonPlayed
+        var playerJSON = 
+            {
+                "PLAYER_NAME": playerName,
+                "TEAM_ID": teamID,
+                "SEASON": seasonPlayed,
+                "PLAYER_ID": playerID
+            } 
+        playerData.push(playerJSON)
+        // alert('Successfully added player')
+        res.sendFile(path.join(__dirname, '../html/index.html'))
+    });
+
+router
+    .route('/insertTeamQuery')
+    .post((req, res) => {
+        const team = require('../../data/json/team.json')
+        console.log(team[team.length - 1])
+        const nickname = req.body.nickname
+        const teamAbbreviation = req.body.teamAbbreviation
+        const yearFounded = req.body.yearFounded
+        const city = req.body.city
+        var teamJSON = 
+            {
+                "NICKNAME": nickname,
+                "ABBREVIATION": teamAbbreviation,
+                "YEARFOUNDED": yearFounded,
+                "CITY": city,
+                "LEAGUE_ID": '',
+                "TEAM_ID": '',
+                "MIN_YEAR": '',
+                "MAX_YEAR": '',
+                "ARENA": '',
+                "ARENACAPACITY": '',
+                "OWNER": '',
+                "GENERALMANAGER": '',
+                "HEADCOACH": '',
+                "DLEAGUEAFFILIATION": '', 
+                
+            } 
+        team.push(teamJSON)
+        console.log( console.log(team[team.length - 1]))
+        // alert('Successfully added player')
+        res.sendFile(path.join(__dirname, '../html/index.html'))
+    });
+
+
+router
+    .route('/insertRankingQuery')
+    .post((req, res) => {
+        const ranking = require('../../data/json/ranking.json')
+        const team = req.body.team
+        const teamID= req.body.teamID
+        const awayRecord = req.body.awayRecord
+        const homeRecord = req.body.homeRecord
+        const season = req.body.season
+        const wins = req.body.wins
+        const loses = req.body.loses
+        var rankingJSON = 
+            {
+                "TEAM": team,  //Phoenix
+                "TEAM_ID": teamID,  //46565456
+                "LEAGUE_ID": '',
+                "STANDINGSDATE": '',
+                "W_PCT": '',
+                "RETURNTOPLAY": '',
+                "CONFERENCE": '',
+                "ROAD_RECORD": awayRecord,
+                "HOME_RECORD": homeRecord,
+                "SEASON_ID": "2" + season, //22015
+                "G": '82',
+                "W": wins,
+                "L": loses
+                
+            } 
+        console.log(ranking[ranking.length - 1])
+        ranking.push(rankingJSON)
+        console.log(ranking[ranking.length - 1])
+        // alert('Successfully added player')
+        res.sendFile(path.join(__dirname, '../html/index.html'))
+    });
+
+function checkInsertDropdown(){
+    var val = document.getElementById("insertSelect").value
     if (val == "Players") {
-        document.getElementById("userInput").innerHTML = 
-        "<h3>PlayerID:</h3> <input id=\"PlayerID\" > </input> <br>" + 
-        "<h3>TeamID:</h3> <input id=\"TeamID\" > </input> <br>" +
-        "<h3>PlayerName:</h3> <input id=\"PlayerName\"> </input> <br>" +
-        "<h3>Season Played:</h3> <input id = \"SeasonPlayed\"></input> <br>" +
-        "<input type=\"Submit\" onClick=func()>" 
-        var playerIDButton = document.getElementById("PlayerID")
-        console.log(playerIDButton.value)
+        document.getElementById("userInput1").innerHTML = 
+        "<h3>PlayerID:</h3> <input name=\"PlayerID\" required > </input> <br>" + 
+        "<h3>TeamID:</h3> <input name=\"TeamID\" required > </input> <br>" +
+        "<h3>PlayerName:</h3> <input name=\"PlayerName\" required> </input> <br>" +
+        "<h3>Season Played:</h3> <input name = \"SeasonPlayed\" required></input> <br>" +
+        "<input type=\"Submit\"> </input>"  
     }
     else if (val == "Teams") {
-        document.getElementById("userInput").innerHTML =
-        "Team Name: <input > </input>"
+        document.getElementById("userInput2").innerHTML =
+        "Team Name: <input name=\"nickname\" > </input><br>" +
+        "Team Abbreviation: <input name=\"teamAbbreviation\"></input><br>" +
+        "Year Founded: <input name=\"yearFounded\"></input><br>" + 
+        "City: <input name=\"city\" ></input><br>" +
+        "<input type=\"Submit\"> </input>"
+    }
+    else if(val == "Ranking"){
+        document.getElementById("userInput3").innerHTML =
+        "Team: <input name=\"team\"></input><br>" + 
+        "TeamID: <input name=\"teamID\" > </input><br>" +
+        "Season: <input name=\"season\"></input><br>" +
+        "Wins: <input name=\"wins\" > </input><br>" +
+        "Losses: <input name=\"loses\"></input><br>" +
+        "Home Record: <input name=\"homeRecord\"></input><br>" + 
+        "Away Record: <input name=\"awayRecord\" ></input><br>" +
+        "<input type=\"Submit\"> </input>"
+
     }
 }
 
-module.exports = router
+module.exports = {router}

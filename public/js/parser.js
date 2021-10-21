@@ -29,7 +29,7 @@ function csvJSON(csv){
 const players = fs.readFileSync("players.csv").toString();
 const content = csvJSON(players);
 
-fs.writeFile('test.json', content, err => {
+fs.writeFile('players.json', content, err => {
     if (err) {
         console.error(err);
         return;
