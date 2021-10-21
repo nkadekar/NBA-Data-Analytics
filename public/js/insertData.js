@@ -3,6 +3,17 @@ const router = express.Router()
 const path = require('path')
 const alert = require('alert');
 
+const backupAndPush = require('./fileHandler')
+
+const playerFileName = __dirname + '/../../data/json/players.json'
+const playerBackupName = __dirname + '/../../data/backup/players.json'
+
+const teamFileName = __dirname + '/../../data/json/team.json'
+const teamBackupName = __dirname + '/../../data/backup/team.json'
+
+const rankingFileName = __dirname + '/../../data/json/ranking.json'
+const rankingBackupName = __dirname + '/../../data/backup/ranking.json'
+
 router
     .route('/')
     .get((req, res) => {
@@ -12,7 +23,6 @@ router
 router
     .route('/insertPlayerQuery')
     .post((req, res) => {
-        const playerData = require('../../data/json/players.json');
         const playerName = req.body.PlayerName
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
@@ -23,9 +33,8 @@ router
                 "TEAM_ID": teamID,
                 "SEASON": seasonPlayed,
                 "PLAYER_ID": playerID
-            } 
-        playerData.push(playerJSON)
-        // alert('Successfully added player')
+            }
+        backupAndPush(playerFileName, playerBackupName, playerJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -33,7 +42,6 @@ router
     .route('/insertTeamQuery')
     .post((req, res) => {
         const team = require('../../data/json/team.json')
-        console.log(team[team.length - 1])
         const nickname = req.body.nickname
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
@@ -56,9 +64,7 @@ router
                 "DLEAGUEAFFILIATION": '', 
                 
             } 
-        team.push(teamJSON)
-        console.log( console.log(team[team.length - 1]))
-        // alert('Successfully added player')
+        backupAndPush(teamFileName, teamBackupName, teamJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -66,7 +72,7 @@ router
 router
     .route('/insertRankingQuery')
     .post((req, res) => {
-        const ranking = require('../../data/json/ranking.json')
+        //const ranking = require('../../data/json/ranking.json')
         const team = req.body.team
         const teamID= req.body.teamID
         const awayRecord = req.body.awayRecord
@@ -91,10 +97,11 @@ router
                 "L": loses
                 
             } 
-        console.log(ranking[ranking.length - 1])
-        ranking.push(rankingJSON)
-        console.log(ranking[ranking.length - 1])
-        // alert('Successfully added player')
+        // console.log(ranking[ranking.length - 1])
+        // ranking.push(rankingJSON)
+        // console.log(ranking[ranking.length - 1])
+        // // alert('Successfully added player')
+        backupAndPush(rankingFileName, rankingBackupName, rankingJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -110,21 +117,21 @@ function checkInsertDropdown(){
     }
     else if (val == "Teams") {
         document.getElementById("userInput2").innerHTML =
-        "Team Name: <input name=\"nickname\" > </input><br>" +
-        "Team Abbreviation: <input name=\"teamAbbreviation\"></input><br>" +
-        "Year Founded: <input name=\"yearFounded\"></input><br>" + 
-        "City: <input name=\"city\" ></input><br>" +
+        "Team Name: <input name=\"nickname\" required> </input><br>" +
+        "Team Abbreviation: <input name=\"teamAbbreviation\" required></input><br>" +
+        "Year Founded: <input name=\"yearFounded\" required></input><br>" + 
+        "City: <input name=\"city\" required></input><br>" +
         "<input type=\"Submit\"> </input>"
     }
     else if(val == "Ranking"){
         document.getElementById("userInput3").innerHTML =
-        "Team: <input name=\"team\"></input><br>" + 
-        "TeamID: <input name=\"teamID\" > </input><br>" +
-        "Season: <input name=\"season\"></input><br>" +
-        "Wins: <input name=\"wins\" > </input><br>" +
-        "Losses: <input name=\"loses\"></input><br>" +
-        "Home Record: <input name=\"homeRecord\"></input><br>" + 
-        "Away Record: <input name=\"awayRecord\" ></input><br>" +
+        "Team: <input name=\"team\" required></input><br>" + 
+        "TeamID: <input name=\"teamID\" required> </input><br>" +
+        "Season: <input name=\"season\" required></input><br>" +
+        "Wins: <input name=\"wins\" required> </input><br>" +
+        "Losses: <input name=\"loses\" required></input><br>" +
+        "Home Record: <input name=\"homeRecord\" required></input><br>" + 
+        "Away Record: <input name=\"awayRecord\" required></input><br>" +
         "<input type=\"Submit\"> </input>"
 
     }
