@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 
-const funcs = require("./fileHandler")
 
 router
     .route('/')
@@ -28,7 +27,6 @@ router
     .post((req, res) => {
         const teamData = require('./parser').teamData
         const teamName = req.body.TeamName
-        console.log(teamData[0].NICKNAME)
 
         const index = teamData.findIndex(x => x.NICKNAME === teamName);
         if (index !== undefined) teamData.splice(index, 1);

@@ -1,5 +1,13 @@
 const fs = require('fs')
 
+const playerDataFileName = __dirname + "/../data/csv/players.csv"
+const teamDataFileName = __dirname + "/../data/csv/teams.csv"
+const rankingDataFileName = __dirname + "/../data/csv/ranking.csv"
+
+const playerDataBackupFolder = __dirname + "/../data/players"
+const teamDataBackupFolder = __dirname + "/../data/teams"
+const rankingDataBackupFolder = __dirname + "/../data/rankings"
+
 function backupAndPush(orig, backup, newData) {
     const jsonFile = require(orig)
     // backing up the data

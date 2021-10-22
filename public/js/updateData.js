@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 
-const backupAndPush = require('./fileHandler')
 
 router
     .route('/')
@@ -22,16 +21,18 @@ router
 
 
         const index = playerData.findIndex(x => x.PLAYER_NAME === oldPlayerName);
-        if (index !== undefined) playerData.splice(index, 1);
-        var playerJSON = 
-        {
-            "PLAYER_NAME": newPlayerName,
-            "TEAM_ID": teamID,
-            "SEASON": seasonPlayed,
-            "PLAYER_ID": playerID
-        }
+        if (index !== undefined) {
+            playerData.splice(index, 1);
+            var playerJSON = 
+            {
+                "PLAYER_NAME": newPlayerName,
+                "TEAM_ID": teamID,
+                "SEASON": seasonPlayed,
+                "PLAYER_ID": playerID
+            }
+            playerData.push(playerJSON)
         // alert('Successfully added player')
-        
+        }
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -46,24 +47,27 @@ router
         const city = req.body.city
 
         const index = teamData.findIndex(x => x.NICKNAME === oldTeamName);
-        if (index !== undefined) teamData.splice(index, 1);
-        var teamJSON = 
-            {
-                "NICKNAME": newTeamName,
-                "ABBREVIATION": teamAbbreviation,
-                "YEARFOUNDED": yearFounded,
-                "CITY": city,
-                "LEAGUE_ID": '',
-                "TEAM_ID": '',
-                "MIN_YEAR": '',
-                "MAX_YEAR": '',
-                "ARENA": '',
-                "ARENACAPACITY": '',
-                "OWNER": '',
-                "GENERALMANAGER": '',
-                "HEADCOACH": '',
-                "DLEAGUEAFFILIATION": ''
-            } 
+        if (index !== undefined) {
+            teamData.splice(index, 1);
+            var teamJSON = 
+                {
+                    "NICKNAME": newTeamName,
+                    "ABBREVIATION": teamAbbreviation,
+                    "YEARFOUNDED": yearFounded,
+                    "CITY": city,
+                    "LEAGUE_ID": '',
+                    "TEAM_ID": '',
+                    "MIN_YEAR": '',
+                    "MAX_YEAR": '',
+                    "ARENA": '',
+                    "ARENACAPACITY": '',
+                    "OWNER": '',
+                    "GENERALMANAGER": '',
+                    "HEADCOACH": '',
+                    "DLEAGUEAFFILIATION": ''
+                }
+                teamData.push(teamJSON) 
+        }
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
@@ -80,8 +84,8 @@ router
         const awayRecord = req.body.awayRecord
 
         const index = rankingData.findIndex(x => (x.TEAM === teamName && x.SEASON_ID === season));
-        if (index !== undefined) rankingData.splice(index, 1);
-
+        if (index !== undefined) {
+        rankingData.splice(index, 1);
         var rankingJSON = 
             {
                 "TEAM": teamName,  //Phoenix
@@ -99,6 +103,7 @@ router
                 "L": loses
             } 
             rankingData.push(rankingJSON)
+        }
 
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))

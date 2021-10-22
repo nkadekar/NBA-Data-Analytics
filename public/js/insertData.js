@@ -3,16 +3,6 @@ const router = express.Router()
 const path = require('path')
 const alert = require('alert');
 
-const backupAndPush = require('./fileHandler')
-
-const playerFileName = __dirname + '/../../data/json/players.json'
-const playerBackupName = __dirname + '/../../data/backup/players.json'
-
-const teamFileName = __dirname + '/../../data/json/team.json'
-const teamBackupName = __dirname + '/../../data/backup/team.json'
-
-const rankingFileName = __dirname + '/../../data/json/ranking.json'
-const rankingBackupName = __dirname + '/../../data/backup/ranking.json'
 
 router
     .route('/')
@@ -23,6 +13,7 @@ router
 router
     .route('/insertPlayerQuery')
     .post((req, res) => {
+        var players = require("./parser").playerData
         const playerName = req.body.PlayerName
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
@@ -34,14 +25,14 @@ router
                 "SEASON": seasonPlayed,
                 "PLAYER_ID": playerID
             }
-        backupAndPush.backupAndPush(playerFileName, playerBackupName, playerJSON)
+        players.push(playerJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
 router
     .route('/insertTeamQuery')
     .post((req, res) => {
-        var team = require("./parser").teamsData
+        var teams = require("./parser").teamsData
         const nickname = req.body.nickname
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
@@ -64,7 +55,7 @@ router
                 "DLEAGUEAFFILIATION": '', 
                 
             } 
-        team.push(teamJSON)
+        teams.push(teamJSON)
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 
@@ -80,7 +71,7 @@ router
         const season = req.body.season
         const wins = req.body.wins
         const loses = req.body.loses
-        console.log(ranking[ranking.length - 1])
+        //console.log(ranking[ranking.length - 1])
         var rankingJSON = 
             {
                 "TEAM": team,  //Phoenix
@@ -98,7 +89,7 @@ router
                 "L": loses
             } 
         ranking.push(rankingJSON)
-        console.log(ranking[ranking.length - 1])
+        //console.log(ranking[ranking.length - 1])
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
 

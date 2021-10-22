@@ -27,7 +27,7 @@ router
 
 function WesternConferenceArray(rankingData) { 
     var West = new Set()
-    for (var i = 0; i < rankingData.length-1; i++) {
+    for (var i = 0; i < rankingData.length - 1; i++) {
         if (rankingData[i].CONFERENCE == "West") {
             West.add(rankingData[i].TEAM_ID);
         }
