@@ -16,7 +16,6 @@ const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
 
-
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
@@ -31,58 +30,53 @@ app
 app.
 	route('/saveButton')
 	.get((req, res) => {
-	var files = require("./public/js/parser.js")
-	var playersCSV = fs.readFileSync("./data/csv/players.csv")
-	var teamsCSV = fs.readFileSync("./data/csv/teams.csv")
-	var rankingsCSV = fs.readFileSync('./data/csv/ranking.csv')
-	// 1. get the last added csv file, and put it in the backlog folder
+		var files = require("./public/js/parser.js")
+		var playersCSV = fs.readFileSync("./data/csv/players.csv")
+		var teamsCSV = fs.readFileSync("./data/csv/teams.csv")
+		var rankingsCSV = fs.readFileSync('./data/csv/ranking.csv')
+		// 1. get the last added csv file, and put it in the backlog folder
+		var numOfFilesInPlayers = fs.readdirSync(path.join(playerDataBackupFolder)).length
+		var numOfFilesInTeams = fs.readdirSync(path.join(teamDataBackupFolder)).length
+		var numOfFilesInRankings = fs.readdirSync(path.join(rankingDataBackupFolder)).length
+		var versionPlayers = numOfFilesInPlayers++;
+		var versionTeams = numOfFilesInTeams++;
+		var versionRankings = numOfFilesInRankings++;
 
-	const numOfFilesInPlayers = fs.readdirSync(path.join(playerDataBackupFolder)).length
-	const numOfFilesInTeams = fs.readdirSync(path.join(teamDataBackupFolder)).length
-	const numOfFilesInRankings = fs.readdirSync(path.join(rankingDataBackupFolder)).length
-	console.log(numOfFilesInRankings)
-	fs.writeFile(path.join(playerDataBackupFolder, 'backup-' + numOfFilesInPlayers + 1), playersCSV, (err) => {
-        if(err) return console.log(err)
-        console.log('writing to ' + path.join(playerDataBackupFolder, 'backup'+ numOfFilesInPlayers + 1));
+		fs.writeFile(path.join(playerDataBackupFolder, 'backup-' + versionPlayers), playersCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(playerDataBackupFolder, 'backup'+ versionPlayers));
+		});
+		fs.writeFile(path.join(teamDataBackupFolder, 'backup-'+ versionTeams), teamsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(teamDataBackupFolder, 'backup'+ versionTeams));
+		});
+		fs.writeFile(path.join(rankingDataBackupFolder, 'backup-' + versionRankings), rankingsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(rankingDataBackupFolder, 'backup'+ versionRankings));
+		})
+		// 2. get the current json object, turn it into csv and push it into the data folder
+		var playersData = files.playerData
+		var teamsData = files.teamsData
+		var rankingsData = files.rankingData
+
+		playersCSV = files.jsonCSV(playersData)
+		fs.writeFile(playerDataFileName, playersCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + playerDataFileName);
+		})
+
+		teamCSV = files.jsonCSV(teamsData)
+		fs.writeFile(teamDataFileName, teamsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + teamDataFileName);
+		})
+
+		rankingsCSV = files.jsonCSV(rankingsData)
+		fs.writeFile(rankingDataFileName, rankingsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + rankingDataFileName);
+		})
 	});
-	fs.writeFile(path.join(teamDataBackupFolder, 'backup-'+ numOfFilesInTeams + 1), teamsCSV, (err) => {
-        if(err) return console.log(err)
-        console.log('writing to ' + path.join(teamDataBackupFolder, 'backup'+ numOfFilesInTeams + 1));
-	});
-	fs.writeFile(path.join(rankingDataBackupFolder, 'backup-' + numOfFilesInRankings + 1), rankingsCSV, (err) => {
-        if(err) return console.log(err)
-        console.log('writing to ' + path.join(rankingDataBackupFolder, 'backup'+ numOfFilesInRankings + 1));
-	})
-	// 2. get the current json object, turn it into csv and push it into the data folder
-	var playersData = files.playersData
-	var teamsData = files.teamsData
-	var rankingsData = files.rankingData
-
-	playersCSV = files.jsonCSV(playersData)
-	console.log(playersCSV)
-	fs.writeFile(playerDataFileName, playersCSV, (err) => {
-		if(err) return console.log(err)
-        console.log('writing to ' + playerDataFileName);
-	})
-
-	teamCSV = files.jsonCSV(teamsData)
-	fs.writeFile(teamDataFileName, teamsCSV, (err) => {
-		if(err) return console.log(err)
-        console.log('writing to ' + teamDataFileName);
-	})
-
-	rankingsCSV = files.jsonCSV(rankingsData)
-	fs.writeFile(rankingDataFileName, rankingsCSV, (err) => {
-		if(err) return console.log(err)
-        console.log('writing to ' + rankingDataFileName);
-	})
-
-	});
-
-
-
-	
-	
 
 app
 	.route('/back')
@@ -107,12 +101,6 @@ app
 	. get((req, res) => {
 	res.sendFile(path.join(__dirname, 'public/js/deleteData.js'));
 });
-
-// app
-// 	.route('/data/json/players.json')
-// 	. get((req, res) => {
-// 		res.sendFile(path.join(__dirname, 'data/json/players.json'));
-// 	});
 
 const players = require('./public/js/players')
 app.use('/players', players)
