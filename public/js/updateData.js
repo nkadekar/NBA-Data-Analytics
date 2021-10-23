@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const path = require('path')
+const path = require('path');
+const { teamsData } = require('./parser');
 
 
 router
@@ -47,8 +48,15 @@ router
         const city = req.body.city
 
         const index = teamData.findIndex(x => x.NICKNAME === oldTeamName);
+        console.log(teamData)
+        console.log("Break")
         if (index !== undefined) {
-            teamData.splice(index, 1);
+            teamData[index].NICKNAME = newTeamName
+            teamData[index].ABBREVIATION = teamAbbreviation
+            teamData[index].YEARFOUNDED = yearFounded
+            teamData[index].CITY = city
+            //teamData.splice(index, 1);
+            /*
             var teamJSON = 
                 {
                     "NICKNAME": newTeamName,
@@ -66,8 +74,9 @@ router
                     "HEADCOACH": '',
                     "DLEAGUEAFFILIATION": ''
                 }
-                teamData.push(teamJSON) 
+                teamData.push(teamJSON) */
         }
+        console.log(teamData)
         // alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../html/index.html'))
     });
