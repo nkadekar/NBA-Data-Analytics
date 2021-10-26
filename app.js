@@ -84,24 +84,6 @@ app
 		res.sendFile(path.join(__dirname, 'public/html/index.html'));
 	});
 
-app
-	.route('/public/js/insertData.js')
-	. get((req, res) => {
-		res.sendFile(path.join(__dirname, 'public/js/insertData.js'));
-	});
-
-app
-	.route('/public/js/updateData.js')
-	. get((req, res) => {
-	res.sendFile(path.join(__dirname, 'public/js/updateData.js'));
-});
-
-app
-	.route('/public/js/deleteData.js')
-	. get((req, res) => {
-	res.sendFile(path.join(__dirname, 'public/js/deleteData.js'));
-});
-
 const players = require('./public/js/players')
 app.use('/players', players)
 
@@ -122,6 +104,12 @@ app.use('/updateButton', updateData)
 
 const insertData = require('./public/js/insertData')
 app.use('/insertButton', insertData)
+
+const pointsPerPlayerAnalytics = require("./public/js/pointsPerPlayerAnalytics")
+app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics)
+
+const pointsDifferenceAnalytics = require('./public/js/PointsDifferenceAnalytics')
+app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics)
 
 app
 	.route('/saveButton')
