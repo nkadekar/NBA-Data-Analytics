@@ -52,7 +52,6 @@ function WesternConferencePrint(rankingData, teamData) {
 
 function EasternConferenceArray(rankingData) {
     var East = new Set()
-    console.log(rankingData)
     for (var i = 0; i < 20000; i++) {
         if (rankingData[i].CONFERENCE == "East") {
             East.add(rankingData[i].TEAM_ID);
