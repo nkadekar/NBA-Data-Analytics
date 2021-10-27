@@ -111,6 +111,9 @@ app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics)
 const pointsDifferenceAnalytics = require('./public/js/PointsDifferenceAnalytics')
 app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics)
 
+const averageFGAnalytics = require("./public/js/averageFGAnalytics")
+app.use("/averageFGAnalytics", averageFGAnalytics)
+
 app
 	.route('/saveButton')
 	. get((req, res) => {
