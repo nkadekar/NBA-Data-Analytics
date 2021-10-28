@@ -16,6 +16,25 @@ const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
 
+app
+	.route('/public/js/insertData.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/insertData.js'));
+	});
+
+app
+	.route('/public/js/updateData.js')
+	. get((req, res) => {
+	res.sendFile(path.join(__dirname, 'public/js/updateData.js'));
+});
+
+app
+	.route('/public/js/deleteData.js')
+	. get((req, res) => {
+	res.sendFile(path.join(__dirname, 'public/js/deleteData.js'));
+});
+
+
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
