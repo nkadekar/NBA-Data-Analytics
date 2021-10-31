@@ -130,8 +130,17 @@ app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics)
 const pointsDifferenceAnalytics = require('./public/js/PointsDifferenceAnalytics')
 app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics)
 
+const headToHeadAnalytics = require('./public/js/headToHeadAnalytics')
+app.use('/headToHeadAnalytics', headToHeadAnalytics)
+
 const averageFGAnalytics = require("./public/js/averageFGAnalytics")
 app.use("/averageFGAnalytics", averageFGAnalytics)
+
+const FTandThreePointerAnalytics = require("./public/js/FTandThreePointerAnalytics")
+app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
+
+const MostHomeAndAwayWinsAnalytics = require("./public/js/MostHomeAndAwayWinsAnalytics")
+app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
 
 app
 	.route('/saveButton')
