@@ -35,7 +35,7 @@ router
                 }
             }
         }
-        var outputString = "The team with the most home wins is " + maxHomeTeam + " with " + maxHome + " wins.<br> The team with the most away wins is" + maxAwayTeam + " with " + maxAway + " wins."
+        var outputString = "The team with the most home wins is " + maxHomeTeam + " with " + maxHome + " wins.<br> The team with the most away wins is " + maxAwayTeam + " with " + maxAway + " wins."
         res.send(outputString)
     });
 
