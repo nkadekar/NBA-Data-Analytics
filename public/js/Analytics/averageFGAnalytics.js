@@ -34,8 +34,27 @@ router
             }
             var avgFG = (fieldGoalCounter / totalGames)
             var sendData = "Average field goal for the winning team in the " + season + " is " + avgFG.toPrecision(4) * 100 + "%"
-            res.send(sendData)
+            res.send(makeGraph(avgFG))
         }
     });
+
+function makeGraph(avgFG){
+
+    var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
+        
+                                "<div id=\"myDiv\">" + "</div>" +
+                            "<script>" + 
+                            "var data = [\n" + 
+                            "{\n" +
+                            " x: [" +  "\"" + "Average Field Goal Percentage" + "\"" + "],\n" +
+                            " y: [" + avgFG +  "],\n" +
+                            " type: \'bar\'\n" +
+                            "}\n" +
+                            "];\n" +
+                            "Plotly.newPlot('myDiv', data);\n" +
+                            "</script>" 
+
+    return sendData
+}
 
 module.exports = router
