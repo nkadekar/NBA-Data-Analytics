@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var gamesData = require("./parser").gamesData
-var teamsData = require("./parser").teamsData
+var gamesData = require("../parser").gamesData
+var teamsData = require("../parser").teamsData
 const alert = require('alert');
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/headToHeadAnalytics.html'))
+        res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
     });
 
 router
@@ -16,7 +16,7 @@ router
     .post((req, res) => {
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../html/headToHeadAnalytics.html'))
+            res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
         }
         else {
             var team1ID, team2ID;
@@ -32,7 +32,6 @@ router
 
             for (var i = 0; i < gamesData.length; ++i){
                 if ((parseInt(gamesData[i].SEASON) == req.body.season) && (gamesData[i].HOME_TEAM_ID == team1ID || gamesData[i].HOME_TEAM_ID == team2ID) && (gamesData[i].VISITOR_TEAM_ID == team1ID || gamesData[i].VISITOR_TEAM_ID == team2ID)){
-                    console.log(gamesData[i].GAME_DATE_EST)
                     if (parseInt(gamesData[i].HOME_TEAM_WINS)){
                         if (team1ID == gamesData[i].HOME_TEAM_ID){
                             team1Counter++

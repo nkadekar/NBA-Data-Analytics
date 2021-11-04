@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var rankingData = require("./parser").rankingData
+var rankingData = require("../parser").rankingData
 const alert = require('alert');
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/mostHomeAndAwayWinsAnalytics.html'))
+        res.sendFile(path.join(__dirname , '../../html/Analytics/mostHomeAndAwayWinsAnalytics.html'))
     });
 
 router
@@ -17,7 +17,7 @@ router
         var maxHomeTeam, maxAwayTeam;
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../html/mostHomeAndAwayWinsAnlytics.htmll'))
+            res.sendFile(path.join(__dirname , '.../../html/Analytics/mostHomeAndAwayWinsAnlytics.htmll'))
         }
         else{
             for (var i = 0; i < rankingData.length; ++i){

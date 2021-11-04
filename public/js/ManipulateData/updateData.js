@@ -1,19 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path');
-const { teamsData } = require('./parser');
+const { teamsData } = require('../parser');
 
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/updateData.html'));
+        res.sendFile(path.join(__dirname , '../../html/ManipulateData/updateData.html'));
 });
 
 router
     .route('/updatePlayerQuery')
     .post((req, res) => {
-        var playerData = require("./parser").playerData
+        var playerData = require("../parser").playerData
         const oldPlayerName = req.body.oldPlayerName
         const newPlayerName = req.body.newPlayerName
         const teamID = req.body.TeamID
@@ -34,13 +34,13 @@ router
             playerData.push(playerJSON)
         // alert('Successfully added player')
         }
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 router
     .route('/updateTeamQuery')
     .post((req, res) => {
-        var teamData = require("./parser").teamsData
+        var teamData = require("../parser").teamsData
         const oldTeamName = req.body.oldTeamName
         const newTeamName = req.body.newTeamName
         const teamAbbreviation = req.body.teamAbbreviation
@@ -78,13 +78,13 @@ router
         }
        // console.log(teamData)
         // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 router
     .route('/updateRankingQuery')
     .post((req, res) => {
-        var rankingData = require("./parser").rankingData
+        var rankingData = require("../parser").rankingData
         const teamName = req.body.teamName
         const season = req.body.season
         const wins = req.body.wins
@@ -115,7 +115,7 @@ router
         }
 
         // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 function CheckVal(){

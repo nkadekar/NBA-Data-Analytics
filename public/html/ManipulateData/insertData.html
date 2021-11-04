@@ -3,8 +3,7 @@
 <head>
 
 
-	<script src="http://localhost:3000/public/js/insertData.js"></script>
-	<script id="testing" src="http://localhost:3000/data/json/players.json"></script>
+	<script src="http://localhost:3000/public/js/ManipulateData/insertData.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +13,13 @@
 </head>
 <body>
 	<div id="test"></div>
+    <label for="Insert">Choose a Record:</label>
+      <select className="playerSelect" value="Empty" id="insertSelect" onchange="checkInsertDropdown()">
+        <option value="Empty"> -- select an option -- </option>
+        <option value="Players">Players</option>
+        <option value="Teams">Teams</option>
+        <option value="Ranking">Ranking</option>
+      </select>
 	<form  method="post" action="/insertButton/insertPlayerQuery" id="userInput1">
   </form>
   <form method="post" action="/insertButton/insertTeamQuery" id="userInput2">
@@ -22,13 +28,8 @@
   </form>
 
 
-  <label for="Insert">Choose a Record:</label>
-  <select className="playerSelect" value="Empty"  id="insertSelect" onchange="checkInsertDropdown()">
-  <option value="Empty"> -- select an option -- </option>
-  <option value="Players" >Players</option>
-  <option value="Teams">Teams</option>
-  <option value="Ranking">Ranking</option>
-  </select>
+
+
   <form method="get" action="/back">
     <button type="submit">Back</button>
   </form>

@@ -1,19 +1,18 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-const alert = require('alert');
-
+const alert = require('alert')
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../html/insertData.html'));
+        res.sendFile(path.join(__dirname, '../../html/ManipulateData/insertData.html'));
     });
 
 router
     .route('/insertPlayerQuery')
     .post((req, res) => {
-        var players = require("./parser").playerData
+        var players = require("../parser").playerData
         const playerName = req.body.PlayerName
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
@@ -26,13 +25,13 @@ router
                 "PLAYER_ID": playerID
             }
         players.push(playerJSON)
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 router
     .route('/insertTeamQuery')
     .post((req, res) => {
-        var teams = require("./parser").teamsData
+        var teams = require("../parser").teamsData
         const nickname = req.body.nickname
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
@@ -56,14 +55,14 @@ router
                 
             } 
         teams.push(teamJSON)
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 
 router
     .route('/insertRankingQuery')
     .post((req, res) => {
-        var ranking = require('./parser').rankingData
+        var ranking = require('../parser').rankingData
         const team = req.body.team
         const teamID= req.body.teamID
         const awayRecord = req.body.awayRecord
@@ -90,7 +89,7 @@ router
             } 
         ranking.push(rankingJSON)
         //console.log(ranking[ranking.length - 1])
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 function checkInsertDropdown(){

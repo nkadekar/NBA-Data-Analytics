@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var gameData = require("./parser").gamesData
-var teamData = require("./parser").teamsData
+var gameData = require("../parser").gamesData
+var teamData = require("../parser").teamsData
 const alert = require('alert');
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/pointsDifferenceAnalytics.html'))
+        res.sendFile(path.join(__dirname , '../../html/Analytics/pointsDifferenceAnalytics.html'))
     });
 
 router
@@ -21,7 +21,7 @@ router
         var awayNickname;
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../html/pointsDifferenceAnalytics.html'))
+            res.sendFile(path.join(__dirname , '../../html/Analytics/pointsDifferenceAnalytics.html'))
         }
         else{     
             for (var i = 0; i < gameData.length; i++) {

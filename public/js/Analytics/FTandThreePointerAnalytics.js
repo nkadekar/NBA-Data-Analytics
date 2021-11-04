@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var gamesData = require("./parser").gamesData
+var gamesData = require("../parser").gamesData
 const alert = require('alert');
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/FTandThreePointerAnalytics.html'))
+        res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
 router
@@ -17,7 +17,7 @@ router
         var totalGames = 0
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../html/FTandThreePointerAnalytics.html'))
+            res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
         }
         else {
             for (var i = 0; i < gamesData.length; ++i){

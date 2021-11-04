@@ -2,9 +2,8 @@
 <html lang="en">
 
 <head>
-  <script src="http://localhost:3000/public/js/deleteData.js">
+  <script src="http://localhost:3000/public/js/ManipulateData/deleteData.js">
   </script>
-	<script src="http://localhost:3000/data/json/players.json">
 	</script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,18 +14,20 @@
 
 <body>
   <div id="test"></div>
+      <label for="Delete">Choose a Record:</label>
+          <select className="deleteSelect" value="Empty" id="deleteSelect" onchange="CheckVal()">
+            <option value="Empty"> -- select an option -- </option>
+            <option value="Players">Players</option>
+            <option value="Teams">Teams</option>
+            <option value="Ranking">Ranking</option>
+          </select>
 	<form method="post" action="/deleteButton/deletePlayerQuery" id="userInput"></form>
   <form method="post" action="/deleteButton/deleteTeamQuery" id="userInput2"></form>
   <form method="post" action="/deleteButton/deleteRankingQuery" id="userInput3"></form>
 
 
-    <label for="Delete">Choose a Record:</label>
-    <select className="deleteSelect" value="Empty"  id="deleteSelect" onchange="CheckVal()">
-      <option value="Empty"> -- select an option -- </option>
-      <option value="Players">Players</option>
-      <option value="Teams">Teams</option>
-      <option value="Ranking">Ranking</option>
-    </select>
+
+
     <form method = "get" action = "/back">
       <button type="submit">Back</button>
   </form>

@@ -1,23 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var rankingData = require("./parser").rankingData
+var rankingData = require("../parser").rankingData
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../html/wins.html'));
-  });
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/homeRecord.html'))
+    });
 
 router
-    .route('/winsQuery')
+    .route('/homeQuery')
     .post((req, res) => {
         let year = req.body.year;
-        var winsPerTeam = PrintTeamWins(rankingData, year, 82)
-        res.send(makeTable(winsPerTeam));
-  });
+        var homeRecord = PrintHomeTeamWins(rankingData, year, 82)
+        res.send(makeTable(homeRecord))
+    });
 
-function getWinsPerTeam(rankingData, season, games) {
+function getHomeWinsPerTeam(rankingData, season, games) {
     var visited = []
     var arr = [];
     var counter = 0;
@@ -32,11 +32,11 @@ function getWinsPerTeam(rankingData, season, games) {
     return arr;
 }
 
-function PrintTeamWins(rankingData, season){
-    var seasonList = getWinsPerTeam(rankingData, season, 82)
+function PrintHomeTeamWins(rankingData, season){
     var res = []
+    var seasonList = getHomeWinsPerTeam(rankingData, season, 82)
     for (var i = 0; i < seasonList.length; i++) {
-        res.push(seasonList[i].TEAM + ": " +  seasonList[i].W)
+        res.push(seasonList[i].TEAM + " : " + seasonList[i].HOME_RECORD)
     }
     return res
 }

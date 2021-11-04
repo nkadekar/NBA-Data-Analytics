@@ -6,39 +6,39 @@ const path = require('path')
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/deleteData.html'))
+        res.sendFile(path.join(__dirname , '../../html/ManipulateData/deleteData.html'))
     });
 
 router
     .route('/deletePlayerQuery')
     .post((req, res) => {
-        var playerData = require('./parser').playerData;
+        var playerData = require('../parser').playerData;
         const playerName = req.body.PlayerName
         
         const index = playerData.findIndex(x => x.PLAYER_NAME === playerName);
         if (index !== undefined) playerData.splice(index, 1);
 
         // // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'));
+        res.sendFile(path.join(__dirname, '../../html/index.html'));
     });
 
 router
     .route('/deleteTeamQuery')
     .post((req, res) => {
-        const teamData = require('./parser').teamData
+        const teamData = require('../parser').teamData
         const teamName = req.body.TeamName
 
         const index = teamData.findIndex(x => x.NICKNAME === teamName);
         if (index !== undefined) teamData.splice(index, 1);
 
         // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'));
+        res.sendFile(path.join(__dirname, '../../html/index.html'));
 });
 
 router
     .route('/deleteRankingQuery')
     .post((req, res) => {
-        const rankingData = require('./parser').rankingData
+        const rankingData = require('../parser').rankingData
         const teamName = req.body.TeamName
         const season = req.body.Season
 
@@ -48,7 +48,7 @@ router
             }
         }
         // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../html/index.html'))
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
     

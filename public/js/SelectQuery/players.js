@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const path = require('path')
-var playerData = require("./parser").playerData
+const path = require('path') 
+var playerData = require("../parser").playerData
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../html/players.html'));
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'));
     });
 
 router

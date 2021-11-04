@@ -17,23 +17,28 @@ const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
 
 app
-	.route('/public/js/insertData.js')
+	.route('/public/js/ManipulateData/insertData.js')
 	. get((req, res) => {
-		res.sendFile(path.join(__dirname, 'public/js/insertData.js'));
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/insertData.js'));
 	});
 
 app
-	.route('/public/js/updateData.js')
+	.route('/public/js/ManipulateData/updateData.js')
 	. get((req, res) => {
-	res.sendFile(path.join(__dirname, 'public/js/updateData.js'));
-});
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/updateData.js'));
+	});
 
 app
-	.route('/public/js/deleteData.js')
+	.route('/public/js/ManipulateData/deleteData.js')
 	. get((req, res) => {
-	res.sendFile(path.join(__dirname, 'public/js/deleteData.js'));
-});
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/deleteData.js'));
+	});
 
+app
+	.route('/public/js/Analytics/pointsPerPlayerAnalytics.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/Analytics/pointsPerPlayerAnalytics.js'));
+	});
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -103,44 +108,47 @@ app
 		res.sendFile(path.join(__dirname, 'public/html/index.html'));
 	});
 
-const players = require('./public/js/players')
+const players = require('./public/js/SelectQuery/players')
 app.use('/players', players)
 
-const teams = require('./public/js/teams')
+const teams = require('./public/js/SelectQuery/teams')
 app.use('/teams', teams)
 
-const teamWins = require('./public/js/wins')
+const teamWins = require('./public/js/SelectQuery/wins')
 app.use('/wins', teamWins)
 
-const home = require('./public/js/homeRecord')
+const home = require('./public/js/SelectQuery/homeRecord')
 app.use('/home', home)
 
-const deleteData = require('./public/js/deleteData')
+const deleteData = require('./public/js/ManipulateData/deleteData')
 app.use('/deleteButton', deleteData)
 
-const updateData = require('./public/js/updateData')
+const updateData = require('./public/js/ManipulateData/updateData')
 app.use('/updateButton', updateData)
 
-const insertData = require('./public/js/insertData')
+const insertData = require('./public/js/ManipulateData/insertData')
 app.use('/insertButton', insertData)
 
-const pointsPerPlayerAnalytics = require("./public/js/pointsPerPlayerAnalytics")
+const pointsPerPlayerAnalytics = require("./public/js/Analytics/pointsPerPlayerAnalytics")
 app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics)
 
-const pointsDifferenceAnalytics = require('./public/js/PointsDifferenceAnalytics')
+const pointsDifferenceAnalytics = require('./public/js/Analytics/PointsDifferenceAnalytics')
 app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics)
 
-const headToHeadAnalytics = require('./public/js/headToHeadAnalytics')
+const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
 app.use('/headToHeadAnalytics', headToHeadAnalytics)
 
-const averageFGAnalytics = require("./public/js/averageFGAnalytics")
+const averageFGAnalytics = require("./public/js/Analytics/averageFGAnalytics")
 app.use("/averageFGAnalytics", averageFGAnalytics)
 
-const FTandThreePointerAnalytics = require("./public/js/FTandThreePointerAnalytics")
+const FTandThreePointerAnalytics = require("./public/js/Analytics/FTandThreePointerAnalytics")
 app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
 
-const MostHomeAndAwayWinsAnalytics = require("./public/js/MostHomeAndAwayWinsAnalytics")
+const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
+
+// const pointsPerPlayerAfterAnalytics = require("./public/js/AfterAnalytics/pointsPerPlayerAfterAnalytics")
+// app.use("/pointsPerPlayerAfterAnalytics", pointsPerPlayerAfterAnalytics)
 
 app
 	.route('/saveButton')

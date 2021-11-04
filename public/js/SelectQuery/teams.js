@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var rankingData = require("./parser").rankingData
-var teamData = require("./parser").teamsData
+var rankingData = require("../parser").rankingData
+var teamData = require("../parser").teamsData
 
 var West = WesternConferencePrint(rankingData, teamData)
 var East = EasternConferencePrint(rankingData, teamData)
@@ -10,7 +10,7 @@ var East = EasternConferencePrint(rankingData, teamData)
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../html/teams.html'))
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/teams.html'))
     });
 
 router

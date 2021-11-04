@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-var gameData = require("./parser").gamesData
+var gameData = require("../parser").gamesData
 var alert = require("alert")
 
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname , '../html/averageFGAnalytics.html'))
+        res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
     });
 
 router
@@ -18,7 +18,7 @@ router
         var totalGames = 0
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../html/averageFGAnalytics.html'))
+            res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
         }
         else{
             for (var i = 0; i < gameData.length; ++i){
