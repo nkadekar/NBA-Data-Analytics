@@ -4,20 +4,18 @@ const path = require('path')
 var gameDetailsData = require("../parser").gamesDetailsData
 const alert = require('alert')
 
-
-var totalPoints
+var points
 
 router
     .route('/')
     .get((req, res) => {
-
         res.sendFile(path.join(__dirname , '../../html/Analytics/pointsPerPlayerAnalytics.html'))
     });
 
 router
     .route('/pointsPerPlayerQuery')
     .post((req, res) => {
-        totalPoints = 0;
+        var totalPoints = 0;
         var playerFoundFlag = false
         var playerIndex;
         for (var i = 0; i < gameDetailsData.length; i++){
@@ -36,9 +34,31 @@ router
         }
         else{
             var sendData = gameDetailsData[playerIndex].PLAYER_NAME + " has scored: " + totalPoints.toString() + " points."
-            res.send(sendData)
-            // res.sendFile(path.join(__dirname , '../../html/AfterAnalytics/pointsPerPlayerAfterAnalytics.html'))
+            res.send(makeGraph(gameDetailsData[playerIndex].PLAYER_NAME, totalPoints, ))
         }
     });
+
+
+
+function makeGraph(playerName, totalPoints){
+
+    var temp = totalPoints
+
+    var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
+     
+                             "<div id=\"myDiv\">" + "</div>" +
+                            "<script>" + 
+                            "var data = [\n" + 
+                            "{\n" +
+                            " x: [" +  "\"" + playerName + "\"" + "],\n" +
+                            " y: [" + totalPoints +  "],\n" +
+                            " type: \'bar\'\n" +
+                            "}\n" +
+                            "];\n" +
+                            "Plotly.newPlot('myDiv', data);\n" +
+                            "</script>" 
+
+    return sendData
+}
 
 module.exports = router
