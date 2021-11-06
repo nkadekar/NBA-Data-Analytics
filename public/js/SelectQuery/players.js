@@ -6,15 +6,15 @@ var playerData = require("../parser").playerData
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'));
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
     });
 
 router
     .route('/playersQuery')
     .post((req, res) => {
-        let numberOfPlayers = req.body.numberOfPlayers;
+        let numberOfPlayers = req.body.numberOfPlayers
         var players = filterplayerData(playerData, numberOfPlayers)
-        res.send(makeTable(players));
+        res.send(makeTable(players))
     });
 
 function filterplayerData(playerData, value) { 
@@ -26,14 +26,13 @@ function filterplayerData(playerData, value) {
 }
 
 function makeTable(myArray) {
-    var result = "<table border=1>";
-    for(var i=0; i<myArray.length; i++) {
-        result += "<tr>";
-        result += "<td>"+myArray[i]+"</td>";
-        result += "</tr>";
+    var result = "<table border=1>"
+    for(var i=0; i < myArray.length; i++) {
+        result += "<tr>"
+        result += "<td>"+myArray[i]+"</td>"
+        result += "</tr>"
     }
-    result += "</table>";
-
+    result += "</table>"
     return result;
 }
 

@@ -13,7 +13,6 @@ function backupAndPush(orig, backup, newData) {
     // backing up the data
     fs.writeFile(backup, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + backup);
     }) 
 
@@ -22,7 +21,6 @@ function backupAndPush(orig, backup, newData) {
 
     fs.writeFile(orig, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + orig);
     })
 }
@@ -32,14 +30,12 @@ function backup(orig, backup) {
     // backing up the data
     fs.writeFile(backup, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + backup);
     }) 
 
     // updating the current json file
     fs.writeFile(orig, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + orig);
     })
 }
@@ -49,14 +45,12 @@ function backup(orig, backup) {
     // backing up the data
     fs.writeFile(backup, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + backup);
     }) 
 
     // updating the current json file
     fs.writeFile(orig, JSON.stringify(jsonFile), (err) => {
         if(err) return console.log(err)
-        //console.log(JSON.stringify(playerData));
         console.log('writing to ' + orig);
     })
 }

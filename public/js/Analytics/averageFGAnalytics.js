@@ -78,11 +78,11 @@ function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
     return sendData
 }
 
-// function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
+//Add another Chart for Pts, reb, ast
 
+// function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
 //     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
-        
-//                                 "<div id=\"myDiv\">" + "</div>" +
+//                             "<div id=\"myDiv\">" + "</div>" +
 //                             "<script>" + 
 //                             "var data = [\n" + 
 //                             "{\n" +

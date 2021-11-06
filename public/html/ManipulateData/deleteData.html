@@ -14,25 +14,19 @@
 
 <body>
   <div id="test"></div>
-      <label for="Delete">Choose a Record:</label>
-          <select className="deleteSelect" value="Empty" id="deleteSelect" onchange="CheckVal()">
-            <option value="Empty"> -- select an option -- </option>
-            <option value="Players">Players</option>
-            <option value="Teams">Teams</option>
-            <option value="Ranking">Ranking</option>
-          </select>
-	<form method="post" action="/deleteButton/deletePlayerQuery" id="userInput"></form>
+  <label for="Delete">Choose a Record:</label>
+  <select className="deleteSelect" value="Empty" id="deleteSelect" onchange="CheckVal()">
+    <option value="Empty"> -- select an option -- </option>
+    <option value="Players">Players</option>
+    <option value="Teams">Teams</option>
+    <option value="Ranking">Ranking</option>
+  </select>
+  <form method="post" action="/deleteButton/deletePlayerQuery" id="userInput"></form>
   <form method="post" action="/deleteButton/deleteTeamQuery" id="userInput2"></form>
   <form method="post" action="/deleteButton/deleteRankingQuery" id="userInput3"></form>
-
-
-
-
-    <form method = "get" action = "/back">
-      <button type="submit">Back</button>
+  <form method = "get" action = "/back">
+    <button type="submit">Back</button>
   </form>
-
 </body>
-
 
 </html>

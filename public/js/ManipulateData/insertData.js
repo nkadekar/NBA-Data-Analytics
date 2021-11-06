@@ -25,6 +25,7 @@ router
                 "PLAYER_ID": playerID
             }
         players.push(playerJSON)
+        alert("Player successfully inserted.")
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
@@ -55,6 +56,7 @@ router
                 
             } 
         teams.push(teamJSON)
+        alert("Team successfully inserted.")
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
@@ -70,7 +72,6 @@ router
         const season = req.body.season
         const wins = req.body.wins
         const loses = req.body.loses
-        //console.log(ranking[ranking.length - 1])
         var rankingJSON = 
             {
                 "TEAM": team,  //Phoenix
@@ -88,7 +89,7 @@ router
                 "L": loses
             } 
         ranking.push(rankingJSON)
-        //console.log(ranking[ranking.length - 1])
+        alert("Ranking successfully inserted.")
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 

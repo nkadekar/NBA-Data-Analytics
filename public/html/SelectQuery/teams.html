@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,18 +8,17 @@
     <script src="app.js"></script>
     <title>teams</title>
 </head>
+
 <body>
     <h1>Teams page</h1>
     <h2>This query will give the list of teams in the league</h2>
     <form action="/teams/conferenceQuery" method="post">
-        <!-- <button id = "west" type = "submit">West</button>
-        <button id = "east" type = "submit">East</button> -->
         <input type="text" name="conf" placeholder="east/west">
         <button type="submit">Submit</button>
     </form>
-
     <form method = "get" action = "/back">
         <button type="submit">Back</button>
     </form>
 </body>
+
 </html>

@@ -29,7 +29,7 @@ function WesternConferenceArray(rankingData) {
     var West = new Set()
     for (var i = 0; i < rankingData.length - 1; i++) {
         if (rankingData[i].CONFERENCE == "West") {
-            West.add(rankingData[i].TEAM_ID);
+            West.add(rankingData[i].TEAM_ID)
         }
     }
     return West
@@ -54,7 +54,7 @@ function EasternConferenceArray(rankingData) {
     var East = new Set()
     for (var i = 0; i < 20000; i++) {
         if (rankingData[i].CONFERENCE == "East") {
-            East.add(rankingData[i].TEAM_ID);
+            East.add(rankingData[i].TEAM_ID)
         }
     }
     return East
@@ -78,12 +78,11 @@ function EasternConferencePrint(rankingData, teamData) {
 function makeTable(myArray) {
     var result = "<table border=1>";
     for(var i=0; i<myArray.length; i++) {
-        result += "<tr>";
-        result += "<td>"+myArray[i]+"</td>";
-        result += "</tr>";
+        result += "<tr>"
+        result += "<td>"+myArray[i]+"</td>"
+        result += "</tr>"
     }
-    result += "</table>";
-
+    result += "</table>"
     return result;
 }
 

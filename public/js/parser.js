@@ -7,10 +7,8 @@ function csvJSON(csv){
     var headers = lines[0].split(",");
   
     for(var i = 1; i < lines.length; i++){
-  
         var obj = {};
         var currentline = lines[i].split(",");
-  
         for(var j=0; j < headers.length; j++){
             obj[headers[j]] = currentline[j];
         }
@@ -21,7 +19,6 @@ function csvJSON(csv){
 
 function jsonCSV(json){
     const array = [Object.keys(json[0])].concat(json)
-
     return array.map(it => {
         return Object.values(it).toString()
     }).join('\n')

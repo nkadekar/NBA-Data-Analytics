@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path');
 const { teamsData } = require('../parser');
-
+const alert = require('alert')
 
 router
     .route('/')
@@ -19,8 +19,6 @@ router
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
         const seasonPlayed = req.body.SeasonPlayed
-
-
         const index = playerData.findIndex(x => x.PLAYER_NAME === oldPlayerName);
         if (index !== undefined) {
             playerData.splice(index, 1);
@@ -32,7 +30,7 @@ router
                 "PLAYER_ID": playerID
             }
             playerData.push(playerJSON)
-        // alert('Successfully added player')
+        alert('Successfully updated player')
         }
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
@@ -46,38 +44,14 @@ router
         const teamAbbreviation = req.body.teamAbbreviation
         const yearFounded = req.body.yearFounded
         const city = req.body.city
-
         const index = teamData.findIndex(x => x.NICKNAME === oldTeamName);
-        //console.log(teamData)
-        // console.log("Break")
         if (index !== undefined) {
             teamData[index].NICKNAME = newTeamName
             teamData[index].ABBREVIATION = teamAbbreviation
             teamData[index].YEARFOUNDED = yearFounded
             teamData[index].CITY = city
-            //teamData.splice(index, 1);
-            /*
-            var teamJSON = 
-                {
-                    "NICKNAME": newTeamName,
-                    "ABBREVIATION": teamAbbreviation,
-                    "YEARFOUNDED": yearFounded,
-                    "CITY": city,
-                    "LEAGUE_ID": '',
-                    "TEAM_ID": '',
-                    "MIN_YEAR": '',
-                    "MAX_YEAR": '',
-                    "ARENA": '',
-                    "ARENACAPACITY": '',
-                    "OWNER": '',
-                    "GENERALMANAGER": '',
-                    "HEADCOACH": '',
-                    "DLEAGUEAFFILIATION": ''
-                }
-                teamData.push(teamJSON) */
         }
-       // console.log(teamData)
-        // alert('Successfully added player')
+        alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
@@ -91,7 +65,6 @@ router
         const loses = req.body.loses 
         const homeRecord = req.body.homeRecord
         const awayRecord = req.body.awayRecord
-
         const index = rankingData.findIndex(x => (x.TEAM === teamName && x.SEASON_ID === season));
         if (index !== undefined) {
         rankingData.splice(index, 1);
@@ -113,8 +86,7 @@ router
             } 
             rankingData.push(rankingJSON)
         }
-
-        // alert('Successfully added player')
+        alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 

@@ -2,34 +2,28 @@
 <html lang="en">
 
 <head>
-  <script src="http://localhost:3000/public/js/ManipulateData/updateData.js">
-  </script>
-
-	</script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <h1>Update Stuff</h1>
+  <script src="http://localhost:3000/public/js/ManipulateData/updateData.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <h1>Update Stuff</h1>
 </head>
 
 <body>
   <div id="test"></div>
-      <label for="Update">Choose a Record:</label>
-      <select className="playerSelect" value="Empty" id="updateSelect" onchange="CheckVal()">
-        <option value="Empty"> -- select an option -- </option>
-        <option value="Players">Players</option>
-        <option value="Teams">Teams</option>
-        <option value="Ranking">Ranking</option>
-      </select>
+  <label for="Update">Choose a Record:</label>
+  <select className="playerSelect" value="Empty" id="updateSelect" onchange="CheckVal()">
+    <option value="Empty"> -- select an option -- </option>
+    <option value="Players">Players</option>
+    <option value="Teams">Teams</option>
+    <option value="Ranking">Ranking</option>
+  </select>
 	<form method="post" action="/updateButton/updatePlayerQuery" id="userInput"></form>
   <form method="post" action="/updateButton/updateTeamQuery" id="userInput2"></form>
   <form method="post" action="/updateButton/updateRankingQuery" id="userInput3"></form>
-
-
-
-    <form method = "get" action = "/back">
-      <button type="submit">Back</button>
+  <form method = "get" action = "/back">
+    <button type="submit">Back</button>
   </form>
 </body>
 

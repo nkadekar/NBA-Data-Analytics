@@ -6,7 +6,7 @@ var rankingData = require("../parser").rankingData
 router
     .route('/')
     .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../../html/SelectQuery/wins.html'));
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/wins.html'))
   });
 
 router
@@ -14,22 +14,21 @@ router
     .post((req, res) => {
         let year = req.body.year;
         var winsPerTeam = PrintTeamWins(rankingData, year, 82)
-        res.send(makeTable(winsPerTeam));
+        res.send(makeTable(winsPerTeam))
   });
 
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
     var arr = [];
-    var counter = 0;
     for (var i = 0; i < rankingData.length; i++){
         if((rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == games)){
             if(visited.indexOf(rankingData[i].TEAM_ID) == -1){
-                visited.push(rankingData[i].TEAM_ID);
-                arr.push(rankingData[i]);
+                visited.push(rankingData[i].TEAM_ID)
+                arr.push(rankingData[i])
             }
         } 
     }
-    return arr;
+    return arr
 }
 
 function PrintTeamWins(rankingData, season){
@@ -42,14 +41,13 @@ function PrintTeamWins(rankingData, season){
 }
 
 function makeTable(myArray) {
-    var result = "<table border=1>";
+    var result = "<table border=1>"
     for(var i=0; i<myArray.length; i++) {
-        result += "<tr>";
-        result += "<td>"+myArray[i]+"</td>";
-        result += "</tr>";
+        result += "<tr>"
+        result += "<td>"+myArray[i]+"</td>"
+        result += "</tr>"
     }
-    result += "</table>";
-
+    result += "</table>"
     return result;
 }
 

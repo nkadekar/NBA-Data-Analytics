@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-
+const alert = require('alert')
 
 router
     .route('/')
@@ -14,12 +14,10 @@ router
     .post((req, res) => {
         var playerData = require('../parser').playerData;
         const playerName = req.body.PlayerName
-        
-        const index = playerData.findIndex(x => x.PLAYER_NAME === playerName);
+        const index = playerData.findIndex(x => x.PLAYER_NAME === playerName)
         if (index !== undefined) playerData.splice(index, 1);
-
-        // // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../../html/index.html'));
+        alert('Successfully added player')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
 router
@@ -27,12 +25,10 @@ router
     .post((req, res) => {
         const teamData = require('../parser').teamData
         const teamName = req.body.TeamName
-
-        const index = teamData.findIndex(x => x.NICKNAME === teamName);
+        const index = teamData.findIndex(x => x.NICKNAME === teamName)
         if (index !== undefined) teamData.splice(index, 1);
-
-        // alert('Successfully added player')
-        res.sendFile(path.join(__dirname, '../../html/index.html'));
+        alert('Successfully added player')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
 });
 
 router
@@ -41,13 +37,12 @@ router
         const rankingData = require('../parser').rankingData
         const teamName = req.body.TeamName
         const season = req.body.Season
-
         for(var i = 0; i < rankingData.length; i++){
             if((rankingData[i].TEAM == teamName) && (rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == '82')) {
                 rankingData.splice(i, 1)
             }
         }
-        // alert('Successfully added player')
+        alert('Successfully added player')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
