@@ -21,6 +21,8 @@ router
         else {
             var team1ID, team2ID;
             var team1Counter = team2Counter = 0
+            // var team1Points = team1Rebounds = team1Assists = team1Steals = team1Blocks = team1Turnovers = 0
+            // var team2Points = team2Rebounds = team2Assists = team2Steals = team2Blocks = team2Turnovers = 0
             for (var i = 0; i < teamsData.length; ++i){
                 if (teamsData[i].NICKNAME == req.body.team1){
                     team1ID = teamsData[i].TEAM_ID

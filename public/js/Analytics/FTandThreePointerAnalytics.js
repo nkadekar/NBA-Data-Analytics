@@ -37,7 +37,27 @@ router
         var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
 
         var outputString = "Average Home FT Percentage: " + avgHomeFreeThrow.toPrecision(4) + "%<br> Average Away FT Percentage: " + avgAwayFreeThrow.toPrecision(4) + "%<br> Average Home 3 PT Percentage: " + avgHomeThreePoint.toPrecision(4) + "%<br> Average Away 3 PT Percentage: " + avgAwayThreePoint.toPrecision(4) + "%"
-        res.send(outputString)
+        // res.send(outputString)
+        res.send(makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint))
     });
+
+function makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint){
+
+    var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
+        
+                    "<div id=\"myDiv\">" + "</div>" +
+                    "<script>" + 
+                    "var data = [\n" + 
+                    "{\n" +
+                    " x: [" +  "\"" + "Avg Home Free Throw Percentage" + "\"" + "," + "\"" + "Avg Away Free Throw Percentage" + "\"" + "," + "\"" + "Avg Home 3PT Percentage" + "\"" + "," + "\"" + "Avg Away 3PT Percentage" + "\"" + "],\n" +
+                    " y: [" + avgHomeFreeThrow + "," + avgAwayFreeThrow + "," + avgHomeThreePoint + "," + avgAwayThreePoint + "],\n" +
+                    " type: \'bar\'\n" +
+                    "}\n" +
+                    "];\n" +
+                    "Plotly.newPlot('myDiv', data);\n" +
+                    "</script>" 
+
+    return sendData
+}
 
 module.exports = router

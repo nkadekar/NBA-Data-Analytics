@@ -36,7 +36,27 @@ router
             }
         }
         var outputString = "The team with the most home wins is " + maxHomeTeam + " with " + maxHome + " wins.<br> The team with the most away wins is " + maxAwayTeam + " with " + maxAway + " wins."
-        res.send(outputString)
+        // res.send(outputString)
+        res.send(makeGraph(maxHome, maxHomeTeam, maxAway, maxAwayTeam))
     });
+
+function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
+
+    var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
+        
+                                "<div id=\"myDiv\">" + "</div>" +
+                            "<script>" + 
+                            "var data = [\n" + 
+                            "{\n" +
+                            " x: [" +  "\"" + "Most Home Wins (" + homeTeam + ")" + "\"" + "," + "\"" + "Most Away Wins (" + awayTeam  + ")" + "\"" + "],\n" +
+                            " y: [" + mostHomeWins + "," + mostAwayWins + "],\n" +
+                            " type: \'bar\'\n" +
+                            "}\n" +
+                            "];\n" +
+                            "Plotly.newPlot('myDiv', data);\n" +
+                            "</script>" 
+
+    return sendData
+}
 
 module.exports = router
