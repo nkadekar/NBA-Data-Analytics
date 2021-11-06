@@ -4,8 +4,6 @@ const path = require('path')
 var gameDetailsData = require("../parser").gamesDetailsData
 const alert = require('alert')
 
-var points
-
 router
     .route('/')
     .get((req, res) => {
@@ -15,14 +13,30 @@ router
 router
     .route('/pointsPerPlayerQuery')
     .post((req, res) => {
-        var totalPoints = 0;
+        var totalPoints = 0
+        var totalRebounds = 0
+        var totalAssists = 0
+        var totalSteals = 0
+        var totalBlocks = 0
         var playerFoundFlag = false
-        var playerIndex;
+        var playerIndex
         for (var i = 0; i < gameDetailsData.length; i++){
             if (req.body.playerName.toLowerCase() == gameDetailsData[i].PLAYER_NAME.toLowerCase()){
                 if (gameDetailsData[i].PTS != "") {
                     playerFoundFlag = true
                     totalPoints += parseInt(gameDetailsData[i].PTS)
+                    if (gameDetailsData[i].REB != ""){
+                        totalRebounds += parseInt(gameDetailsData[i].REB)
+                    }
+                    if (gameDetailsData[i].AST != ""){
+                        totalAssists += parseInt(gameDetailsData[i].AST)
+                    }
+                    if (gameDetailsData[i].STL != ""){
+                        totalSteals += parseInt(gameDetailsData[i].STL)
+                    }
+                    if (gameDetailsData[i].BLK != ""){
+                        totalBlocks += parseInt(gameDetailsData[i].BLK)
+                    }
                     playerIndex = i
                 }
             }
@@ -34,15 +48,11 @@ router
         }
         else{
             var sendData = gameDetailsData[playerIndex].PLAYER_NAME + " has scored: " + totalPoints.toString() + " points."
-            res.send(makeGraph(gameDetailsData[playerIndex].PLAYER_NAME, totalPoints, ))
+            res.send(makeGraph(gameDetailsData[playerIndex].PLAYER_NAME, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks))
         }
     });
 
-
-
-function makeGraph(playerName, totalPoints){
-
-    var temp = totalPoints
+function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
      
@@ -50,8 +60,8 @@ function makeGraph(playerName, totalPoints){
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
-                            " x: [" +  "\"" + playerName + "\"" + "],\n" +
-                            " y: [" + totalPoints +  "],\n" +
+                            " x: [" +  "\"" + "Points" + "\"" + "," + "\"" + "Rebounds" + "\"" + "," + "\"" + "Assists" + "\"" + "," + "\"" + "Steals" + "\"" + "," + "\"" + "Blocks" + "\"" + "],\n" +
+                            " y: [" + totalPoints + "," + totalRebounds + "," + totalAssists + "," + totalSteals + "," + totalBlocks + "],\n" +
                             " type: \'bar\'\n" +
                             "}\n" +
                             "];\n" +
