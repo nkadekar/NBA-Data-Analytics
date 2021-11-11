@@ -147,9 +147,6 @@ app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
 const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
 
-// const pointsPerPlayerAfterAnalytics = require("./public/js/AfterAnalytics/pointsPerPlayerAfterAnalytics")
-// app.use("/pointsPerPlayerAfterAnalytics", pointsPerPlayerAfterAnalytics)
-
 app
 	.route('/saveButton')
 	. get((req, res) => {
