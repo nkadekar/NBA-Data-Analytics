@@ -17,11 +17,11 @@ router
     .route('/conferenceQuery')
     .post((req, res) => {
         var choice = req.body.conf
-        if(choice == 'west' || choice == "West") {
-            res.send(makeTable(West))
+        if(choice == 1) {
+            res.send(makeTable(West, "Western Conference Teams"))
         }
-        else if(choice == 'east' || choice == "East"){
-            res.send(makeTable(East))
+        else if(choice == 2){
+            res.send(makeTable(East, "Eastern Conference Teams"))
         }
     });
 
@@ -75,14 +75,23 @@ function EasternConferencePrint(rankingData, teamData) {
     return EastTeam
 }
 
-function makeTable(myArray) {
-    var result = "<table border=1>";
+function makeTable(myArray, conference) {
+    var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
+    "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"></link>"
+     result += "<table class=\"table\" border=1>"
+     result += "<thead class=\"thead-dark\">"
+
+     result += "<th scope=\"col\">" + conference + "</th>"
+    result += "</thead>"
     for(var i=0; i<myArray.length; i++) {
         result += "<tr>"
         result += "<td>"+myArray[i]+"</td>"
         result += "</tr>"
     }
     result += "</table>"
+    result +=   "<form method=\"get\" action=\"/back\">"
+    result +=   "<button class=\"btn btn-primary btn-lg\" id=\"save-button\" type=\"submit\" text-align=\"center\">Back</button>"
+    result +=   "</form>"
     return result;
 }
 

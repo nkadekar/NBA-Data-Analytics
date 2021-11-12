@@ -26,13 +26,24 @@ function filterplayerData(playerData, value) {
 }
 
 function makeTable(myArray) {
-    var result = "<table border=1>"
+    var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
+        "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"></link>"
+     result += "<table class=\"table\" border=1>"
+     result += "<thead class=\"thead-dark\">"
+
+     result += "<th scope=\"col\">#</th>"
+     result += "<th scope=\"col\">Name</th>"
+    result += "</thead>"
     for(var i=0; i < myArray.length; i++) {
         result += "<tr>"
+        result += "<th scope=\"row\">" + (i + 1) + "</th>"
         result += "<td>"+myArray[i]+"</td>"
         result += "</tr>"
     }
     result += "</table>"
+    result +=   "<form method=\"get\" action=\"/back\">"
+    result +=   "<button class=\"btn btn-primary btn-lg\" id=\"save-button\" type=\"submit\" text-align=\"center\">Back</button>"
+    result +=   "</form>"
     return result;
 }
 

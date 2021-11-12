@@ -6,19 +6,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="app.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://localhost:3000/public/css/main.css">
+    
+    <link rel="stylesheet" href="http://localhost:3000/public/css/bootstrap.min.css">
     <title>teams</title>
 </head>
 
 <body>
+                <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                    <a class="navbar-brand" href="#">NBA Analytics - XYZ Coders</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                
+                    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <form method="get" action="/back">
+                                    <button class="btn btn-dark" type="submit">Back</button>
+                                </form>
+                            </li>
+                
+                
+                
+                        </ul>
+                
+                    </div>
+                </nav>
+        <div class="container">
     <h1>Teams page</h1>
     <h2>This query will give the list of teams in the league</h2>
-    <form action="/teams/conferenceQuery" method="post">
-        <input type="text" name="conf" placeholder="east/west">
-        <button type="submit">Submit</button>
-    </form>
-    <form method = "get" action = "/back">
-        <button type="submit">Back</button>
-    </form>
+        <form action="/teams/conferenceQuery" method="post">
+            <div class="form-row align-items-center">
+                <div class="col-sm-3 my-1">
+                    <div class="input-group">
+        
+                    <select class="custom-select mr-sm-2" name="conf">
+                        <option selected>Choose a conference</option>
+                        <option value="1">West</option>
+                        <option value="2">East</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+
+        </div>
 </body>
 
 </html>
