@@ -3,31 +3,54 @@
   
 <head>
 	<script src="http://localhost:3000/public/js/ManipulateData/insertData.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="http://localhost:3000/public/css/main.css">
+      
+      <link rel="stylesheet" href="http://localhost:3000/public/css/bootstrap.min.css">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <h1>Insert Stuff</h1>
 </head>
 
 <body>
-	<div id="test"></div>
-  <label for="Insert">Choose a Record:</label>
-  <select className="playerSelect" value="Empty" id="insertSelect" onchange="checkInsertDropdown()">
+                  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                    <a class="navbar-brand" href="#">NBA Analytics - XYZ Coders</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                          <form method="get" action="/back">
+                            <button class="btn btn-dark" type="submit">Back</button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+      <div class="container">
+      <h1>Insert Stuff</h1>
+    <div class="form-group">
+  <label for="Insert">Choose a Record</label>
+  <select class="custom-select mr-sm-2" value="Empty" id="insertSelect" onchange="checkInsertDropdown()">
     <option value="Empty"> -- select an option -- </option>
     <option value="Players">Players</option>
     <option value="Teams">Teams</option>
     <option value="Ranking">Ranking</option>
   </select>
+    </div>
+    <br>
 	<form  method="post" action="/insertButton/insertPlayerQuery" id="userInput1">
-  </form>
+    </form>
   <form method="post" action="/insertButton/insertTeamQuery" id="userInput2">
   </form>
   <form method="post" action="/insertButton/insertRankingQuery" id="userInput3">
   </form>
-  <form method="get" action="/back">
-    <button type="submit">Back</button>
-  </form>
+
+</div>
 </body>
 
 </html>

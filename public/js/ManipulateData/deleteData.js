@@ -51,19 +51,34 @@ function CheckVal(){
     var val = document.getElementById("deleteSelect").value
     if (val == "Players") {
         document.getElementById("userInput").innerHTML = 
-        "<h3>Enter a player name to delete from the player dataset. :</h3> <input name=\"PlayerName\" > </input> <br>" +
-        "<input type=\"Submit\"> </input>" 
+        "<div class=\"form-group\">" + 
+        "<label>Enter a player name to delete from the player dataset</label>  <input class=\"form-control\" name=\"PlayerName\" ></input> <br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>" 
+        document.getElementById("userInput2").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
     }
     else if (val == "Teams") {
         document.getElementById("userInput2").innerHTML = 
-        "<h3>Enter a team name to delete from the teams dataset. :</h3> <input name=\"TeamName\" > </input> <br>" +
-        "<input type=\"Submit\" onClick=getTeam()> </input>" 
+         "<div class=\"form-group\">" + 
+        "Enter a team name to delete from the teams dataset <input class=\"form-control\" name=\"TeamName\" > </input> <br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\" onClick=getTeam()> </input>" 
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
     }
     else if (val == "Ranking") {
         document.getElementById("userInput3").innerHTML = 
-        "<h3>Enter a team name and season to update from the ranking dataset. </h3> Team Name: <input name=\"TeamName\" > </input>" +
-        "Season: <input name=\"Season\"></input><br><br>" +
-        "<input type=\"Submit\" onClick=getRanking()> </input>" 
+        "Enter a team name and season to update from the ranking dataset <br>" +
+        "<div class=\"form-group\">" + 
+        "Team Name: <input class=\"form-control\" name=\"TeamName\" > </input>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Season: <input class=\"form-control\" name=\"Season\"></input><br><br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\" onClick=getRanking()> </input>" 
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput2").innerHTML = ""
     }
 }
     

@@ -94,31 +94,70 @@ function CheckVal(){
     var val = document.getElementById("updateSelect").value 
     if (val == "Players") {
         document.getElementById("userInput").innerHTML = 
-        "<h3>Enter a player name to update from the player dataset. </h3> <input name=\"oldPlayerName\" > </input> <br>" +
-        "<h3>New PlayerID:</h3> <input name=\"PlayerID\" required > </input> <br>" + 
-        "<h3>New TeamID:</h3> <input name=\"TeamID\" required > </input> <br>" +
-        "<h3>New PlayerName:</h3> <input name=\"newPlayerName\" required> </input> <br>" +
-        "<h3>Season Played:</h3> <input name = \"SeasonPlayed\" required></input> <br>" +
-        "<input type=\"Submit\"> </input>"  
+        "<div class=\"form-group\">" + 
+        "Enter a player name to update from the player dataset <input class=\"form-control\" name=\"oldPlayerName\" > </input> <br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "New PlayerID <input class=\"form-control\" name=\"PlayerID\" required > </input> <br>" + 
+        "</div>" +
+         "<div class=\"form-group\">" + 
+        "New TeamID <input class=\"form-control\" name=\"TeamID\" required > </input> <br>" +
+        "</div>" + 
+         "<div class=\"form-group\">" + 
+        "New PlayerName <input class=\"form-control\" name=\"newPlayerName\" required> </input> <br>" +
+        "</div>" +
+         "<div class=\"form-group\">" + 
+        "Season Played <input class=\"form-control\" name = \"SeasonPlayed\" required></input> <br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>"  
+        document.getElementById("userInput2").innerHTML  = ""
+        document.getElementById("userInput3").innerHTML =  ""
     }
     else if (val == "Teams") {
         document.getElementById("userInput2").innerHTML =
-        "<h3>Enter a team name to update</h3> <input name=\"oldTeamName\" > </input> <br>" +
-        "Team Name: <input name=\"newTeamName\" > </input><br>" +
-        "Team Abbreviation: <input name=\"teamAbbreviation\"></input><br>" +
-        "Year Founded: <input name=\"yearFounded\"></input><br>" + 
-        "City: <input name=\"city\" ></input><br>" +
-        "<input type=\"Submit\"> </input>"
+        "<div class=\"form-group\">" + 
+        "Enter a team name to update <input class=\"form-control\" name=\"oldTeamName\" > </input> <br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Team Name <input class=\"form-control\" name=\"newTeamName\" > </input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Team Abbreviation <input class=\"form-control\" name=\"teamAbbreviation\"></input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Year Founded <input class=\"form-control\" name=\"yearFounded\"></input><br>" + 
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "City <input class=\"form-control\" name=\"city\" ></input><br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>"
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
     }
     else if (val == "Ranking") {
         document.getElementById("userInput3").innerHTML =
-        "<h3>Enter a team name and season to update from the ranking dataset. </h3> Team Name: <input name=\"teamName\" > </input>" +
-        "Season: <input name=\"season\"></input><br><br>" +
-        "Wins: <input name=\"wins\" > </input><br>" +
-        "Losses: <input name=\"losses\"></input><br>" +
-        "Home Record: <input name=\"homeRecord\"></input><br>" + 
-        "Away Record: <input name=\"awayRecord\" ></input><br>" +
-        "<input type=\"Submit\"> </input>"
+        "Enter a team name and season to update from the ranking dataset <br> <br>" + 
+        "<div class=\"form-group\">" + 
+        "Team Name <input class=\"form-control\" name=\"teamName\" > </input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Season: <input class=\"form-control\" name=\"season\"></input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Wins <input class=\"form-control\" name=\"wins\" > </input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Losses <input class=\"form-control\" name=\"losses\"></input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Home Record <input class=\"form-control\" name=\"homeRecord\"></input><br>" + 
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Away Record <input class=\"form-control\" name=\"awayRecord\" ></input><br>" +
+        "</div>" +
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>"
+         document.getElementById("userInput").innerHTML = ""
+         document.getElementById("userInput2").innerHTML = ""
     }
 }
 

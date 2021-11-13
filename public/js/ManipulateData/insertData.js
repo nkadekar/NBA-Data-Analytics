@@ -97,30 +97,67 @@ function checkInsertDropdown(){
     var val = document.getElementById("insertSelect").value
     if (val == "Players") {
         document.getElementById("userInput1").innerHTML = 
-        "<h3>PlayerID:</h3> <input name=\"PlayerID\" required > </input> <br>" + 
-        "<h3>TeamID:</h3> <input name=\"TeamID\" required > </input> <br>" +
-        "<h3>PlayerName:</h3> <input name=\"PlayerName\" required> </input> <br>" +
-        "<h3>Season Played:</h3> <input name = \"SeasonPlayed\" required></input> <br>" +
-        "<input type=\"Submit\"> </input>"  
+        "<div class=\"form-group\">" + 
+        "<label>PlayerID</label> <input class=\"form-control\" name=\"PlayerID\" required > </input> <br>" + 
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "<label>TeamID</label> <input class=\"form-control\" name=\"TeamID\" required > </input> <br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "<label>Player Name</label> <input class=\"form-control\" name=\"PlayerName\" required> </input> <br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "<label>Season Played</label> <input class=\"form-control\" name = \"SeasonPlayed\" required></input> <br>" +
+        "</div>" + 
+        "<input   class=\"btn btn-primary\" type=\"Submit\"> </input>"  
+
+        document.getElementById("userInput2").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
     }
     else if (val == "Teams") {
         document.getElementById("userInput2").innerHTML =
-        "Team Name: <input name=\"nickname\" required> </input><br>" +
-        "Team Abbreviation: <input name=\"teamAbbreviation\" required></input><br>" +
-        "Year Founded: <input name=\"yearFounded\" required></input><br>" + 
-        "City: <input name=\"city\" required></input><br>" +
-        "<input type=\"Submit\"> </input>"
+        "<div class=\"form-group\">" + 
+        "Team Name <input class=\"form-control\" name=\"nickname\" required> </input><br>" +
+        "</div>" + 
+         "<div class=\"form-group\">" + 
+        "Team Abbreviation <input class=\"form-control\" name=\"teamAbbreviation\" required></input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Year Founded <input class=\"form-control\" name=\"yearFounded\" required></input><br>" + 
+        "</div>" + 
+         "<div class=\"form-group\">" + 
+        "City <input class=\"form-control\" name=\"city\" required></input><br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>"
+        document.getElementById("userInput1").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
     }
     else if(val == "Ranking"){
         document.getElementById("userInput3").innerHTML =
-        "Team: <input name=\"team\" required></input><br>" + 
-        "TeamID: <input name=\"teamID\" required> </input><br>" +
-        "Season: <input name=\"season\" required></input><br>" +
-        "Wins: <input name=\"wins\" required> </input><br>" +
-        "Losses: <input name=\"loses\" required></input><br>" +
-        "Home Record: <input name=\"homeRecord\" required></input><br>" + 
-        "Away Record: <input name=\"awayRecord\" required></input><br>" +
-        "<input type=\"Submit\"> </input>"
+        "<div class=\"form-group\">" + 
+        "Team: <input class=\"form-control\" name=\"team\" required></input><br>" + 
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "TeamID: <input class=\"form-control\" name=\"teamID\" required> </input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Season: <input class=\"form-control\" name=\"season\" required></input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Wins: <input class=\"form-control\" name=\"wins\" required> </input><br>" +
+        "</div>" + 
+        "<div class=\"form-group\">" + 
+        "Losses: <input class=\"form-control\" name=\"loses\" required></input><br>" +
+        "</div>" + 
+         "<div class=\"form-group\">" + 
+        "Home Record: <input class=\"form-control\" name=\"homeRecord\" required></input><br>" + 
+        "</div>" + 
+        "<div class=\"form-group\">" +
+        "Away Record: <input class=\"form-control\" name=\"awayRecord\" required></input><br>" +
+        "</div>" + 
+        "<input class=\"btn btn-primary\" type=\"Submit\"> </input>"
+        document.getElementById("userInput1").innerHTML = ""
+        document.getElementById("userInput2").innerHTML = ""
 
     }
 }
