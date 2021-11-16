@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path') 
 var playerData = require("../parser").playerData
+const alert = require('alert')
 
 router
     .route('/')
@@ -13,8 +14,15 @@ router
     .route('/playersQuery')
     .post((req, res) => {
         let numberOfPlayers = req.body.numberOfPlayers
-        var players = filterplayerData(playerData, numberOfPlayers)
-        res.send(makeTable(players))
+        if (req.body.numberOfPlayers > playerData.length) {
+            var alertMessage = "Number of players length is too big. Current length of player data is: " + playerData.length + " players."
+            alert(alertMessage)
+            res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
+        }
+        else {
+            var players = filterplayerData(playerData, numberOfPlayers)
+            res.send(makeTable(players))
+        }
     });
 
 function filterplayerData(playerData, value) { 

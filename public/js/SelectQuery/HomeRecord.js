@@ -13,8 +13,22 @@ router
     .route('/homeQuery')
     .post((req, res) => {
         let year = req.body.year
-        var homeRecord = PrintHomeTeamWins(rankingData, year, 82)
-        res.send(makeTable(homeRecord, year))
+        if (req.body.year == 2011) {
+            var homeRecord = PrintHomeTeamWins(rankingData, year, 66)
+            res.send(makeTable(homeRecord, year))
+        }
+        else if (req.body.year == 2019) {
+            var homeRecord = PrintHomeTeamWins(rankingData, year, 72)
+            res.send(makeTable(homeRecord, year))
+        }
+        else if (req.body.year == 2020) {
+            var homeRecord = PrintHomeTeamWins(rankingData, year, 72)
+            res.send(makeTable(homeRecord, year))
+        }
+        else {
+            var homeRecord = PrintHomeTeamWins(rankingData, year, 82)
+            res.send(makeTable(homeRecord, year))
+        }
     });
 
 function getHomeWinsPerTeam(rankingData, season, games) {
@@ -32,8 +46,19 @@ function getHomeWinsPerTeam(rankingData, season, games) {
 }
 
 function PrintHomeTeamWins(rankingData, season){
+    if (season == 2011) {
+        var seasonList = getHomeWinsPerTeam(rankingData, season, 66)
+    }
+    else if (season == 2019) {
+        var seasonList = getHomeWinsPerTeam(rankingData, season, 72)
+    }
+    else if (season == 2020) {
+        var seasonList = getHomeWinsPerTeam(rankingData, season, 72)
+    }
+    else {
+        var seasonList = getHomeWinsPerTeam(rankingData, season, 82)
+    }
     var res = []
-    var seasonList = getHomeWinsPerTeam(rankingData, season, 82)
     for (var i = 0; i < seasonList.length; i++) {
         res.push(seasonList[i].TEAM + " : " + seasonList[i].HOME_RECORD)
     }
