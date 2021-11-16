@@ -35,7 +35,6 @@ router
                         pointsCounter += parseFloat(gameData[i].PTS_home)
                         reboundsCounter += parseFloat(gameData[i].REB_home)
                         assistsCounter += parseFloat(gameData[i].AST_home)
-
                     }
                     else {
                         fieldGoalCounter += parseFloat(gameData[i].FG_PCT_away)
@@ -62,7 +61,6 @@ router
 function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
-        
                             "<div id=\"myDiv\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 var rankingData = require("../parser").rankingData
+const alert = require('alert')
 
 router
     .route('/')
@@ -13,8 +14,22 @@ router
     .route('/winsQuery')
     .post((req, res) => {
         let year = req.body.year
-        var winsPerTeam = PrintTeamWins(rankingData, year, 82)
-        res.send(makeTable(winsPerTeam, year))
+        if (req.body.year == 2011) {
+            var winsPerTeam = PrintTeamWins(rankingData, year, 66)
+            res.send(makeTable(winsPerTeam, year))
+        }
+        else if (req.body.year == 2019) {
+            var winsPerTeam = PrintTeamWins(rankingData, year, 72)
+            res.send(makeTable(winsPerTeam, year))
+        }
+        else if (req.body.year == 2020) {
+            var winsPerTeam = PrintTeamWins(rankingData, year, 72)
+            res.send(makeTable(winsPerTeam, year))
+        }
+        else{ 
+            var winsPerTeam = PrintTeamWins(rankingData, year, 82)
+            res.send(makeTable(winsPerTeam, year))
+        }
   });
 
 function getWinsPerTeam(rankingData, season, games) {
@@ -32,7 +47,18 @@ function getWinsPerTeam(rankingData, season, games) {
 }
 
 function PrintTeamWins(rankingData, season){
-    var seasonList = getWinsPerTeam(rankingData, season, 82)
+    if (season == 2011) {
+        var seasonList = getWinsPerTeam(rankingData, season, 66)
+    }
+    else if (season == 2019) {
+        var seasonList = getWinsPerTeam(rankingData, season, 72)
+    }
+    else if (season == 2020) {
+        var seasonList = getWinsPerTeam(rankingData, season, 72)
+    }
+    else {
+        var seasonList = getWinsPerTeam(rankingData, season, 82)
+    }
     var res = []
     for (var i = 0; i < seasonList.length; i++) {
         res.push(seasonList[i].TEAM + ": " +  seasonList[i].W)
