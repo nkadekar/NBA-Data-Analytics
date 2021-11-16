@@ -8,29 +8,15 @@ router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/wins.html'))
-  });
+    });
 
 router
     .route('/winsQuery')
     .post((req, res) => {
         let year = req.body.year
-        if (req.body.year == 2011) {
-            var winsPerTeam = PrintTeamWins(rankingData, year, 66)
-            res.send(makeTable(winsPerTeam, year))
-        }
-        else if (req.body.year == 2019) {
-            var winsPerTeam = PrintTeamWins(rankingData, year, 72)
-            res.send(makeTable(winsPerTeam, year))
-        }
-        else if (req.body.year == 2020) {
-            var winsPerTeam = PrintTeamWins(rankingData, year, 72)
-            res.send(makeTable(winsPerTeam, year))
-        }
-        else{ 
-            var winsPerTeam = PrintTeamWins(rankingData, year, 82)
-            res.send(makeTable(winsPerTeam, year))
-        }
-  });
+        var winsPerTeam = PrintTeamWins(rankingData, year)
+        res.send(makeTable(winsPerTeam, year))
+    });
 
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
@@ -51,7 +37,7 @@ function PrintTeamWins(rankingData, season){
         var seasonList = getWinsPerTeam(rankingData, season, 66)
     }
     else if (season == 2019) {
-        var seasonList = getWinsPerTeam(rankingData, season, 72)
+        var seasonList = getWinsPerTeam(rankingData, season, 64)
     }
     else if (season == 2020) {
         var seasonList = getWinsPerTeam(rankingData, season, 72)
