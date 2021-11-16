@@ -5,14 +5,57 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://localhost:3000/public/css/main.css">
+        <link rel="stylesheet" href="http://localhost:3000/public/css/bootstrap.min.css">
     </head>
 
     <body>
+                    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                        <a class="navbar-brand" href="#">NBA Analytics - XYZ Coders</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <form method="get" action="/back">
+                                        <button class="btn btn-dark" type="submit">Back</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+        <div class="container">
         <h1>Average Field Goal, Three Point, and Free Throw Percentage for the Winning Team in a Given Season</h1>
-        <h3>Enter a season: </h3>
+        <label>Enter a season: </label>
         <form method="post" action="/averageFGAnalytics/averageFGQuery" id="average-FG-analytics">
-            <input type="text" name="season">
-            <input type="Submit"> </input>
+                                    <select class="custom-select mr-sm-2" name="season">
+                                        <option selected>Select a Year</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                    </select>
+            <br>
+            <br>
+            <input class="btn btn-primary" type="Submit"> </input>
         </form>
+        </div>
     </body>
 </html>

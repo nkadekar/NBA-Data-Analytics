@@ -141,7 +141,7 @@ function CheckVal(){
         "Team Name <input class=\"form-control\" name=\"teamName\" > </input><br>" +
         "</div>" + 
         "<div class=\"form-group\">" + 
-        "Season: <input class=\"form-control\" name=\"season\"></input><br>" +
+        "Season <input class=\"form-control\" name=\"season\"></input><br>" +
         "</div>" + 
         "<div class=\"form-group\">" + 
         "Wins <input class=\"form-control\" name=\"wins\" > </input><br>" +

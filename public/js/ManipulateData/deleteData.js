@@ -69,7 +69,7 @@ function CheckVal(){
     }
     else if (val == "Ranking") {
         document.getElementById("userInput3").innerHTML = 
-        "Enter a team name and season to update from the ranking dataset <br>" +
+        "Enter a team name and season to update from the ranking dataset <br><br>" +
         "<div class=\"form-group\">" + 
         "Team Name: <input class=\"form-control\" name=\"TeamName\" > </input>" +
         "</div>" + 

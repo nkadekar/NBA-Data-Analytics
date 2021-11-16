@@ -3,6 +3,10 @@
 
 <head>
     <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://localhost:3000/public/css/main.css">
+    <link rel="stylesheet" href="http://localhost:3000/public/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +15,43 @@
 </head>
 
 <body>
+                        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                            <a class="navbar-brand" href="#">NBA Analytics - XYZ Coders</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item active">
+                                        <form method="get" action="/back">
+                                            <button class="btn btn-dark" type="submit">Back</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+    <div class="container">
     <h1>Points, Rebounds, Assists, Steals, and Blocks for a given player from 2004-2020</h1>
-    <h3>Enter a player's name: </h3>
-    <form method="post" action="/pointsPerPlayerAnalytics/pointsPerPlayerQuery" id="playerPoints">
-        <input type="text" name="playerName">
-        <input type="Submit"> </input>
+
+    <label>Enter a player's name </label>
+        <form method="post" action="/pointsPerPlayerAnalytics/pointsPerPlayerQuery" id="playerPoints">
+        <div class="form-row align-items-center">
+    
+            <div class="col-sm-3 my-1">
+                <div class="input-group">
+                    <input type="text" name="playerName" class="form-control" id="inlineFormInputGroupUsername"
+                        placeholder="Number of Players">
+                </div>
+            </div>
+            <div class="col-auto my-1">
+            </div>
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
     </form>
+    </div>
 </body>
 
 </html>
