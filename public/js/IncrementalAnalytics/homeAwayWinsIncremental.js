@@ -3,7 +3,7 @@ const router = express.Router()
 const path = require('path')
 // var cachedDataJSON = require("../../../app.js").cachedHomeAwayWinsJSON
 var rankingData = require("../parser").rankingData
-const alert = require('alert');
+
 var cachedDataJSON = [];
 
 router
@@ -15,11 +15,10 @@ router
 router
     .route('/homeAwayWinsIncrementalQuery')
     .post((req, res) => {
-        //0. Check if JSON file is empty 
-        if(Object.keys(cachedDataJSON).length != 0)
-        {
-            // console.log(cachedDataJSON[0])
-            return;
+        if(Object.keys(cachedDataJSON).length != 0){
+
+            //Read from data and deal with updates
+
         }
         else{
             //1. populate JSON
@@ -28,14 +27,15 @@ router
                 if (season == 2011){
                     games = 66
                 }
-                else if (season == 2019 || season == 2020){
+                else if (season == 2019){
+                    games = 63
+                }
+                else if (season == 2020){
                     games = 72
                 }
-                // console.log("here")
                 cachedDataJSON.push(getWinsPerTeam(rankingData, season, games))
-                // console.log(cachedDataJSON)
             }
-
+            
             //2. option to change
 
             //3. compare times
@@ -51,7 +51,7 @@ function getWinsPerTeam(rankingData, season, games) {
                 visited.push(rankingData[i].TEAM_ID)
                 var homeRec = parseInt(rankingData[i].HOME_RECORD.substr(0, rankingData[i].HOME_RECORD.indexOf('-')))
                 var awayRec = parseInt(rankingData[i].ROAD_RECORD.substr(0, rankingData[i].ROAD_RECORD.indexOf('-')))
-                arr.push(createJSON(rankingData[i].TEAM, rankingData[i].SEASON_ID.substring(1), homeRec, awayRec))
+                arr.push(createJSON(rankingData[i].TEAM, parseInt(rankingData[i].SEASON_ID.substring(1)), homeRec, awayRec))
             }
         } 
     }
@@ -59,7 +59,7 @@ function getWinsPerTeam(rankingData, season, games) {
 }
 
 function createJSON(teamName, season, homeWins, awayWins){
-    return {"TEAM NAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
+    return {"TEAMNAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
 }
     
 module.exports = router
