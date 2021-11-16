@@ -16,6 +16,8 @@ const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
 
+// var cachedHomeAwayWinsJSON = {"name": "Arya"};
+
 
 app
 	.route('/public/css/main.css')
@@ -162,6 +164,9 @@ app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
 const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
 
+const MostHomeAndAwayWinsAnalyticsIncremental = require("./public/js/IncrementalAnalytics/homeAwayWinsIncremental")
+app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental)
+
 app
 	.route('/saveButton')
 	. get((req, res) => {
@@ -171,3 +176,5 @@ app
 app.listen(3000, () => {
 	console.log(`Example app listening on port ${port}!`)
 });
+
+// module.exports = {cachedHomeAwayWinsJSON}

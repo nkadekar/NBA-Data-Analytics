@@ -58,7 +58,7 @@
 
     <div class="container">
             <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <h2>Select Query</h2>
             <p>Player list: Testing </p>
             <form method="get" action="/players">
@@ -78,7 +78,7 @@
             </form>
           </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <h2>Manipulate Data</h2>
                         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
                             condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
@@ -94,7 +94,7 @@
                     </form>
                     </div>
                 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <h2>Compute Analytics</h2>
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
                         condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
@@ -112,9 +112,7 @@
                         <button class="btn btn-secondary" id="average-FG-analytics" type="submit">Head to Head Record Between Two Teams</button>
                     </form>
                     <form method="get" action="/FTandThreePointerAnalytics">
-                        <button class="btn btn-secondary" id="FT-and-Threepointer-analytics" type="submit">Average Free Throw Percentage and Three Point Percentage
-                            for the
-                            Home team vs the Away team</button>
+                        <button class="btn btn-secondary" id="FT-and-Threepointer-analytics" type="submit">Average Home vs Away stats</button>
                     </form>
                     <form method="get" action="/MostHomeAndAwayWinsAnalytics">
                         <button class="btn btn-secondary"  id="FT-and-Threepointer-analytics" type="submit">
@@ -124,6 +122,21 @@
                      
                 </div>
 
+                <div class="col-md-5">
+                    <h2>Incremental Analytics</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                        condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
+                        sed odio dui. </p>
+                    <form method="get" action="/pointsPerPlayerAnalytics">
+                        <button class="btn btn-secondary" id="most-wins-analytics" type="submit">Highest Win ratio for 2004-2020</button>
+                    </form>
+                    <form method="get" action="/homeAwayWinsIncremental">
+                        <button class="btn btn-secondary"  id="FT-and-Threepointer-analytics" type="submit">
+                            Team with the Most Home Games and Away Games Wins
+                        </button>
+                    </form>
+                     
+                </div>
 
           </div>
           </div>
