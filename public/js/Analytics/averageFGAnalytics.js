@@ -63,7 +63,7 @@ function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
         
-                                "<div id=\"myDiv\">" + "</div>" +
+                            "<div id=\"myDiv\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
@@ -73,28 +73,20 @@ function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
                             "}\n" +
                             "];\n" +
                             "Plotly.newPlot('myDiv', data);\n" +
-                            "</script>" 
+                            "</script>" + 
+                            "<div id=\"myDiv2\">" + "</div>" +
+                            "<script>" + 
+                            "var data = [\n" + 
+                            "{\n" +
+                            " x: [" +  "\"" + "Avg Points Per Game" + "\"" + "," + "\"" + "Avg Rebounds Per Game" + "\"" + "," + "\"" + "Avg Assists Per Game" + "\"" + "],\n" +
+                            " y: [" + avgPTS + "," + avgREB + "," + avgAST + "],\n" +
+                            " type: \'bar\'\n" +
+                            "}\n" +
+                            "];\n" +
+                            "Plotly.newPlot('myDiv2', data);\n" +
+                            "</script>"  
 
     return sendData
 }
-
-//Add another Chart for Pts, reb, ast
-
-// function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
-//     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
-//                             "<div id=\"myDiv\">" + "</div>" +
-//                             "<script>" + 
-//                             "var data = [\n" + 
-//                             "{\n" +
-//                             " x: [" +  "\"" + "Avg Field Goal Percentage" + "\"" + "," + "\"" + "Avg 3PT Percentage" + "\"" + "," + "\"" + "Avg Free Throw Percentage" + "\"" + "," + "\"" + "Avg Points Per Game" + "\"" + "," + "\"" + "Avg Rebounds Per Game" + "\"" + "," + "\"" + "Avg Assists Per Game" + "\"" + "],\n" +
-//                             " y: [" + avgFG + "," + avg3PT + "," + avgFT +  "," + avgPTS + "," + avgREB + "," + avgAST + "],\n" +
-//                             " type: \'bar\'\n" +
-//                             "}\n" +
-//                             "];\n" +
-//                             "Plotly.newPlot('myDiv', data);\n" +
-//                             "</script>" 
-
-//     return sendData
-// }
 
 module.exports = router
