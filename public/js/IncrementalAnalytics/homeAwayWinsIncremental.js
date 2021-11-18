@@ -18,6 +18,10 @@ router
         if(Object.keys(cachedDataJSON).length != 0){
 
             //Read from data and deal with updates
+            
+            //2. option to change
+
+            //3. compare times
 
         }
         else{
@@ -35,10 +39,6 @@ router
                 }
                 cachedDataJSON.push(getWinsPerTeam(rankingData, season, games))
             }
-            
-            //2. option to change
-
-            //3. compare times
         }
     });
 

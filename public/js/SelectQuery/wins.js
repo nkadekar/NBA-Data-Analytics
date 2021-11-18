@@ -37,7 +37,7 @@ function PrintTeamWins(rankingData, season){
         var seasonList = getWinsPerTeam(rankingData, season, 66)
     }
     else if (season == 2019) {
-        var seasonList = getWinsPerTeam(rankingData, season, 64)
+        var seasonList = getWinsPerTeam(rankingData, season, 63)
     }
     else if (season == 2020) {
         var seasonList = getWinsPerTeam(rankingData, season, 72)
