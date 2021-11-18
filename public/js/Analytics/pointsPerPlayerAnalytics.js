@@ -82,7 +82,7 @@ function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSt
                             "<h4 style=\"position:relative; left:90px; top:20px;\">Steals: " + totalSteals  +  "</h4>" + 
                             "<h4 style=\"position:relative; left:90px; top:20px;\">Blocks: " + totalBlocks  +  "</h>" + 
                             "</div>" + 
-                             "<div style=\"position:relative; top:10px;\" id=\"myDiv\">" + "</div>" +
+                             "<div style=\"position:relative; top:10px;\" id=\"myPlayer\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
@@ -91,7 +91,7 @@ function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSt
                             " type: \'bar\'\n" +
                             "}\n" +
                             "];\n" +
-                            "Plotly.newPlot('myDiv', data);\n" +
+                            "Plotly.newPlot('myPlayer', data);\n" +
                             "</script>" + 
                             "<form method=\"get\" action=\"/back\">" +
                             "<button style=\"position:relative; left:90px; top:2px;\" class=\"btn btn-primary\" type=\"submit\">Back</button>" +
