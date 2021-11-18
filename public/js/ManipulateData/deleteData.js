@@ -27,7 +27,7 @@ router
         const teamName = req.body.TeamName
         const index = teamData.findIndex(x => x.NICKNAME === teamName)
         if (index !== undefined) teamData.splice(index, 1);
-        alert('Successfully added player')
+        alert('Successfully deleted a team')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
 });
 
@@ -35,6 +35,8 @@ router
     .route('/deleteRankingQuery')
     .post((req, res) => {
         const rankingData = require('../parser').rankingData
+        var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
+        var cachedDataJSON2 = require("../IncrementalAnalytics/totalRecordIncremental").cachedtotalWinsJSON
         const teamName = req.body.TeamName
         const season = req.body.Season
         for(var i = 0; i < rankingData.length; i++){
@@ -42,7 +44,25 @@ router
                 rankingData.splice(i, 1)
             }
         }
-        alert('Successfully added player')
+        if(Object.keys(cachedDataJSON).length != 0) {
+            // look for it 
+            // if found --> delete
+            // if not --> skip
+            // console.log(cachedDataJSON[season - 2004][teamName])
+            if(cachedDataJSON[season][teamName] != undefined)
+                cachedDataJSON[season - 2004].splice(teamName, 1)
+
+        }
+        if(Object.keys(cachedDataJSON2).length != 0) {
+            // look for it 
+            // if found --> delete
+            // if not --> skip
+            // console.log(cachedDataJSON2[season - 2004][teamName])
+            if(cachedDataJSON2[season][teamName] != undefined)
+                cachedDataJSON2[season - 2004].splice(teamName, 1)
+
+        }
+        alert('Successfully deleted a team')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 

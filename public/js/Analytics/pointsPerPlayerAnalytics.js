@@ -55,8 +55,34 @@ router
 function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
-     
-                             "<div id=\"myDiv\">" + "</div>" +
+                            "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" +
+                            "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">" +
+                            "<link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/main.css\">" +
+                            "<link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/bootstrap.min.css\"></link>" +
+                            "<body>" +
+                            "<nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">" +
+                            "<a class=\"navbar-brand\" href=\"#\">NBA Analytics - XYZ Coders</a>" +
+                            "<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\"" +
+                            "aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">" +
+                            "<span class=\"navbar-toggler-icon\"></span>" +
+                            "</button>" +
+                            "<div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">" +
+                                "<ul class=\"navbar-nav mr-auto\">" +
+                                    "<li class=\"nav-item active\">" +
+                                    "</li>" +
+                                "</ul>" +
+                            "</div>" +
+                        "</nav>" + 
+                            "<div class=\"container\">" +
+                            "<div>" +
+                            "<h1 style=\"position:relative; left:90px; top:20px;\">" + playerName + "'\s stats"  + "</h1>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">Points: " + totalPoints +  "</h4>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">Rebounds: " + totalRebounds  +  "</h4>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">Assists: " + totalAssists  +  "</h4>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">Steals: " + totalSteals  +  "</h4>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">Blocks: " + totalBlocks  +  "</h>" + 
+                            "</div>" + 
+                             "<div style=\"position:relative; top:10px;\" id=\"myPlayer\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
@@ -65,8 +91,13 @@ function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSt
                             " type: \'bar\'\n" +
                             "}\n" +
                             "];\n" +
-                            "Plotly.newPlot('myDiv', data);\n" +
-                            "</script>" 
+                            "Plotly.newPlot('myPlayer', data);\n" +
+                            "</script>" + 
+                            "<form method=\"get\" action=\"/back\">" +
+                            "<button style=\"position:relative; left:90px; top:2px;\" class=\"btn btn-primary\" type=\"submit\">Back</button>" +
+                             "</form>" +
+                            "</div>" +
+                            "</body>"
 
     return sendData
 }

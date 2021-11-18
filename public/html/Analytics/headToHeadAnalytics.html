@@ -33,13 +33,90 @@
     <h1> Head To Head Record Between Two Teams in a Given Season</h1>
     <form method="post" action="/headToHeadAnalytics/headToHeadQuery" id="headTohead">
         <div class="form-group">
-            Enter a season <input class="form-control" name="season"> </input>
+                                                <select class="custom-select mr-sm-2" name="season">
+                                                    <option selected>Select a Year</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2005">2005</option>
+                                                    <option value="2006">2006</option>
+                                                    <option value="2007">2007</option>
+                                                    <option value="2008">2008</option>
+                                                    <option value="2009">2009</option>
+                                                    <option value="2010">2010</option>
+                                                    <option value="2011">2011</option>
+                                                    <option value="2012">2012</option>
+                                                    <option value="2013">2013</option>
+                                                    <option value="2014">2014</option>
+                                                    <option value="2015">2015</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2020">2020</option>
+                                                </select>
         </div>
         <div class="form-group">
-            Enter the first team <input class="form-control" name="team1"> </input>
+            <select class="custom-select mr-sm-2" name="team1">
+                <option selected>Select the first team</option>
+                <option value="Hawks">Atlanta Hawks</option>
+                <option value="Celtics">Boston Celtics</option>
+                <option value="Nets">Brooklyn Nets</option>
+                <option value="Hornets">Charlotte Hornets</option>
+                <option value="Bulls">Chicago Bulls</option>
+                <option value="Mavericks">Dallas Mavericks</option>
+                <option value="Nuggets">Denver Nuggets</option>
+                <option value="Pistons">Detroit Pistons</option>
+                <option value="Warrios">Golden State Warriors</option>
+                <option value="Rockets">Houston Rockets</option>
+                <option value="Pacers">Indiana Pacers</option>
+                <option value="Clippers">Los Angeles Clippers</option>             
+                <option value="Lakers">Los Angeles Lakers</option>
+                <option value="Grizzlies">Memphis Grizzlies</option>
+                <option value="Heat">Miami Heat</option>
+                <option value="Bucks">Milwaukee Bucks</option>
+                <option value="Timberwolves">Minnesota Timberwolves</option>
+                <option value="Pelicans">New Orleans Pelicans</option>
+                <option value="Thunder">Oklahoma City Thunder</option>
+                <option value="Magic">Orlando Magic</option>
+                <option value="76ers">Philadelphia 76ers</option>
+                <option value="Suns">Phoenix Suns</option>
+                <option value="Trail Blazers">Portland Trail Blazers</option>
+                <option value="Spurs">San Antonio Spurs</option>
+                <option value="Raptors">Toronto Raptors</option>
+                <option value="Jazz">Utah Jazz</option>
+                <option value="Wizards">Washington Wizards</option>
+            </select>
         </div>
         <div class="form-group">
-            Enter the second team <input class="form-control" name="team2"> </input>
+                        <select class="custom-select mr-sm-2" name="team2">
+                            <option selected>Select the first team</option>
+                            <option value="Hawks">Atlanta Hawks</option>
+                            <option value="Celtics">Boston Celtics</option>
+                            <option value="Nets">Brooklyn Nets</option>
+                            <option value="Hornets">Charlotte Hornets</option>
+                            <option value="Bulls">Chicago Bulls</option>
+                            <option value="Mavericks">Dallas Mavericks</option>
+                            <option value="Nuggets">Denver Nuggets</option>
+                            <option value="Pistons">Detroit Pistons</option>
+                            <option value="Warrios">Golden State Warriors</option>
+                            <option value="Rockets">Houston Rockets</option>
+                            <option value="Pacers">Indiana Pacers</option>
+                            <option value="Clippers">Los Angeles Clippers</option>
+                            <option value="Lakers">Los Angeles Lakers</option>
+                            <option value="Grizzlies">Memphis Grizzlies</option>
+                            <option value="Heat">Miami Heat</option>
+                            <option value="Bucks">Milwaukee Bucks</option>
+                            <option value="Timberwolves">Minnesota Timberwolves</option>
+                            <option value="Pelicans">New Orleans Pelicans</option>
+                            <option value="Thunder">Oklahoma City Thunder</option>
+                            <option value="Magic">Orlando Magic</option>
+                            <option value="76ers">Philadelphia 76ers</option>
+                            <option value="Suns">Phoenix Suns</option>
+                            <option value="Trail Blazers">Portland Trail Blazers</option>
+                            <option value="Spurs">San Antonio Spurs</option>
+                            <option value="Raptors">Toronto Raptors</option>
+                            <option value="Jazz">Utah Jazz</option>
+                            <option value="Wizards">Washington Wizards</option>
+                        </select>
         </div>
         <input  class="btn btn-primary" type="submit">
     </form>
