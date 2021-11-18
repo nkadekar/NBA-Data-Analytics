@@ -4,6 +4,8 @@ const path = require('path');
 const { teamsData } = require('../parser');
 const alert = require('alert')
 
+// var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
+
 router
     .route('/')
     .get((req, res) => {
@@ -51,7 +53,7 @@ router
             teamData[index].YEARFOUNDED = yearFounded
             teamData[index].CITY = city
         }
-        alert('Successfully added player')
+        alert('Successfully added team')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
@@ -59,13 +61,14 @@ router
     .route('/updateRankingQuery')
     .post((req, res) => {
         var rankingData = require("../parser").rankingData
+        var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
         const teamName = req.body.teamName
         const season = req.body.season
         const wins = req.body.wins
         const loses = req.body.loses 
         const homeRecord = req.body.homeRecord
         const awayRecord = req.body.awayRecord
-        const index = rankingData.findIndex(x => (x.TEAM === teamName && x.SEASON_ID === season));
+        var index = rankingData.findIndex(x => (x.TEAM === teamName && x.SEASON_ID === season));
         if (index !== undefined) {
         rankingData.splice(index, 1);
         var rankingJSON = 
@@ -83,10 +86,23 @@ router
                 "G": '82',
                 "W": wins,
                 "L": loses
-            } 
+            }
             rankingData.push(rankingJSON)
         }
-        alert('Successfully added player')
+        if(cachedDataJSON.length != 0) {
+            var index = season - 2004
+            for(var idx = 0; idx < cachedDataJSON[index].length; idx++) {
+                if (teamName == cachedDataJSON[index][idx].TEAMNAME) {
+                    var homeWins = parseInt(homeRecord.substr(0, homeRecord.indexOf('-')))
+                    var awayWins = parseInt(awayRecord.substr(0, awayRecord.indexOf('-')))
+                    cachedDataJSON[index][idx].HOMEWINS = homeWins
+                    cachedDataJSON[index][idx].AWAYWINS = awayWins
+                }
+            }
+        }
+        alert('Successfully added ranking')
+        console.log(cachedDataJSON)
+        // check if cached data is empty
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 

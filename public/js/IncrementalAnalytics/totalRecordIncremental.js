@@ -3,8 +3,6 @@ const router = express.Router()
 const path = require('path')
 var rankingData = require("../parser").rankingData
 
-var cachedDataJSON = []
-
 router
     .route('/')
     .get((req, res) => {
@@ -14,8 +12,7 @@ router
 router
     .route('/homeAwayWinsIncrementalQuery')
     .post((req, res) => {
-        console.time('Incremental timer')
-        if(cachedDataJSON.length == 0) {
+        if(cachedRecordDataJSON.length == 0) {
             //1. populate JSON
             for (var season = 2004; season <= 2020; season++){
                 var games = 82
@@ -28,7 +25,11 @@ router
                 else if (season == 2020){
                     games = 72
                 }
-                cachedDataJSON.push(getWinsPerTeam(rankingData, season, games))
+                cachedRecordDataJSON.push(getTotalRecordPerTeam(rankingData, season, games))
+            }
+            for (var i = 0; i < cachedRecordDataJSON.length; i++) {
+                
+
             }
         }
         // Reading and answering the query
@@ -51,34 +52,36 @@ router
         homeTeam = cachedDataJSON[index][maxHomeIndex].TEAMNAME
         awayTeam = cachedDataJSON[index][maxAwayIndex].TEAMNAME
         res.send(makeGraph(maxHome, homeTeam, maxAway, awayTeam))
-        console.timeEnd('Incremental timer')
+        console.log(cachedDataJSON)
     });
 
-function getWinsPerTeam(rankingData, season, games) {
+function getTotalRecordPerTeam(rankingData, season, games) {
     var visited = []
-    var arr = [];
-    for (var i = 0; i < rankingData.length; i++){
-        if((rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == games)){
-            if(visited.indexOf(rankingData[i].TEAM_ID) == -1){
-                visited.push(rankingData[i].TEAM_ID)
-                var homeRec = parseInt(rankingData[i].HOME_RECORD.substr(0, rankingData[i].HOME_RECORD.indexOf('-')))
-                var awayRec = parseInt(rankingData[i].ROAD_RECORD.substr(0, rankingData[i].ROAD_RECORD.indexOf('-')))
-                arr.push(createJSON(rankingData[i].TEAM, parseInt(rankingData[i].SEASON_ID.substring(1)), homeRec, awayRec))
+    var winsTotal = 0
+    var lossesTotal = 0
+    var arr = []
+        for (var i = 0; i < rankingData.length; i++){
+            if((rankingData[i].SEASON_ID.substring(1) == season) && (rankingData[i].G == games)){
+                if(visited.indexOf(rankingData[i].TEAM_ID) == -1){
+                    visited.push(rankingData[i].TEAM_ID)
+                    winsTotal = parseInt(rankingData[i].W)
+                    lossesTotal = parseInt(rankingData[i].L)
+                    arr.push(createJSON(rankingData[i].TEAM, parseInt(rankingData[i].SEASON_ID.substring(1)), winsTotal, lossesTotal))
+                }
             }
-        } 
-    }
+        }
     return arr
 }
 
-function createJSON(teamName, season, homeWins, awayWins){
-    return {"TEAMNAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
+function createJSON(teamName, wins, losses){
+    return {"TEAMNAME": teamName, "WINS": wins,  "LOSSES": losses}
 }
 
 function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
         
-                                "<div id=\"myDiv\">" + "</div>" +
+                            "<div id=\"myDiv\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
@@ -92,5 +95,6 @@ function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
 
     return sendData
 }
-    
-module.exports = {router, cachedDataJSON}
+
+
+module.exports = router

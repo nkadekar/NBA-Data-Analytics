@@ -16,7 +16,7 @@ const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
 
-// var cachedHomeAwayWinsJSON = {"name": "Arya"};
+// var cachedHomeAwayWinsJSON = [];
 
 
 app
@@ -165,8 +165,11 @@ const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndA
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
 
 const MostHomeAndAwayWinsAnalyticsIncremental = require("./public/js/IncrementalAnalytics/homeAwayWinsIncremental")
-app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental)
+app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental.router)
 
+
+const totalRecordIncremental = require("./public/js/IncrementalAnalytics/totalRecordIncremental")
+app.use("/totalRecordIncremental", totalRecordIncremental.router)
 app
 	.route('/saveButton')
 	. get((req, res) => {

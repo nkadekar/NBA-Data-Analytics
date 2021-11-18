@@ -12,12 +12,13 @@ router
 
 router
     .route('/mostHomeAndAwayWinsQuery')
-    .post((req, res) => {
+    .post((req, res) => { 
+        console.time("Regular home away query")
         var maxHome = maxAway = 0
         var maxHomeTeam, maxAwayTeam;
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '.../../html/Analytics/mostHomeAndAwayWinsAnlytics.htmll'))
+            res.sendFile(path.join(__dirname , '.../../html/Analytics/mostHomeAndAwayWinsAnlytics.html'))
         }
         else{
             for (var i = 0; i < rankingData.length; ++i){
@@ -38,6 +39,7 @@ router
         var outputString = "The team with the most home wins is " + maxHomeTeam + " with " + maxHome + " wins.<br> The team with the most away wins is " + maxAwayTeam + " with " + maxAway + " wins."
         // res.send(outputString)
         res.send(makeGraph(maxHome, maxHomeTeam, maxAway, maxAwayTeam))
+        console.timeEnd("Regular home away query")
     });
 
 function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
