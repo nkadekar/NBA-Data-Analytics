@@ -73,6 +73,7 @@ router
         const wins = req.body.wins
         const loses = req.body.loses
         var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
+        var cachedDataJSON2 = require("../IncrementalAnalytics/totalRecordIncremental").cachedtotalWinsJSON
         var rankingJSON = 
             {
                 "TEAM": team,  //Phoenix
@@ -90,13 +91,27 @@ router
                 "L": loses
             } 
         ranking.push(rankingJSON)
-        if(cachedDataJSON.length != 0) {
+        if(Object.keys(cachedDataJSON).length != 0) {
             var index = season - 2004
+            const home_wins = homeRecord.substr(0, homeRecord.indexOf('-'))
+            const away_wins = awayRecord.substr(0, awayRecord.indexOf('-'))
             var newCachedEntry = {
-                "TEAM": team,
+                "TEAMNAME": team,
                 "SEASON": season,
+                "HOMEWINS":home_wins,
+                "AWAYWINS": away_wins
             }
-            cachedDataJSON[index].push()
+            if(cachedDataJSON[index][item] != undefined)
+                cachedDataJSON[index][team].push(newCachedEntry)
+            
+        }
+        if(Object.keys(cachedDataJSON2).length != 0) {
+            var newCachedEntry = {
+                "TEAMNAME": team,
+                "WINS": wins
+            }
+            if(cachedDataJSON2 != undefined)
+                cachedDataJSON2.push(newCachedEntry)
         }
         alert("Ranking successfully inserted.")
         res.sendFile(path.join(__dirname, '../../html/index.html'))

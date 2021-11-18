@@ -167,9 +167,9 @@ app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
 const MostHomeAndAwayWinsAnalyticsIncremental = require("./public/js/IncrementalAnalytics/homeAwayWinsIncremental")
 app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental.router)
 
-
 const totalRecordIncremental = require("./public/js/IncrementalAnalytics/totalRecordIncremental")
 app.use("/totalRecordIncremental", totalRecordIncremental.router)
+
 app
 	.route('/saveButton')
 	. get((req, res) => {

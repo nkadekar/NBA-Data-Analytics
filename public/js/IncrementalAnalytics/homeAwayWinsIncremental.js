@@ -14,7 +14,7 @@ router
 router
     .route('/homeAwayWinsIncrementalQuery')
     .post((req, res) => {
-        console.time('Incremental timer')
+        console.time('Incremental timer for home away wins')
         if(cachedDataJSON.length == 0) {
             //1. populate JSON
             for (var season = 2004; season <= 2020; season++){
@@ -51,7 +51,7 @@ router
         homeTeam = cachedDataJSON[index][maxHomeIndex].TEAMNAME
         awayTeam = cachedDataJSON[index][maxAwayIndex].TEAMNAME
         res.send(makeGraph(maxHome, homeTeam, maxAway, awayTeam))
-        console.timeEnd('Incremental timer')
+        console.timeEnd('Incremental timer for home away wins')
     });
 
 function getWinsPerTeam(rankingData, season, games) {
