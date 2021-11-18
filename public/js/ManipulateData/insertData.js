@@ -101,7 +101,7 @@ router
                 "HOMEWINS":home_wins,
                 "AWAYWINS": away_wins
             }
-            if(cachedDataJSON[index][item] != undefined)
+            if(cachedDataJSON[index][team] != undefined)
                 cachedDataJSON[index][team].push(newCachedEntry)
             
         }
