@@ -81,7 +81,7 @@ function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, differe
                         "</nav>" + 
                             "<div class=\"container\">" +
                             "<h1 style=\"position:relative; left:90px; top:20px;\">" + "testing" + "'\s stats"  + "</h1>" + 
-                            "<div style=\"position:relative; top:10px;\"  id=\"myDiv\">" + "</div>" +
+                            "<div style=\"position:relative; top:10px;\"  id=\"myDiff\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 
                             "{\n" +
@@ -90,7 +90,7 @@ function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, differe
                             " type: \'bar\'\n" +
                             "}\n" +
                             "];\n" +
-                            "Plotly.newPlot('myDiv', data);\n" +
+                            "Plotly.newPlot('myDiff', data);\n" +
                             "</script>" +
                             "<form method=\"get\" action=\"/back\">" +
                             "<button style=\"position:relative; left:90px; top:2px;\" class=\"btn btn-primary\" type=\"submit\">Back</button>" +
