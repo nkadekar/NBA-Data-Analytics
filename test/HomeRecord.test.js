@@ -17,6 +17,6 @@ test("testing getHomeWinsPerTeam() for the 2019 season", () =>{
 })
 
 // special nba season due to COVID  (72 games)
-test("testing getHomeWinsPerTeam() for the 2019 season", () =>{
+test("testing getHomeWinsPerTeam() for the 2020 season", () =>{
     expect(getHomeWinsPerTeam(rankingData, 2020, 72).length).toBe(30)
 })
