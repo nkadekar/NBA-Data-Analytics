@@ -16,7 +16,7 @@
     "plotly.js-dist": "^2.6.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders/issues"
   },
-  "homepage": "https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders#readme"
+  "homepage": "https://github.com/ucr-cs180-fall21/cs180project-022-xyzcoders#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
 }
