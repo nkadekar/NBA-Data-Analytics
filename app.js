@@ -135,7 +135,7 @@ const teamWins = require('./public/js/SelectQuery/wins')
 app.use('/wins', teamWins)
 
 const home = require('./public/js/SelectQuery/homeRecord')
-app.use('/home', home)
+app.use('/home', home.router)
 
 const deleteData = require('./public/js/ManipulateData/deleteData')
 app.use('/deleteButton', deleteData)

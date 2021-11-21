@@ -75,4 +75,4 @@ function makeTable(myArray, year) {
     return result;
 }
 
-module.exports = router
+module.exports = {router, getHomeWinsPerTeam}
