@@ -126,7 +126,7 @@ app
 	});
 
 const players = require('./public/js/SelectQuery/players')
-app.use('/players', players)
+app.use('/players', players.router)
 
 const teams = require('./public/js/SelectQuery/teams')
 app.use('/teams', teams)

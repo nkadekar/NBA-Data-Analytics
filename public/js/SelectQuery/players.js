@@ -14,11 +14,10 @@ router
     .route('/playersQuery')
     .post((req, res) => {
         let numberOfPlayers = req.body.numberOfPlayers
-        if (req.body.numberOfPlayers > playerData.length) {
-            var alertMessage = "Number of players length is too big. Current length of player data is: " + playerData.length + " players."
-            alert(alertMessage)
-            res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
+        if(checkLengthOfPlayerData(playerData, req.body.numberOfPlayers)){
+                res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
         }
+
         else {
             var players = filterplayerData(playerData, numberOfPlayers)
             res.send(makeTable(players))
@@ -31,6 +30,15 @@ function filterplayerData(playerData, value) {
         res.push(playerData[i].PLAYER_NAME)
     }
     return res
+}
+
+function checkLengthOfPlayerData(playerData, value){
+    if(value > playerData.length) {
+        var alertMessage = "Number of players length is too big. Current length of player data is: " + playerData.length + " players."
+        alert(alertMessage)
+        return true  
+    }
+    return false
 }
 
 function makeTable(myArray) {
@@ -55,4 +63,4 @@ function makeTable(myArray) {
     return result;
 }
 
-module.exports = router;
+module.exports = {router, filterplayerData, checkLengthOfPlayerData};
