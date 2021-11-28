@@ -55,11 +55,11 @@ router
             var DifferenceString = "In the season " + req.body.season + ", " + DifferenceInPointsJSON.HomeTeam + " vs " 
             + DifferenceInPointsJSON.AwayTeam + " has the largest difference of " 
             + DifferenceInPointsJSON.Difference + " points."
-            res.send(makeGraph(DifferenceInPointsJSON.HomeTeam, DifferenceInPointsJSON.AwayTeam, homeTeamPts, awayTeamPts, DifferenceInPointsJSON.Difference))
+            res.send(makeGraph(DifferenceInPointsJSON.HomeTeam, DifferenceInPointsJSON.AwayTeam, homeTeamPts, awayTeamPts, DifferenceInPointsJSON.Difference, req.body.season))
         }
     });
 
-function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, difference){
+function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, difference, season){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
                             "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" +
@@ -80,7 +80,8 @@ function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, differe
                             "</div>" +
                         "</nav>" + 
                             "<div class=\"container\">" +
-                            "<h1 style=\"position:relative; left:90px; top:20px;\">" + "testing" + "'\s stats"  + "</h1>" + 
+                            "<h4 style=\"position:relative; left:90px; top:20px;\">" +  "The largest difference in points during the " + season + " is " + difference + " between " +
+                             homeTeamName  +  " and " + awayTeamName + "</h4>" + 
                             "<div style=\"position:relative; top:10px;\"  id=\"myDiff\">" + "</div>" +
                             "<script>" + 
                             "var data = [\n" + 

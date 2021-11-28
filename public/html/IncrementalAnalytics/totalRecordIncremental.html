@@ -6,15 +6,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="http://localhost:3000/public/css/main.css">
+            
+            <link rel="stylesheet" href="http://localhost:3000/public/css/bootstrap.min.css">
 </head>
 
 <body>
+                            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                                <a class="navbar-brand" href="#">NBA Analytics - XYZ Coders</a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>                      
+                               <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item active">
+                                            <form method="get" action="/back">
+                                                <button class="btn btn-dark" type="submit">Back</button>
+                                            </form>
+                                        </li>         
+                                    </ul>   
+                                </div>
+                            </nav>
+    <div class="container">
     <h1> Total wins and loses for a team through the 2004 to the 2020 season (Incremental)</h1>
     <form method="post" action="/totalRecordIncremental/totalRecordIncrementalQuery" id="mostHomseAway">
+        <div class="form-group"></div>
         <h3>Enter a team name: </h3>
-        <input type="text" name="teamName" required> </input>
-        <input type="submit">
+               <div class="form-group">
+            <select class="custom-select mr-sm-2" name="teamName">
+                <option selected>Select a team</option>
+                <option value="Atlanta">Atlanta Hawks</option>
+                <option value="Boston">Boston Celtics</option>
+                <option value="Brooklyn">Brooklyn Nets</option>
+                <option value="Charlotte">Charlotte Hornets</option>
+                <option value="Chicago">Chicago Bulls</option>
+                <option value="Mavericks">Dallas Mavericks</option>
+                <option value="Denver">Denver Nuggets</option>
+                <option value="Detroit">Detroit Pistons</option>
+                <option value="Golden State">Golden State Warriors</option>
+                <option value="Rockets">Houston Rockets</option>
+                <option value="Pacers">Indiana Pacers</option>
+                <option value="LA Clippers">Los Angeles Clippers</option>             
+                <option value="LA Lakers">Los Angeles Lakers</option>
+                <option value="Memphis">Memphis Grizzlies</option>
+                <option value="Miami">Miami Heat</option>
+                <option value="Milwaukee">Milwaukee Bucks</option>
+                <option value="Minnesota">Minnesota Timberwolves</option>
+                <option value="New Orlean">New Orleans Pelicans</option>
+                <option value="Oklahoma">Oklahoma City Thunder</option>
+                <option value="Orlando">Orlando Magic</option>
+                <option value="76ers">Philadelphia 76ers</option>
+                <option value="Phoenix">Phoenix Suns</option>
+                <option value="Portland">Portland Trail Blazers</option>
+                <option value="San Antonio">San Antonio Spurs</option>
+                <option value="Toronto">Toronto Raptors</option>
+                <option value="Utah">Utah Jazz</option>
+                <option value="Washington">Washington Wizards</option>
+            </select>
+        </div>
+        <input class="btn btn-primary" type="submit">
     </form>
+</div>
+
 </body>
 
 </html>
