@@ -18,6 +18,13 @@ router
         res.send(makeTable(winsPerTeam, year))
     });
 
+/**
+ * Retrieves rankings for the end of a specific season
+ * @param {Array[JSON Object]} rankingData
+ * @param {string} season
+ * @param {int} games
+ * @returns {Array[JSON Object]} arr: Rankings formatted in JSON
+ */
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
     var arr = [];
@@ -32,6 +39,12 @@ function getWinsPerTeam(rankingData, season, games) {
     return arr
 }
 
+/**
+ * Formats strings for output. Retrieves wins per team as well.
+ * @param {Array[JSON Object]} rankingData
+ * @param {string} season 
+ * @returns {Array[string]} res
+ */
 function PrintTeamWins(rankingData, season){
     if (season == 2011) {
         var seasonList = getWinsPerTeam(rankingData, season, 66)
@@ -52,15 +65,21 @@ function PrintTeamWins(rankingData, season){
     return res
 }
 
+/**
+ * Makes html table given data
+ * @param {Array[string]} myArray
+ * @param {string} conference
+ * @returns {HTML Table} result
+ */
 function makeTable(myArray, year) {
 
     var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
         "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"></link>"
-     result += "<table class=\"table\" border=1>"
-     result += "<thead class=\"thead-dark\">"
+    result += "<table class=\"table\" border=1>"
+    result += "<thead class=\"thead-dark\">"
 
-     result += "<th scope=\"col\">Team Name</th>"
-     result += "<th scope=\"col\">Number of Wins during the " + year + " Season" + "</th>"
+    result += "<th scope=\"col\">Team Name</th>"
+    result += "<th scope=\"col\">Number of Wins during the " + year + " Season" + "</th>"
     result += "</thead>"
     for(var i=0; i<myArray.length; i++) {
         result += "<tr>"
