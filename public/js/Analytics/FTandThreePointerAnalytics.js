@@ -41,6 +41,15 @@ router
         res.send(makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, req.body.season))
     });
 
+/**
+ * Creates html for graph visualization
+ * @param {int} avgHomeFreeThrow
+ * @param {int} avgAwayFreeThrow
+ * @param {int} avgHomeThreePoint
+ * @param {int} avgAwayThreePoint
+ * @param {int} season
+ * @returns {string} sendData
+ */
 function makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, season){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +

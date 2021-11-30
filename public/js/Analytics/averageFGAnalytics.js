@@ -58,6 +58,16 @@ router
         }
     });
 
+/**
+ * Creates html for graph visualization
+ * @param {int} avgFG
+ * @param {int} avg3PT
+ * @param {int} avgFT
+ * @param {int} avgPTS
+ * @param {int} avgREB
+ * @param {int} avgAST
+ * @returns {string} sendData
+ */
 function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +

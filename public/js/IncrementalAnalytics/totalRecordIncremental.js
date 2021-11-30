@@ -55,6 +55,13 @@ router
         console.timeEnd('Incremental timer for total record')
     });
 
+    /**
+ * Compiles home and away record per team
+ * @param {Array[JSON Object]} rankingData
+ * @param {string} season
+ * @param {int} games
+ * @returns {Array[JSON Object]} arr: JSON Objects with team, season, home record, away record
+ */
 function getRecordPerTeam(rankingData, season, games) {
     var visited = []
     var arr = [];
@@ -71,6 +78,11 @@ function getRecordPerTeam(rankingData, season, games) {
     return arr
 }
 
+/**
+ * Calculates total wins of a given team
+ * @param {string} teamName
+ * @returns {JSON Object} teamName, wins
+ */
 function calcWins(teamName){
     var winsTotal = 0
     for (var i = 0; i < DataJSON.length; i++){
@@ -83,14 +95,34 @@ function calcWins(teamName){
     return createJSON2(teamName, winsTotal)
 }
 
+/**
+ * Creates formatted JSON given inputs
+ * @param {string} teamName
+ * @param {string} season
+ * @param {string} homeWins
+ * @param {string} awayWins
+ * @returns {JSON Object}
+ */
 function createJSON(teamName, season, homeWins, awayWins){
     return {"TEAMNAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
 }
 
+/**
+ * Creates formatted JSON given inputs
+ * @param {string} teamName
+ * @param {int} totalWins
+ * @returns {JSON Object}
+ */
 function createJSON2(teamName, totalWins){
     return {"TEAMNAME": teamName, "WINS": totalWins}
 }
 
+/**
+ * Creates html for graph visualization
+ * @param {string} teamName
+ * @param {int} wins
+ * @returns {string} sendData
+ */
 function makeGraph(teamName, wins){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
@@ -128,6 +160,5 @@ function makeGraph(teamName, wins){
 
     return sendData
 }
-
 
 module.exports = {router, cachedtotalWinsJSON}

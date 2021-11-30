@@ -52,6 +52,16 @@ router
         }
     });
 
+/**
+ * Creates html for graph visualization
+ * @param {string} playerName
+ * @param {int} totalPoints
+ * @param {int} totalRebounds
+ * @param {int} totalAssists
+ * @param {int} totalSteals
+ * @param {int} totalBlocks
+ * @returns {string} sendData
+ */
 function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
