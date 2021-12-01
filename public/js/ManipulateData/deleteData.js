@@ -16,7 +16,7 @@ router
         const playerName = req.body.PlayerName
         const index = playerData.findIndex(x => x.PLAYER_NAME === playerName)
         if (index !== undefined) playerData.splice(index, 1);
-        alert('Successfully added player')
+        alert('Successfully deleted player')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 

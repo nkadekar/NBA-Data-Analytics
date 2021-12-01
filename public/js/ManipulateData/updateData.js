@@ -53,7 +53,7 @@ router
             teamData[index].YEARFOUNDED = yearFounded
             teamData[index].CITY = city
         }
-        alert('Successfully added team')
+        alert('Successfully updated team')
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
