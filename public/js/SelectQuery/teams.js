@@ -25,6 +25,11 @@ router
         }
     });
 
+/**
+ * Compiles all teams in the Western Conference
+ * @param {Array[JSON Object]} rankingData
+ * @returns {Array[string]} West
+ */
 function WesternConferenceArray(rankingData) { 
     var West = new Set()
     for (var i = 0; i < rankingData.length - 1; i++) {
@@ -35,6 +40,12 @@ function WesternConferenceArray(rankingData) {
     return West
 }
 
+/**
+ * Converts team ID to team nicknames for Western Conference
+ * @param {Array[JSON Object]} rankingData 
+ * @param {Array[JSON Object]} teamData 
+ * @returns {Array[string]} WestTeams
+ */
 function WesternConferencePrint(rankingData, teamData) { 
     var WestTeams = []
     var West = WesternConferenceArray(rankingData)
@@ -50,6 +61,11 @@ function WesternConferencePrint(rankingData, teamData) {
     return WestTeams
 }
 
+/**
+ * Compiles all teams in the Eastern Conference
+ * @param {Array[JSON Object]} rankingData
+ * @returns {Array[string]} East
+ */
 function EasternConferenceArray(rankingData) {
     var East = new Set()
     for (var i = 0; i < 20000; i++) {
@@ -60,6 +76,12 @@ function EasternConferenceArray(rankingData) {
     return East
 }
 
+/**
+ * Converts team ID to team nicknames for Eastern Conference
+ * @param {Array[JSON Object]} rankingData 
+ * @param {Array[JSON Object]} teamData 
+ * @returns {Array[string]} EastTeams
+ */
 function EasternConferencePrint(rankingData, teamData) {
     var EastTeam = []
     var East = EasternConferenceArray(rankingData)
@@ -75,13 +97,19 @@ function EasternConferencePrint(rankingData, teamData) {
     return EastTeam
 }
 
+/**
+ * Makes html table given data
+ * @param {Array[string]} myArray
+ * @param {string} conference
+ * @returns {HTML Table} result
+ */
 function makeTable(myArray, conference) {
     var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
     "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"></link>"
-     result += "<table class=\"table\" border=1>"
-     result += "<thead class=\"thead-dark\">"
+    result += "<table class=\"table\" border=1>"
+    result += "<thead class=\"thead-dark\">"
 
-     result += "<th scope=\"col\">" + conference + "</th>"
+    result += "<th scope=\"col\">" + conference + "</th>"
     result += "</thead>"
     for(var i=0; i<myArray.length; i++) {
         result += "<tr>"

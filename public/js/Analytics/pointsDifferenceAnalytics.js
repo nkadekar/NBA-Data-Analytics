@@ -59,6 +59,16 @@ router
         }
     });
 
+/**
+ * Creates html for graph visualization
+ * @param {string} homeTeamName
+ * @param {string} awayTeamName
+ * @param {int} homeTeamPts
+ * @param {int} awayTeamPts
+ * @param {int} difference
+ * @param {int} season
+ * @returns {string} sendData
+ */
 function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, difference, season){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +

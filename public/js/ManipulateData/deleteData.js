@@ -66,7 +66,9 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
-    
+/**
+ * Called on click to visualize correct form for "Delete" data manipulation
+ */
 function CheckVal(){
     var val = document.getElementById("deleteSelect").value
     if (val == "Players") {

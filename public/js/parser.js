@@ -1,9 +1,13 @@
 const fs = require("fs");
 
+/**
+ * Converts a given csv string into a JSON Object Array
+ * @param {string} csv csv file converted to a string
+ * @returns {Array[JSON Objects]} result
+ */
 function csvJSON(csv){
     var lines = csv.split("\n");
     var result = [];
-    var finalString = "[\n";
     var headers = lines[0].split(",");
   
     for(var i = 1; i < lines.length; i++){
@@ -17,6 +21,11 @@ function csvJSON(csv){
     return result
 }
 
+/**
+ * Converts array of JSON Objects to a csv string
+ * @param {Array[JSON Objects]} json
+ * @returns {string} csv
+ */
 function jsonCSV(json){
     const array = [Object.keys(json[0])].concat(json)
     return array.map(it => {

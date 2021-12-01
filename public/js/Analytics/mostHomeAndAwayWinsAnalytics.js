@@ -42,6 +42,14 @@ router
         console.timeEnd("Regular home away query")
     });
 
+/**
+ * Creates html for graph visualization
+ * @param {int} mostHomeWins
+ * @param {string} homeTeam
+ * @param {int} mostAwayWins
+ * @param {string} awayTeam
+ * @returns {string} sendData
+ */
 function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +

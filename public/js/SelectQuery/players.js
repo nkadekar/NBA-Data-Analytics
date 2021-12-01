@@ -24,6 +24,12 @@ router
         }
     });
 
+/**
+ * Gets a certain number of player names from playerData
+ * @param {Array[JSON Object]} playerData
+ * @param {string} value
+ * @returns {Array[string]} res
+ */
 function filterplayerData(playerData, value) { 
     let res = []
     for (var i = 0; i < value; i++) {
@@ -32,6 +38,12 @@ function filterplayerData(playerData, value) {
     return res
 }
 
+/**
+ * Verifies that the value passed in is less than the length of the playerData array
+ * @param {Array[JSON Object]} playerData
+ * @param {string} value
+ * @returns {boolean}
+ */
 function checkLengthOfPlayerData(playerData, value){
     if(value > playerData.length) {
         var alertMessage = "Number of players length is too big. Current length of player data is: " + playerData.length + " players."
@@ -41,14 +53,19 @@ function checkLengthOfPlayerData(playerData, value){
     return false
 }
 
+/**
+ * Makes html table given data
+ * @param {Array[string]} myArray
+ * @returns {HTML Table} result
+ */
 function makeTable(myArray) {
     var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
         "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"></link>"
-     result += "<table class=\"table\" border=1>"
-     result += "<thead class=\"thead-dark\">"
+    result += "<table class=\"table\" border=1>"
+    result += "<thead class=\"thead-dark\">"
 
-     result += "<th scope=\"col\">#</th>"
-     result += "<th scope=\"col\">Name</th>"
+    result += "<th scope=\"col\">#</th>"
+    result += "<th scope=\"col\">Name</th>"
     result += "</thead>"
     for(var i=0; i < myArray.length; i++) {
         result += "<tr>"

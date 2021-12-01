@@ -54,6 +54,13 @@ router
         console.timeEnd('Incremental timer for home away wins')
     });
 
+/**
+ * Compiles home and away record per team
+ * @param {Array[JSON Object]} rankingData
+ * @param {string} season
+ * @param {int} games
+ * @returns {Array[JSON Object]} arr: JSON Objects with team, season, home record, away record
+ */
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
     var arr = [];
@@ -70,10 +77,26 @@ function getWinsPerTeam(rankingData, season, games) {
     return arr
 }
 
+/**
+ * Creates formatted JSON given inputs
+ * @param {string} teamName
+ * @param {string} season
+ * @param {int} homeWins
+ * @param {int} awayWins
+ * @returns {JSON Object}
+ */
 function createJSON(teamName, season, homeWins, awayWins){
     return {"TEAMNAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
 }
 
+/**
+ * Creates html for graph visualization
+ * @param {int} mostHomeWins
+ * @param {string} homeTeam
+ * @param {int} mostAwayWins
+ * @param {string} awayTeam
+ * @returns {string} sendData
+ */
 function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
 
     var sendData = "<script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\"></script>" +
