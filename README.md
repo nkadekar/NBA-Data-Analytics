@@ -30,4 +30,4 @@ Authored by: Nikhil Kadekar, Edward Zhu, Arya Faramarzi, Jorge Peng, Aramis Masa
 1. Make sure the repository is cloned on your local machine from the steps above. 
 2. Through the file system, open up the folder "cs180project-022-xyzcoders."
 3. Once in the folder, open up the docs folder and click on the index.html file.
-4. A browser with the documentation for our code should open up and you can view the documentation for our code there.
+4. A browser with the documentation for the code should open up and you can view the documentation for the code there.
