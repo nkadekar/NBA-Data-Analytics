@@ -161,4 +161,4 @@ function makeGraph(teamName, wins){
     return sendData
 }
 
-module.exports = {router, cachedtotalWinsJSON}
+module.exports = {router, cachedtotalWinsJSON, getRecordPerTeam}
