@@ -10,9 +10,9 @@ const rankingDataBackupFolder = __dirname + "/../data/rankings"
 
 /**
  * Backs up old json data and writes new data to a new json file
- * @param {object} orig
- * @param {object} backup
- * @param {JSON object} newData
+ * @param {Object} orig
+ * @param {Object} backup
+ * @param {Object} newData
  */
 function backupAndPush(orig, backup, newData) {
     const jsonFile = require(orig)
@@ -33,8 +33,8 @@ function backupAndPush(orig, backup, newData) {
 
 /**
  * Backs up old json data and writes it to a backup file
- * @param {object} orig
- * @param {object} backup
+ * @param {Object} orig
+ * @param {Object} backup
  */
 function backup(orig, backup) {
     const jsonFile = require(orig)

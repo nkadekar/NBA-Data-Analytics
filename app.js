@@ -1,8 +1,21 @@
+/** Express router providing user related routes
+ * @module routers/users
+ * @requires express
+ */ 
+
 /**
  * express module
  * @const
  */
 const express = require('express');
+
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace usersRouter
+ */
+//router in all JS files
 
 const app = express();
 const port = 3000;

@@ -27,8 +27,8 @@ router
 
 /**
  * Compiles all teams in the Western Conference
- * @param {Array[JSON Object]} rankingData
- * @returns {Array[string]} West
+ * @param {Array.<Object>} rankingData
+ * @returns {Array.<string>} West
  */
 function WesternConferenceArray(rankingData) { 
     var West = new Set()
@@ -42,9 +42,9 @@ function WesternConferenceArray(rankingData) {
 
 /**
  * Converts team ID to team nicknames for Western Conference
- * @param {Array[JSON Object]} rankingData 
- * @param {Array[JSON Object]} teamData 
- * @returns {Array[string]} WestTeams
+ * @param {Array.<Object>} rankingData 
+ * @param {Array.<Object>} teamData 
+ * @returns {Array.<string>} WestTeams
  */
 function WesternConferencePrint(rankingData, teamData) { 
     var WestTeams = []
@@ -63,8 +63,8 @@ function WesternConferencePrint(rankingData, teamData) {
 
 /**
  * Compiles all teams in the Eastern Conference
- * @param {Array[JSON Object]} rankingData
- * @returns {Array[string]} East
+ * @param {Array.<Object>} rankingData
+ * @returns {Array.<string>} East
  */
 function EasternConferenceArray(rankingData) {
     var East = new Set()
@@ -78,9 +78,9 @@ function EasternConferenceArray(rankingData) {
 
 /**
  * Converts team ID to team nicknames for Eastern Conference
- * @param {Array[JSON Object]} rankingData 
- * @param {Array[JSON Object]} teamData 
- * @returns {Array[string]} EastTeams
+ * @param {Array.<Object>} rankingData 
+ * @param {Array.<Object>} teamData 
+ * @returns {Array.<string>} EastTeams
  */
 function EasternConferencePrint(rankingData, teamData) {
     var EastTeam = []
@@ -99,9 +99,9 @@ function EasternConferencePrint(rankingData, teamData) {
 
 /**
  * Makes html table given data
- * @param {Array[string]} myArray
+ * @param {Array.<string>} myArray
  * @param {string} conference
- * @returns {HTML Table} result
+ * @returns {HTML_Table} result
  */
 function makeTable(myArray, conference) {
     var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 

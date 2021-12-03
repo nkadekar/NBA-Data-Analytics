@@ -75,10 +75,10 @@ router
 
     /**
  * Compiles home and away record per team
- * @param {Array[JSON Object]} rankingData
+ * @param {Array.<Object>} rankingData
  * @param {string} season
  * @param {int} games
- * @returns {Array[JSON Object]} arr: JSON Objects with team, season, home record, away record
+ * @returns {Array.<Object>} arr: JSON Objects with team, season, home record, away record
  */
 function getRecordPerTeam(rankingData, season, games) {
     var visited = []
@@ -99,7 +99,7 @@ function getRecordPerTeam(rankingData, season, games) {
 /**
  * Calculates total wins of a given team
  * @param {string} teamName
- * @returns {JSON Object} teamName, wins
+ * @returns {Object} teamName, wins
  */
 function calcWins(teamName){
     var winsTotal = 0
@@ -119,7 +119,7 @@ function calcWins(teamName){
  * @param {string} season
  * @param {string} homeWins
  * @param {string} awayWins
- * @returns {JSON Object}
+ * @returns {Object}
  */
 function createJSON(teamName, season, homeWins, awayWins){
     return {"TEAMNAME": teamName, "SEASON": season, "HOMEWINS": homeWins, "AWAYWINS": awayWins}
@@ -129,7 +129,7 @@ function createJSON(teamName, season, homeWins, awayWins){
  * Creates formatted JSON given inputs
  * @param {string} teamName
  * @param {int} totalWins
- * @returns {JSON Object}
+ * @returns {Object}
  */
 function createJSON2(teamName, totalWins){
     return {"TEAMNAME": teamName, "WINS": totalWins}
