@@ -135,4 +135,4 @@ function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
     return sendData
 }
     
-module.exports = {router, cachedDataJSON}
+module.exports = {router, cachedDataJSON, getWinsPerTeam}

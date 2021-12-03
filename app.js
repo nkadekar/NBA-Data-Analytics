@@ -129,10 +129,10 @@ const players = require('./public/js/SelectQuery/players')
 app.use('/players', players.router)
 
 const teams = require('./public/js/SelectQuery/teams')
-app.use('/teams', teams)
+app.use('/teams', teams.router)
 
 const teamWins = require('./public/js/SelectQuery/wins')
-app.use('/wins', teamWins)
+app.use('/wins', teamWins.router)
 
 const home = require('./public/js/SelectQuery/homeRecord')
 app.use('/home', home.router)
