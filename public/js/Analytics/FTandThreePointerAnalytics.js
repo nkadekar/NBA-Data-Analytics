@@ -4,12 +4,30 @@ const path = require('path')
 var gamesData = require("../parser").gamesData
 const alert = require('alert');
 
+/**
+ * Route serving average stats for home vs away team analytic.
+ * @name get/FTandThreePointerAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/FTandThreePointerAnalytics/FTandThreePointerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/FTandThreePointerQuery')
     .post((req, res) => {
@@ -36,8 +54,6 @@ router
         var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
         var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
 
-        var outputString = "Average Home FT Percentage: " + avgHomeFreeThrow.toPrecision(4) + "%<br> Average Away FT Percentage: " + avgAwayFreeThrow.toPrecision(4) + "%<br> Average Home 3 PT Percentage: " + avgHomeThreePoint.toPrecision(4) + "%<br> Average Away 3 PT Percentage: " + avgAwayThreePoint.toPrecision(4) + "%"
-        // res.send(outputString)
         res.send(makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, req.body.season))
     });
 

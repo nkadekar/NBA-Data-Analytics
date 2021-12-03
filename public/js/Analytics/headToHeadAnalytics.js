@@ -5,12 +5,30 @@ var gamesData = require("../parser").gamesData
 var teamsData = require("../parser").teamsData
 const alert = require('alert');
 
+/**
+ * Route serving the head to head analytic.
+ * @name get/headToHeadAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/headToHeadAnalytics/headToHeadQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/headToHeadQuery')
     .post((req, res) => {
@@ -22,8 +40,6 @@ router
             var team1ID, team2ID;
             var team1Counter = team2Counter = 0
 
-            // var team1Points = team1Rebounds = team1Assists = team1Steals = team1Blocks = team1Turnovers = 0
-            // var team2Points = team2Rebounds = team2Assists = team2Steals = team2Blocks = team2Turnovers = 0
             for (var i = 0; i < teamsData.length; ++i){
                 if (teamsData[i].NICKNAME == req.body.team1){
                     team1ID = teamsData[i].TEAM_ID
@@ -74,9 +90,7 @@ router
         for(var i = 0; i < team1Scores.length; i++){
             numOfGames.push(`Game ${i + 1}`)
         } 
-
         
-        var outputStr = "The head to head record between " + req.body.team1 + " and " + req.body.team2 + " during the " + req.body.season + " is " + team1Counter + "-" + team2Counter
         res.send(makeGraph(req.body.team1, req.body.team2, team1Counter, team2Counter, numOfGames, team1Scores, team2Scores, req.body.season))
     });
 

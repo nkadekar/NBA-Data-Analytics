@@ -4,16 +4,34 @@ const path = require('path')
 var rankingData = require("../parser").rankingData
 const alert = require('alert');
 
+/**
+ * Route serving most home and away wins analytic.
+ * @name get/mostHomeAndAwayWinsAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/mostHomeAndAwayWinsAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/mostHomeAndAwayWinsAnalytics/mostHomeAndAwayWinsQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/mostHomeAndAwayWinsQuery')
     .post((req, res) => { 
-        console.time("Regular home away query")
+        // console.time("Regular home away query")
         var maxHome = maxAway = 0
         var maxHomeTeam, maxAwayTeam;
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
@@ -36,10 +54,9 @@ router
                 }
             }
         }
-        var outputString = "The team with the most home wins is " + maxHomeTeam + " with " + maxHome + " wins.<br> The team with the most away wins is " + maxAwayTeam + " with " + maxAway + " wins."
-        // res.send(outputString)
+        
         res.send(makeGraph(maxHome, maxHomeTeam, maxAway, maxAwayTeam))
-        console.timeEnd("Regular home away query")
+        // console.timeEnd("Regular home away query")
     });
 
 /**

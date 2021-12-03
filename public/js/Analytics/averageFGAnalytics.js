@@ -4,12 +4,30 @@ const path = require('path')
 var gameData = require("../parser").gamesData
 var alert = require("alert")
 
+/**
+ * Route serving average stats winning analytic.
+ * @name get/averageFGAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/averageFGAnalytics/averageFGQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/averageFGQuery')
     .post((req, res) => {

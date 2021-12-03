@@ -1,4 +1,9 @@
+/**
+ * express module
+ * @const
+ */
 const express = require('express');
+
 const app = express();
 const port = 3000;
 const cors = require('cors')
@@ -6,7 +11,7 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const fs = require('fs')
 
-const funcs = require('./public/js/fileHandler')
+// const funcs = require('./public/js/fileHandler')
 
 const playerDataFileName = __dirname + "/data/csv/players.csv"
 const teamDataFileName = __dirname + "/data/csv/teams.csv"
@@ -15,9 +20,6 @@ const rankingDataFileName = __dirname + "/data/csv/ranking.csv"
 const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
-
-// var cachedHomeAwayWinsJSON = [];
-
 
 app
 	.route('/public/css/main.css')
@@ -179,5 +181,3 @@ app
 app.listen(3000, () => {
 	console.log(`Example app listening on port ${port}!`)
 });
-
-// module.exports = {cachedHomeAwayWinsJSON}
