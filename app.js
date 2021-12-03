@@ -144,13 +144,13 @@ const updateData = require('./public/js/ManipulateData/updateData')
 app.use('/updateButton', updateData)
 
 const insertData = require('./public/js/ManipulateData/insertData')
-app.use('/insertButton', insertData)
+app.use('/insertButton', insertData.router)
 
 const pointsPerPlayerAnalytics = require("./public/js/Analytics/pointsPerPlayerAnalytics")
-app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics)
+app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics.router)
 
 const pointsDifferenceAnalytics = require('./public/js/Analytics/PointsDifferenceAnalytics')
-app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics)
+app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics.router)
 
 const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
 app.use('/headToHeadAnalytics', headToHeadAnalytics)
@@ -162,7 +162,7 @@ const FTandThreePointerAnalytics = require("./public/js/Analytics/FTandThreePoin
 app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
 
 const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
-app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
+app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics.router)
 
 const MostHomeAndAwayWinsAnalyticsIncremental = require("./public/js/IncrementalAnalytics/homeAwayWinsIncremental")
 app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental.router)
