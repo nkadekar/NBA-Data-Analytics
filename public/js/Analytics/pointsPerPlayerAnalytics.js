@@ -20,27 +20,26 @@ router
         var totalBlocks = 0
         var playerFoundFlag = false
         var playerIndex
-        for (var i = 0; i < gameDetailsData.length; i++){
-            if (req.body.playerName.toLowerCase() == gameDetailsData[i].PLAYER_NAME.toLowerCase()){
-                if (gameDetailsData[i].PTS != "") {
-                    playerFoundFlag = true
-                    totalPoints += parseInt(gameDetailsData[i].PTS)
-                    if (gameDetailsData[i].REB != ""){
-                        totalRebounds += parseInt(gameDetailsData[i].REB)
-                    }
-                    if (gameDetailsData[i].AST != ""){
-                        totalAssists += parseInt(gameDetailsData[i].AST)
-                    }
-                    if (gameDetailsData[i].STL != ""){
-                        totalSteals += parseInt(gameDetailsData[i].STL)
-                    }
-                    if (gameDetailsData[i].BLK != ""){
-                        totalBlocks += parseInt(gameDetailsData[i].BLK)
-                    }
-                    playerIndex = i
-                }
+        playerIndex = findPlayerIndex(req.body.playerName.toLowerCase())
+        
+    
+        if (gameDetailsData[playerIndex].PTS != "") {
+            playerFoundFlag = true
+            totalPoints += parseInt(gameDetailsData[playerIndex].PTS)
+            if (gameDetailsData[playerIndex].REB != ""){
+                totalRebounds += parseInt(gameDetailsData[playerIndex].REB)
+            }
+            if (gameDetailsData[playerIndex].AST != ""){
+                totalAssists += parseInt(gameDetailsData[playerIndex].AST)
+            }
+            if (gameDetailsData[playerIndex].STL != ""){
+                totalSteals += parseInt(gameDetailsData[playerIndex].STL)
+            }
+            if (gameDetailsData[playerIndex].BLK != ""){
+                totalBlocks += parseInt(gameDetailsData[playerIndex].BLK)
             }
         }
+        
         if(playerFoundFlag == false){
             var alertMessage = req.body.playerName + " is not found. Please try again."
             alert(alertMessage)
@@ -51,6 +50,15 @@ router
             res.send(makeGraph(gameDetailsData[playerIndex].PLAYER_NAME, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks))
         }
     });
+
+function findPlayerIndex(playerName) {
+    for (var i = 0; i < gameDetailsData.length; i++){
+        var player = gameDetailsData[i].PLAYER_NAME.toLowerCase()
+        if (playerName == player) {
+            return i
+        }
+    }
+}
 
 /**
  * Creates html for graph visualization
@@ -112,4 +120,4 @@ function makeGraph(playerName, totalPoints, totalRebounds, totalAssists, totalSt
     return sendData
 }
 
-module.exports = router
+module.exports = {router, findPlayerIndex}

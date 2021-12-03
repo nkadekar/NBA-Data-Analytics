@@ -17,13 +17,7 @@ router
         const teamID = req.body.TeamID
         const playerID = req.body.PlayerID
         const seasonPlayed = req.body.SeasonPlayed
-        var playerJSON = 
-            {
-                "PLAYER_NAME": playerName,
-                "TEAM_ID": teamID,
-                "SEASON": seasonPlayed,
-                "PLAYER_ID": playerID
-            }
+        var playerJSON = createJSONVar(playerName, teamID, playerID, seasonPlayed)
         players.push(playerJSON)
         alert("Player successfully inserted.")
         res.sendFile(path.join(__dirname, '../../html/index.html'))
@@ -117,6 +111,16 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+function createJSONVar(playerName, teamID, playerID, seasonPlayed) {
+    return playerJSON = 
+            {
+                "PLAYER_NAME": playerName,
+                "TEAM_ID": teamID,
+                "SEASON": seasonPlayed,
+                "PLAYER_ID": playerID
+            }
+}
+
 /**
  * Called on click to visualize correct form for "Delete" data manipulation
  */
@@ -189,4 +193,4 @@ function checkInsertDropdown(){
     }
 }
 
-module.exports = router
+module.exports = {router, createJSONVar}

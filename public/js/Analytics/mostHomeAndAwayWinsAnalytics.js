@@ -16,7 +16,7 @@ router
         console.time("Regular home away query")
         var maxHome = maxAway = 0
         var maxHomeTeam, maxAwayTeam;
-        if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
+        if(outOfBounds(req.body.season)){
             alert("Invalid Season")
             res.sendFile(path.join(__dirname , '.../../html/Analytics/mostHomeAndAwayWinsAnlytics.html'))
         }
@@ -41,6 +41,15 @@ router
         res.send(makeGraph(maxHome, maxHomeTeam, maxAway, maxAwayTeam))
         console.timeEnd("Regular home away query")
     });
+function outOfBounds(season) {
+    if(parseInt(season) < 2004 || parseInt(season) > 2020){
+        return true
+    }
+    else {
+        return false
+    }
+}
+
 
 /**
  * Creates html for graph visualization
@@ -69,4 +78,4 @@ function makeGraph(mostHomeWins, homeTeam, mostAwayWins, awayTeam){
     return sendData
 }
 
-module.exports = router
+module.exports = {router, outOfBounds}

@@ -38,14 +38,10 @@ router
                     }
                 }
             }
-            for (var i = 0; i < teamData.length; i++) {
-                if (teamData[i].TEAM_ID == homeTeam) {
-                    homeNickname = teamData[i].NICKNAME
-                }
-                if (teamData[i].TEAM_ID == awayTeam) {
-                    awayNickname = teamData[i].NICKNAME
-                }
-            }
+
+            homeNickname = findHomeName(teamData, homeTeam)
+            awayNickname = findAwayName(teamData, awayTeam)
+        
             var DifferenceInPointsJSON = 
             {
                 "Difference": largestDifference,
@@ -58,6 +54,23 @@ router
             res.send(makeGraph(DifferenceInPointsJSON.HomeTeam, DifferenceInPointsJSON.AwayTeam, homeTeamPts, awayTeamPts, DifferenceInPointsJSON.Difference, req.body.season))
         }
     });
+
+    function findHomeName(teamData, homeTeam) {
+        for (var i = 0; i < teamData.length; i++) {
+            if (teamData[i].TEAM_ID == homeTeam) {
+                return teamData[i].NICKNAME
+            }
+        }
+    }
+    
+
+    function findAwayName(teamData, awayTeam) {
+        for (var i = 0; i < teamData.length; i++) {
+            if (teamData[i].TEAM_ID == awayTeam) {
+                return teamData[i].NICKNAME
+            }
+        }
+    }
 
 /**
  * Creates html for graph visualization
@@ -112,4 +125,4 @@ function makeGraph(homeTeamName, awayTeamName, homeTeamPts, awayTeamPts, differe
     return sendData
 }
 
-module.exports = router
+module.exports = {router, findHomeName, findAwayName}
