@@ -7,12 +7,30 @@ var teamData = require("../parser").teamsData
 var West = WesternConferencePrint(rankingData, teamData)
 var East = EasternConferencePrint(rankingData, teamData)
 
+/**
+ * Route serving teams request.
+ * @name get/teams
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/teams.html'))
     });
 
+/**
+ * Route serving conference query computation.
+ * @name get/teams/conferenceQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/conferenceQuery')
     .post((req, res) => {

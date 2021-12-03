@@ -4,12 +4,30 @@ const path = require('path')
 var playerData = require("../parser").playerData
 const alert = require('alert')
 
+/**
+ * Route serving players request.
+ * @name get/players
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
     });
 
+/**
+ * Route serving players query computation.
+ * @name get/players/playersQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/playersQuery')
     .post((req, res) => {
@@ -17,7 +35,6 @@ router
         if(checkLengthOfPlayerData(playerData, req.body.numberOfPlayers)){
                 res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
         }
-
         else {
             var players = filterplayerData(playerData, numberOfPlayers)
             res.send(makeTable(players))

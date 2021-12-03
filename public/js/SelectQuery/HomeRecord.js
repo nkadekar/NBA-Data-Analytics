@@ -3,12 +3,30 @@ const router = express.Router()
 const path = require('path')
 var rankingData = require("../parser").rankingData
 
+/**
+ * Route serving home records request.
+ * @name get/home
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/homeRecord.html'))
     });
 
+/**
+ * Route serving home records query computation.
+ * @name get/home/homeQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/homeQuery')
     .post((req, res) => {
