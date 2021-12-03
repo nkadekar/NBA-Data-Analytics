@@ -24,3 +24,5 @@ Authored by: Nikhil Kadekar, Edward Zhu, Arya Faramarzi, Jorge Peng, Aramis Masa
    ![alt test](https://i.gyazo.com/2ac46495b9f28d725caf4e88221686fe.png)
 10. The program should be running on the url, localhost:3000.
    ![alt test](https://i.gyazo.com/2e2dd806e431c44b959a616ae399d7c6.png)
+
+# How To View Documentation
