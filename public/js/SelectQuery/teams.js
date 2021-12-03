@@ -123,4 +123,4 @@ function makeTable(myArray, conference) {
     return result;
 }
 
-module.exports = router
+module.exports = {router, WesternConferenceArray}
