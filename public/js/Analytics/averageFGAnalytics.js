@@ -19,32 +19,18 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
     });
 
-/**
- * Route compiling stats information
- * @name get/averageFGAnalytics/averageFGQuery
- * @function
- * @memberof module:routers/users~usersRouter
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-router
-    .route('/averageFGQuery')
-    .post((req, res) => {
-        var season = req.body.season
-        var fieldGoalCounter = 0
-        var threePointCounter = 0
-        var freeThrowCounter = 0
-        var pointsCounter = 0
-        var reboundsCounter = 0
-        var assistsCounter = 0
-        var totalGames = 0
-        if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
-            alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
-        }
-        else{
-            for (var i = 0; i < gameData.length; ++i){
+
+
+
+function computeAverageFGQuery(gameData, season){
+            var fieldGoalCounter = 0
+            var threePointCounter = 0
+            var freeThrowCounter = 0
+            var pointsCounter = 0
+            var reboundsCounter = 0
+            var assistsCounter = 0
+            var totalGames = 0
+                for (var i = 0; i < gameData.length; ++i){
                 if (parseInt(gameData[i].SEASON) == season){
                     if (parseInt(gameData[i].HOME_TEAM_WINS)){
                         fieldGoalCounter += parseFloat(gameData[i].FG_PCT_home)
@@ -72,7 +58,38 @@ router
             var avgREB = (reboundsCounter / totalGames)
             var avgAST = (assistsCounter / totalGames)
             var sendData = "Average field goal for the winning team in the " + season + " is " + avgFG.toPrecision(4) * 100 + "%"
-            res.send(makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST))
+            var obj = {
+                "avgFG": avgFG.toPrecision(4),
+                "avg3PT": avg3PT.toPrecision(4),
+                "avgFT": avgFT.toPrecision(4) ,
+                "avgPTS": avgPTS.toPrecision(4) ,
+                "avgREB": avgREB.toPrecision(4) ,
+                "avgAST":avgAST.toPrecision(4) ,
+                "sendData": sendData
+            }
+            return obj
+}
+
+/**
+ * Route compiling stats information
+ * @name get/averageFGAnalytics/averageFGQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/averageFGQuery')
+    .post((req, res) => {
+        var season = req.body.season
+        if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
+            alert("Invalid Season")
+            res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
+        }
+        else{
+            var obj = computeAverageFGQuery(gameData, season)
+            res.send(makeGraph(obj.avgFG, obj.avg3PT, obj.avgFT, obj.avgPTS, obj.avgREB, obj.avgAST))
         }
     });
 
@@ -137,4 +154,4 @@ function makeGraph(avgFG, avg3PT, avgFT, avgPTS, avgREB, avgAST){
     return sendData
 }
 
-module.exports = router
+module.exports = {router, computeAverageFGQuery}
