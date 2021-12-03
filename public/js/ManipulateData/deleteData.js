@@ -3,12 +3,30 @@ const router = express.Router()
 const path = require('path')
 const alert = require('alert')
 
+/**
+ * Route serving delete manipulation.
+ * @name get/deleteButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/ManipulateData/deleteData.html'))
     });
 
+/**
+ * Route serving player deletes
+ * @name get/deleteButton/deletePlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/deletePlayerQuery')
     .post((req, res) => {
@@ -20,6 +38,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+/**
+ * Route serving team deletes
+ * @name get/deleteButton/deleteTeamQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/deleteTeamQuery')
     .post((req, res) => {
@@ -31,6 +58,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
 });
 
+/**
+ * Route serving ranking deletes
+ * @name get/deleteButton/deleteRankingQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/deleteRankingQuery')
     .post((req, res) => {
@@ -48,7 +84,6 @@ router
             // look for it 
             // if found --> delete
             // if not --> skip
-            // console.log(cachedDataJSON[season - 2004][teamName])
             if(cachedDataJSON[season][teamName] != undefined)
                 cachedDataJSON[season - 2004].splice(teamName, 1)
 
@@ -57,7 +92,6 @@ router
             // look for it 
             // if found --> delete
             // if not --> skip
-            // console.log(cachedDataJSON2[season - 2004][teamName])
             if(cachedDataJSON2[season][teamName] != undefined)
                 cachedDataJSON2[season - 2004].splice(teamName, 1)
 

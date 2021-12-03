@@ -5,12 +5,30 @@ var rankingData = require("../parser").rankingData
 
 var cachedDataJSON = []
 
+/**
+ * Route serving home and away wins incremental analytic.
+ * @name get/homeAwayWinsIncremental
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/IncrementalAnalytics/homeAwayWinsIncremental.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/homeAwayWinsIncremental/homeAwayWinsIncrementalQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/homeAwayWinsIncrementalQuery')
     .post((req, res) => {

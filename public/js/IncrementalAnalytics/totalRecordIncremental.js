@@ -6,12 +6,30 @@ var rankingData = require("../parser").rankingData
 var cachedtotalWinsJSON = []
 var DataJSON = []
 
+/**
+ * Route serving total record incremental analytic.
+ * @name get/totalRecordIncremental
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/IncrementalAnalytics/totalRecordIncremental.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/totalRecordIncremental/totalRecordIncrementalQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/totalRecordIncrementalQuery')
     .post((req, res) => {
