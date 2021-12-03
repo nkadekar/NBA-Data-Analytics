@@ -46,8 +46,6 @@ app
 		res.sendFile(path.join(__dirname, 'public/css/bootstrap.min.css'));
 	});
 
-
-
 app
 	.route('/public/js/ManipulateData/insertData.js')
 	. get((req, res) => {
@@ -77,12 +75,30 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
 app.use(cors())
 
+/**
+ * Route serving main page of website.
+ * @name get/index.html
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app
 	.route('/')
 	.get((req, res) => {
     	res.sendFile(path.join(__dirname , 'public/html/index.html'));
 	});
 
+/**
+ * Route serving Save Data button.
+ * @name get/saveButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app.
 	route('/saveButton')
 	.get((req, res) => {
@@ -134,6 +150,15 @@ app.
 		})
 	});
 
+/**
+ * Route serving back buttons.
+ * @name get/back
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app
 	.route('/back')
 	. get((req, res) => {
