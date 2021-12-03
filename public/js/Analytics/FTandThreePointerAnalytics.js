@@ -19,6 +19,34 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
+
+
+
+function computeFTandThreePointerQuery(gamesData, season){
+        var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
+        var totalGames = 0
+        for (var i = 0; i < gamesData.length; ++i){
+            if (parseInt(gamesData[i].SEASON) == season){
+                homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
+                awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
+                homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
+                awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
+                totalGames++
+            }
+    }
+    var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
+    var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
+    var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
+    var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
+    var obj = {
+        "avgHomeFreeThrow": avgHomeFreeThrow.toPrecision(4),
+        "avgHomeThreePoint": avgHomeThreePoint.toPrecision(4),
+        "avgAwayFreeThrow": avgAwayFreeThrow.toPrecision(4),
+        "avgAwayThreePoint": avgAwayThreePoint.toPrecision(4)
+    }
+        return obj
+}
+
 /**
  * Route compiling stats information
  * @name get/FTandThreePointerAnalytics/FTandThreePointerQuery
@@ -31,30 +59,14 @@ router
 router
     .route('/FTandThreePointerQuery')
     .post((req, res) => {
-        var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
-        var totalGames = 0
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
             res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
         }
         else {
-            for (var i = 0; i < gamesData.length; ++i){
-                if (parseInt(gamesData[i].SEASON) == req.body.season){
-                    homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
-                    awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
-                    homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
-                    awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
-                    totalGames++
-                }
-            }
+            var obj = computeFTandThreePointerQuery(gamesData, req.body.season)
+            res.send(makeGraph(obj.avgHomeFreeThrow, obj.avgAwayFreeThrow, obj.avgHomeThreePoint, obj.avgAwayThreePoint, req.body.season))
         }
-
-        var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
-        var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
-        var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
-        var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
-
-        res.send(makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, req.body.season))
     });
 
 /**
@@ -105,4 +117,4 @@ function makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwa
     return sendData
 }
 
-module.exports = router
+module.exports = {router, computeFTandThreePointerQuery}
