@@ -193,7 +193,7 @@ const pointsDifferenceAnalytics = require('./public/js/Analytics/PointsDifferenc
 app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics.router)
 
 const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
-app.use('/headToHeadAnalytics', headToHeadAnalytics)
+app.use('/headToHeadAnalytics', headToHeadAnalytics.router)
 
 const averageFGAnalytics = require("./public/js/Analytics/averageFGAnalytics")
 app.use("/averageFGAnalytics", averageFGAnalytics.router)

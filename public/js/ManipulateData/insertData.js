@@ -146,6 +146,14 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+/**
+ * Creates JSON Variable
+ * @param {string} playerName
+ * @param {string} teamID
+ * @param {string} playerID
+ * @param {string} seasonPlayed
+ * @returns {Object} playerJSON
+ */
 function createJSONVar(playerName, teamID, playerID, seasonPlayed) {
     return playerJSON = 
             {
