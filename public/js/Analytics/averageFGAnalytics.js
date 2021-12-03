@@ -19,57 +19,6 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/averageFGAnalytics.html'))
     });
 
-
-
-
-function computeAverageFGQuery(gameData, season){
-            var fieldGoalCounter = 0
-            var threePointCounter = 0
-            var freeThrowCounter = 0
-            var pointsCounter = 0
-            var reboundsCounter = 0
-            var assistsCounter = 0
-            var totalGames = 0
-                for (var i = 0; i < gameData.length; ++i){
-                if (parseInt(gameData[i].SEASON) == season){
-                    if (parseInt(gameData[i].HOME_TEAM_WINS)){
-                        fieldGoalCounter += parseFloat(gameData[i].FG_PCT_home)
-                        threePointCounter += parseFloat(gameData[i].FG3_PCT_home)
-                        freeThrowCounter += parseFloat(gameData[i].FT_PCT_home)
-                        pointsCounter += parseFloat(gameData[i].PTS_home)
-                        reboundsCounter += parseFloat(gameData[i].REB_home)
-                        assistsCounter += parseFloat(gameData[i].AST_home)
-                    }
-                    else {
-                        fieldGoalCounter += parseFloat(gameData[i].FG_PCT_away)
-                        threePointCounter += parseFloat(gameData[i].FG3_PCT_away)
-                        freeThrowCounter += parseFloat(gameData[i].FT_PCT_away)
-                        pointsCounter += parseFloat(gameData[i].PTS_away)
-                        reboundsCounter += parseFloat(gameData[i].REB_away)
-                        assistsCounter += parseFloat(gameData[i].AST_away)
-                    }
-                    totalGames++;
-                }
-            }
-            var avgFG = (fieldGoalCounter / totalGames)
-            var avg3PT = (threePointCounter / totalGames)
-            var avgFT = (freeThrowCounter / totalGames)
-            var avgPTS = (pointsCounter / totalGames)
-            var avgREB = (reboundsCounter / totalGames)
-            var avgAST = (assistsCounter / totalGames)
-            var sendData = "Average field goal for the winning team in the " + season + " is " + avgFG.toPrecision(4) * 100 + "%"
-            var obj = {
-                "avgFG": avgFG.toPrecision(4),
-                "avg3PT": avg3PT.toPrecision(4),
-                "avgFT": avgFT.toPrecision(4) ,
-                "avgPTS": avgPTS.toPrecision(4) ,
-                "avgREB": avgREB.toPrecision(4) ,
-                "avgAST":avgAST.toPrecision(4) ,
-                "sendData": sendData
-            }
-            return obj
-}
-
 /**
  * Route compiling stats information
  * @name get/averageFGAnalytics/averageFGQuery
@@ -92,6 +41,60 @@ router
             res.send(makeGraph(obj.avgFG, obj.avg3PT, obj.avgFT, obj.avgPTS, obj.avgREB, obj.avgAST))
         }
     });
+
+/**
+ * Computations for all statistics for home and away teams
+ * @param {Array.<Object>} gameData
+ * @param {string} season
+ * @returns {Object} obj
+ */
+function computeAverageFGQuery(gameData, season){
+    var fieldGoalCounter = 0
+    var threePointCounter = 0
+    var freeThrowCounter = 0
+    var pointsCounter = 0
+    var reboundsCounter = 0
+    var assistsCounter = 0
+    var totalGames = 0
+        for (var i = 0; i < gameData.length; ++i){
+        if (parseInt(gameData[i].SEASON) == season){
+            if (parseInt(gameData[i].HOME_TEAM_WINS)){
+                fieldGoalCounter += parseFloat(gameData[i].FG_PCT_home)
+                threePointCounter += parseFloat(gameData[i].FG3_PCT_home)
+                freeThrowCounter += parseFloat(gameData[i].FT_PCT_home)
+                pointsCounter += parseFloat(gameData[i].PTS_home)
+                reboundsCounter += parseFloat(gameData[i].REB_home)
+                assistsCounter += parseFloat(gameData[i].AST_home)
+            }
+            else {
+                fieldGoalCounter += parseFloat(gameData[i].FG_PCT_away)
+                threePointCounter += parseFloat(gameData[i].FG3_PCT_away)
+                freeThrowCounter += parseFloat(gameData[i].FT_PCT_away)
+                pointsCounter += parseFloat(gameData[i].PTS_away)
+                reboundsCounter += parseFloat(gameData[i].REB_away)
+                assistsCounter += parseFloat(gameData[i].AST_away)
+            }
+            totalGames++;
+        }
+    }
+    var avgFG = (fieldGoalCounter / totalGames)
+    var avg3PT = (threePointCounter / totalGames)
+    var avgFT = (freeThrowCounter / totalGames)
+    var avgPTS = (pointsCounter / totalGames)
+    var avgREB = (reboundsCounter / totalGames)
+    var avgAST = (assistsCounter / totalGames)
+    var sendData = "Average field goal for the winning team in the " + season + " is " + avgFG.toPrecision(4) * 100 + "%"
+    var obj = {
+        "avgFG": avgFG.toPrecision(4),
+        "avg3PT": avg3PT.toPrecision(4),
+        "avgFT": avgFT.toPrecision(4) ,
+        "avgPTS": avgPTS.toPrecision(4) ,
+        "avgREB": avgREB.toPrecision(4) ,
+        "avgAST":avgAST.toPrecision(4) ,
+        "sendData": sendData
+    }
+    return obj
+}
 
 /**
  * Creates html for graph visualization

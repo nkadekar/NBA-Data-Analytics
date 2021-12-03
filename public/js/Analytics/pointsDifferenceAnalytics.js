@@ -73,22 +73,33 @@ router
         }
     });
 
-    function findHomeName(teamData, homeTeam) {
-        for (var i = 0; i < teamData.length; i++) {
-            if (teamData[i].TEAM_ID == homeTeam) {
-                return teamData[i].NICKNAME
-            }
+/**
+ * Find Name of Home team
+ * @param {Array.<Object>} gameData
+ * @param {string} homeTeam
+ * @returns {string}
+ */
+function findHomeName(teamData, homeTeam) {
+    for (var i = 0; i < teamData.length; i++) {
+        if (teamData[i].TEAM_ID == homeTeam) {
+            return teamData[i].NICKNAME
         }
     }
-    
+}
 
-    function findAwayName(teamData, awayTeam) {
-        for (var i = 0; i < teamData.length; i++) {
-            if (teamData[i].TEAM_ID == awayTeam) {
-                return teamData[i].NICKNAME
-            }
+/**
+ * Find Name of Away team
+ * @param {Array.<Object>} gameData
+ * @param {string} awayTeam
+ * @returns {string}
+ */
+function findAwayName(teamData, awayTeam) {
+    for (var i = 0; i < teamData.length; i++) {
+        if (teamData[i].TEAM_ID == awayTeam) {
+            return teamData[i].NICKNAME
         }
     }
+}
 
 /**
  * Creates html for graph visualization

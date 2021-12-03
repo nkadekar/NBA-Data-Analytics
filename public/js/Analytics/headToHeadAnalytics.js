@@ -20,66 +20,6 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
     });
 
-
-function computeHeadToHeadQuery(gamesData,teamsData, season, team1, team2){
-            var team1ID, team2ID;
-            var team1Counter = team2Counter = 0
-            for (var i = 0; i < teamsData.length; ++i){
-                if (teamsData[i].NICKNAME == team1){
-                    team1ID = teamsData[i].TEAM_ID
-                }
-                else if (teamsData[i].NICKNAME == team2){
-                    team2ID = teamsData[i].TEAM_ID
-                }
-            }
-
-            var team1Scores = []
-            var team2Scores = []
-
-            for (var i = 0; i < gamesData.length; ++i){
-                if ((parseInt(gamesData[i].SEASON) == season) && 
-                (gamesData[i].HOME_TEAM_ID == team1ID || 
-                    gamesData[i].HOME_TEAM_ID == team2ID) 
-                    && (gamesData[i].VISITOR_TEAM_ID == team1ID || 
-                        gamesData[i].VISITOR_TEAM_ID == team2ID)) {
-
-                    if (parseInt(gamesData[i].HOME_TEAM_WINS)){
-                        if (team1ID == gamesData[i].HOME_TEAM_ID){
-                            team1Scores.push(gamesData[i].PTS_home)
-                            team2Scores.push(gamesData[i].PTS_away)
-                            team1Counter++
-                        }
-                        else {
-                            team1Scores.push(gamesData[i].PTS_away)
-                            team2Scores.push(gamesData[i].PTS_home)
-                            team2Counter++
-                        }
-                    }
-                    else {
-                        if (team1ID == gamesData[i].VISITOR_TEAM_ID){
-                            team1Scores.push(gamesData[i].PTS_away)
-                            team2Scores.push(gamesData[i].PTS_home)
-                            team1Counter++
-                        }
-                        else {
-                            team1Scores.push(gamesData[i].PTS_home)
-                            team2Scores.push(gamesData[i].PTS_away)
-                            team2Counter++
-                        }
-                    }
-                }
-            }
-
-            var obj = {
-                "team1Counter" : team1Counter,
-                "team2Counter" : team2Counter,
-                "team1Scores": team1Scores,
-                "team2Scores": team2Scores
-            }
-
-            return obj
-}
-
 /**
  * Route compiling stats information
  * @name get/headToHeadAnalytics/headToHeadQuery
@@ -106,6 +46,74 @@ router
         }
 
     });
+
+/**
+ * Computations for all statistics for head to head records
+ * @param {Array.<Object>} gamesData
+ * @param {Array.<Object>} teamsData
+ * @param {string} season
+ * @param {string} team1
+ * @param {string} team2
+ * @returns {Object} obj
+ */
+function computeHeadToHeadQuery(gamesData, teamsData, season, team1, team2){
+    var team1ID, team2ID;
+    var team1Counter = team2Counter = 0
+    for (var i = 0; i < teamsData.length; ++i){
+        if (teamsData[i].NICKNAME == team1){
+            team1ID = teamsData[i].TEAM_ID
+        }
+        else if (teamsData[i].NICKNAME == team2){
+            team2ID = teamsData[i].TEAM_ID
+        }
+    }
+
+    var team1Scores = []
+    var team2Scores = []
+
+    for (var i = 0; i < gamesData.length; ++i){
+        if ((parseInt(gamesData[i].SEASON) == season) && 
+        (gamesData[i].HOME_TEAM_ID == team1ID || 
+            gamesData[i].HOME_TEAM_ID == team2ID) 
+            && (gamesData[i].VISITOR_TEAM_ID == team1ID || 
+                gamesData[i].VISITOR_TEAM_ID == team2ID)) {
+
+            if (parseInt(gamesData[i].HOME_TEAM_WINS)){
+                if (team1ID == gamesData[i].HOME_TEAM_ID){
+                    team1Scores.push(gamesData[i].PTS_home)
+                    team2Scores.push(gamesData[i].PTS_away)
+                    team1Counter++
+                }
+                else {
+                    team1Scores.push(gamesData[i].PTS_away)
+                    team2Scores.push(gamesData[i].PTS_home)
+                    team2Counter++
+                }
+            }
+            else {
+                if (team1ID == gamesData[i].VISITOR_TEAM_ID){
+                    team1Scores.push(gamesData[i].PTS_away)
+                    team2Scores.push(gamesData[i].PTS_home)
+                    team1Counter++
+                }
+                else {
+                    team1Scores.push(gamesData[i].PTS_home)
+                    team2Scores.push(gamesData[i].PTS_away)
+                    team2Counter++
+                }
+            }
+        }
+    }
+
+    var obj = {
+        "team1Counter" : team1Counter,
+        "team2Counter" : team2Counter,
+        "team1Scores": team1Scores,
+        "team2Scores": team2Scores
+    }
+
+    return obj
+}
 
 /**
  * Creates html for graph visualization

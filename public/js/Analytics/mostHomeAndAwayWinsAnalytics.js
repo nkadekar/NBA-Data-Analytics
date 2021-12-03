@@ -54,10 +54,16 @@ router
                 }
             }
         }
-        
+
         res.send(makeGraph(maxHome, maxHomeTeam, maxAway, maxAwayTeam))
         // console.timeEnd("Regular home away query")
     });
+
+/**
+ * Figures out whether season is out of bounds
+ * @param {string} season
+ * @returns {boolean}
+ */
 function outOfBounds(season) {
     if(parseInt(season) < 2004 || parseInt(season) > 2020){
         return true
@@ -66,7 +72,6 @@ function outOfBounds(season) {
         return false
     }
 }
-
 
 /**
  * Creates html for graph visualization

@@ -18,34 +18,6 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
-
-
-
-function computeFTandThreePointerQuery(gamesData, season){
-        var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
-        var totalGames = 0
-        for (var i = 0; i < gamesData.length; ++i){
-            if (parseInt(gamesData[i].SEASON) == season){
-                homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
-                awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
-                homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
-                awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
-                totalGames++
-            }
-    }
-    var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
-    var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
-    var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
-    var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
-    var obj = {
-        "avgHomeFreeThrow": avgHomeFreeThrow.toPrecision(4),
-        "avgHomeThreePoint": avgHomeThreePoint.toPrecision(4),
-        "avgAwayFreeThrow": avgAwayFreeThrow.toPrecision(4),
-        "avgAwayThreePoint": avgAwayThreePoint.toPrecision(4)
-    }
-        return obj
-}
-
 /**
  * Route compiling stats information
  * @name get/FTandThreePointerAnalytics/FTandThreePointerQuery
@@ -67,6 +39,36 @@ router.route('/FTandThreePointerQuery')
         }
     });
 
+/**
+ * Computations for all statistics for avgFG, avgFT, and avg3PT
+ * @param {Array.<Object>} gameData
+ * @param {string} season
+ * @returns {Object} obj
+ */
+function computeFTandThreePointerQuery(gamesData, season){
+    var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
+    var totalGames = 0
+    for (var i = 0; i < gamesData.length; ++i){
+        if (parseInt(gamesData[i].SEASON) == season){
+            homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
+            awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
+            homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
+            awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
+            totalGames++
+        }
+    }
+    var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
+    var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
+    var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
+    var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
+    var obj = {
+        "avgHomeFreeThrow": avgHomeFreeThrow.toPrecision(4),
+        "avgHomeThreePoint": avgHomeThreePoint.toPrecision(4),
+        "avgAwayFreeThrow": avgAwayFreeThrow.toPrecision(4),
+        "avgAwayThreePoint": avgAwayThreePoint.toPrecision(4)
+    }
+        return obj
+}
 /**
  * Creates html for graph visualization
  * @param {int} avgHomeFreeThrow

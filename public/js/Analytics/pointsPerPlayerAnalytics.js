@@ -40,7 +40,6 @@ router
         var playerIndex
         playerIndex = findPlayerIndex(req.body.playerName.toLowerCase())
         
-    
         if (gameDetailsData[playerIndex].PTS != "") {
             playerFoundFlag = true
             totalPoints += parseInt(gameDetailsData[playerIndex].PTS)
@@ -68,6 +67,11 @@ router
         }
     });
 
+/**
+ * Finds index of specific player
+ * @param {string} playerName
+ * @returns {int} i: index
+ */
 function findPlayerIndex(playerName) {
     for (var i = 0; i < gameDetailsData.length; i++){
         var player = gameDetailsData[i].PLAYER_NAME.toLowerCase()
