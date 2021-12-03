@@ -20,31 +20,15 @@ router
         res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
     });
 
-/**
- * Route compiling stats information
- * @name get/headToHeadAnalytics/headToHeadQuery
- * @function
- * @memberof module:routers/users~usersRouter
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-router
-    .route('/headToHeadQuery')
-    .post((req, res) => {
-        if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
-            alert("Invalid Season")
-            res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
-        }
-        else {
+
+function computeHeadToHeadQuery(gamesData,teamsData, season, team1, team2){
             var team1ID, team2ID;
             var team1Counter = team2Counter = 0
-
             for (var i = 0; i < teamsData.length; ++i){
-                if (teamsData[i].NICKNAME == req.body.team1){
+                if (teamsData[i].NICKNAME == team1){
                     team1ID = teamsData[i].TEAM_ID
                 }
-                else if (teamsData[i].NICKNAME == req.body.team2){
+                else if (teamsData[i].NICKNAME == team2){
                     team2ID = teamsData[i].TEAM_ID
                 }
             }
@@ -53,7 +37,7 @@ router
             var team2Scores = []
 
             for (var i = 0; i < gamesData.length; ++i){
-                if ((parseInt(gamesData[i].SEASON) == req.body.season) && 
+                if ((parseInt(gamesData[i].SEASON) == season) && 
                 (gamesData[i].HOME_TEAM_ID == team1ID || 
                     gamesData[i].HOME_TEAM_ID == team2ID) 
                     && (gamesData[i].VISITOR_TEAM_ID == team1ID || 
@@ -85,13 +69,42 @@ router
                     }
                 }
             }
+
+            var obj = {
+                "team1Counter" : team1Counter,
+                "team2Counter" : team2Counter,
+                "team1Scores": team1Scores,
+                "team2Scores": team2Scores
+            }
+
+            return obj
+}
+
+/**
+ * Route compiling stats information
+ * @name get/headToHeadAnalytics/headToHeadQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/headToHeadQuery')
+    .post((req, res) => {
+        if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
+            alert("Invalid Season")
+            res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
         }
-        var numOfGames = []
-        for(var i = 0; i < team1Scores.length; i++){
-            numOfGames.push(`Game ${i + 1}`)
-        } 
-        
-        res.send(makeGraph(req.body.team1, req.body.team2, team1Counter, team2Counter, numOfGames, team1Scores, team2Scores, req.body.season))
+        else {
+            var obj = computeHeadToHeadQuery(gamesData, teamsData, req.body.season, req.body.team1, req.body.team2)
+            var numOfGames = []
+            for(var i = 0; i < obj.team1Scores.length; i++){
+                numOfGames.push(`Game ${i + 1}`)
+            } 
+            res.send(makeGraph(req.body.team1, req.body.team2, obj.team1Counter, obj.team2Counter, numOfGames, obj.team1Scores, obj.team2Scores, req.body.season))
+        }
+
     });
 
 /**
@@ -193,4 +206,4 @@ function makeGraph(team1, team2, team1Counter, team2Counter, numOfGames, team1Sc
     return result
 }
 
-module.exports = router
+module.exports = {router, computeHeadToHeadQuery}

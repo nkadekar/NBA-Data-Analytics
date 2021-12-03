@@ -196,10 +196,10 @@ const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
 app.use('/headToHeadAnalytics', headToHeadAnalytics)
 
 const averageFGAnalytics = require("./public/js/Analytics/averageFGAnalytics")
-app.use("/averageFGAnalytics", averageFGAnalytics)
+app.use("/averageFGAnalytics", averageFGAnalytics.router)
 
 const FTandThreePointerAnalytics = require("./public/js/Analytics/FTandThreePointerAnalytics")
-app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
+app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics.router)
 
 const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics)
