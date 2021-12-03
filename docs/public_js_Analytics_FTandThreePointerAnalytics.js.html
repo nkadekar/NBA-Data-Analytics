@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/Analytics/FTandThreePointerAnalytics.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/Analytics/FTandThreePointerAnalytics.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path')
+var gamesData = require("../parser").gamesData
+const alert = require('alert');
+
+/**
+ * Route serving average stats for home vs away team analytic.
+ * @name get/FTandThreePointerAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .get('./', (req, res) => {
+        res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
+    });
+
+/**
+ * Route compiling stats information
+ * @name get/FTandThreePointerAnalytics/FTandThreePointerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.route('/FTandThreePointerQuery')
+    .post((req, res) => {
+        if(parseInt(req.body.season) &lt; 2004 || parseInt(req.body.season) > 2020){
+            alert("Invalid Season")
+            res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
+        }
+        else {
+            var obj = computeFTandThreePointerQuery(gamesData, req.body.season)
+            res.send(makeGraph(obj.avgHomeFreeThrow, obj.avgAwayFreeThrow, obj.avgHomeThreePoint, obj.avgAwayThreePoint, req.body.season))
+        }
+    });
+
+/**
+ * Computations for all statistics for avgFG, avgFT, and avg3PT
+ * @param {Array.&lt;Object>} gameData
+ * @param {string} season
+ * @returns {Object} obj
+ */
+function computeFTandThreePointerQuery(gamesData, season){
+    var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
+    var totalGames = 0
+    for (var i = 0; i &lt; gamesData.length; ++i){
+        if (parseInt(gamesData[i].SEASON) == season){
+            homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
+            awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
+            homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
+            awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
+            totalGames++
+        }
+    }
+    var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
+    var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
+    var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
+    var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
+    var obj = {
+        "avgHomeFreeThrow": avgHomeFreeThrow.toPrecision(4),
+        "avgHomeThreePoint": avgHomeThreePoint.toPrecision(4),
+        "avgAwayFreeThrow": avgAwayFreeThrow.toPrecision(4),
+        "avgAwayThreePoint": avgAwayThreePoint.toPrecision(4)
+    }
+        return obj
+}
+/**
+ * Creates html for graph visualization
+ * @param {int} avgHomeFreeThrow
+ * @param {int} avgAwayFreeThrow
+ * @param {int} avgHomeThreePoint
+ * @param {int} avgAwayThreePoint
+ * @param {int} season
+ * @returns {string} sendData
+ */
+function makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, season){
+
+    var sendData = "&lt;script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\">&lt;/script>" +
+                            "&lt;link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" +
+                            "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">" +
+                            "&lt;link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/main.css\">" +
+                            "&lt;link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/bootstrap.min.css\">&lt;/link>" +
+                            "&lt;nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">" +
+                            "&lt;a class=\"navbar-brand\" href=\"#\">NBA Analytics - XYZ Coders&lt;/a>" +
+                            "&lt;button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\"" +
+                            "aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">" +
+                            "&lt;span class=\"navbar-toggler-icon\">&lt;/span>" +
+                            "&lt;/button>" +
+                            "&lt;div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">" +
+                                "&lt;ul class=\"navbar-nav mr-auto\">" +
+                                    "&lt;li class=\"nav-item active\">" +
+                                    "&lt;/li>" +
+                                "&lt;/ul>" +
+                            "&lt;/div>" +
+                        "&lt;/nav>" + 
+                    "&lt;div id=\"myDiv\">" + "&lt;/div>" +
+                    "&lt;form method=\"get\" action=\"/back\">" +
+                    "&lt;button style=\"position:relative; left:90px; top:2px;\" class=\"btn btn-primary\" type=\"submit\">Back&lt;/button>" +
+                    "&lt;/form>" +
+                    "&lt;script>" + 
+                    "var data = [\n" + 
+                    "{\n" +
+                    " x: [" +  "\"" + "Avg Home Free Throw Percentage" + "\"" + "," + "\"" + "Avg Away Free Throw Percentage" + "\"" + "," + "\"" + "Avg Home 3PT Percentage" + "\"" + "," + "\"" + "Avg Away 3PT Percentage" + "\"" + "],\n" +
+                    " y: [" + avgHomeFreeThrow + "," + avgAwayFreeThrow + "," + avgHomeThreePoint + "," + avgAwayThreePoint + "],\n" +
+                    " type: \'bar\'\n" +
+                    "}\n" +
+                    "];\n" +
+                    "var layout = {title:'Average Shooting Stats during  the " + season + " season" + "\'}\n"+
+                    "Plotly.newPlot('myDiv', data, layout);\n" +
+                    "&lt;/script>" 
+
+    return sendData
+}
+
+module.exports = {router, computeFTandThreePointerQuery}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

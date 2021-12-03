@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/SelectQuery/wins.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/SelectQuery/wins.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path')
+var rankingData = require("../parser").rankingData
+
+/**
+ * Route serving wins request.
+ * @name get/wins
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/wins.html'))
+    });
+
+/**
+ * Route serving wins query computation.
+ * @name get/wins/winsQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/winsQuery')
+    .post((req, res) => {
+        let year = req.body.year
+        var winsPerTeam = PrintTeamWins(rankingData, year)
+        res.send(makeTable(winsPerTeam, year))
+    });
+
+/**
+ * Retrieves rankings for the end of a specific season
+ * @param {Array.&lt;Object>} rankingData
+ * @param {string} season
+ * @param {int} games
+ * @returns {Array.&lt;Object>} arr: Rankings formatted in JSON
+ */
+function getWinsPerTeam(rankingData, season, games) {
+    var visited = []
+    var arr = [];
+    for (var i = 0; i &lt; rankingData.length; i++){
+        if((rankingData[i].SEASON_ID.substring(1) == season) &amp;&amp; (rankingData[i].G == games)){
+            if(visited.indexOf(rankingData[i].TEAM_ID) == -1){
+                visited.push(rankingData[i].TEAM_ID)
+                arr.push(rankingData[i])
+            }
+        } 
+    }
+    return arr
+}
+
+/**
+ * Formats strings for output. Retrieves wins per team as well.
+ * @param {Array.&lt;Object>} rankingData
+ * @param {string} season 
+ * @returns {Array.&lt;string>} res
+ */
+function PrintTeamWins(rankingData, season){
+    if (season == 2011) {
+        var seasonList = getWinsPerTeam(rankingData, season, 66)
+    }
+    else if (season == 2019) {
+        var seasonList = getWinsPerTeam(rankingData, season, 63)
+    }
+    else if (season == 2020) {
+        var seasonList = getWinsPerTeam(rankingData, season, 72)
+    }
+    else {
+        var seasonList = getWinsPerTeam(rankingData, season, 82)
+    }
+    var res = []
+    for (var i = 0; i &lt; seasonList.length; i++) {
+        res.push(seasonList[i].TEAM + ": " +  seasonList[i].W)
+    }
+    return res
+}
+
+/**
+ * Makes html table given data
+ * @param {Array.&lt;string>} myArray
+ * @param {string} conference
+ * @returns {HTML_Table} result
+ */
+function makeTable(myArray, year) {
+
+    var result = "&lt;link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
+        "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">&lt;/link>"
+    result += "&lt;table class=\"table\" border=1>"
+    result += "&lt;thead class=\"thead-dark\">"
+
+    result += "&lt;th scope=\"col\">Team Name&lt;/th>"
+    result += "&lt;th scope=\"col\">Number of Wins during the " + year + " Season" + "&lt;/th>"
+    result += "&lt;/thead>"
+    for(var i=0; i&lt;myArray.length; i++) {
+        result += "&lt;tr>"
+        result += "&lt;th scope=\"row\">" + myArray[i].substr(0, myArray[i].indexOf(':')) + "&lt;/th>"
+        result += "&lt;td>" + myArray[i].substr(myArray[i].indexOf(':') + 2, myArray[i].length) +"&lt;/td>"
+        result += "&lt;/tr>"
+    }
+    result += "&lt;/table>"
+    result +=   "&lt;form method=\"get\" action=\"/back\">"
+    result +=   "&lt;button class=\"btn btn-primary btn-lg\" id=\"save-button\" type=\"submit\" text-align=\"center\">Back&lt;/button>"
+    result +=   "&lt;/form>"
+    return result;
+}
+
+module.exports = {router, getWinsPerTeam}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

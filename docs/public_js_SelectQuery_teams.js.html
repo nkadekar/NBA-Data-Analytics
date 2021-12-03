@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/SelectQuery/teams.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/SelectQuery/teams.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path')
+var rankingData = require("../parser").rankingData
+var teamData = require("../parser").teamsData
+
+var West = WesternConferencePrint(rankingData, teamData)
+var East = EasternConferencePrint(rankingData, teamData)
+
+/**
+ * Route serving teams request.
+ * @name get/teams
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname, '../../html/SelectQuery/teams.html'))
+    });
+
+/**
+ * Route serving conference query computation.
+ * @name get/teams/conferenceQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/conferenceQuery')
+    .post((req, res) => {
+        var choice = req.body.conf
+        if(choice == 1) {
+            res.send(makeTable(West, "Western Conference Teams"))
+        }
+        else if(choice == 2){
+            res.send(makeTable(East, "Eastern Conference Teams"))
+        }
+    });
+
+/**
+ * Compiles all teams in the Western Conference
+ * @param {Array.&lt;Object>} rankingData
+ * @returns {Array.&lt;string>} West
+ */
+function WesternConferenceArray(rankingData) { 
+    var West = new Set()
+    for (var i = 0; i &lt; rankingData.length - 1; i++) {
+        if (rankingData[i].CONFERENCE == "West") {
+            West.add(rankingData[i].TEAM_ID)
+        }
+    }
+    return West
+}
+
+/**
+ * Converts team ID to team nicknames for Western Conference
+ * @param {Array.&lt;Object>} rankingData 
+ * @param {Array.&lt;Object>} teamData 
+ * @returns {Array.&lt;string>} WestTeams
+ */
+function WesternConferencePrint(rankingData, teamData) { 
+    var WestTeams = []
+    var West = WesternConferenceArray(rankingData)
+    var temp = [...West]
+    var count = 0
+    for (var i = 0; i &lt; 15; i++) {
+        for (var j = 0; j &lt; teamData.length; j++) {
+            if (temp[i] == (teamData[j].TEAM_ID)) {
+                WestTeams.push(teamData[j].NICKNAME)
+            }
+        }
+    }
+    return WestTeams
+}
+
+/**
+ * Compiles all teams in the Eastern Conference
+ * @param {Array.&lt;Object>} rankingData
+ * @returns {Array.&lt;string>} East
+ */
+function EasternConferenceArray(rankingData) {
+    var East = new Set()
+    for (var i = 0; i &lt; 20000; i++) {
+        if (rankingData[i].CONFERENCE == "East") {
+            East.add(rankingData[i].TEAM_ID)
+        }
+    }
+    return East
+}
+
+/**
+ * Converts team ID to team nicknames for Eastern Conference
+ * @param {Array.&lt;Object>} rankingData 
+ * @param {Array.&lt;Object>} teamData 
+ * @returns {Array.&lt;string>} EastTeams
+ */
+function EasternConferencePrint(rankingData, teamData) {
+    var EastTeam = []
+    var East = EasternConferenceArray(rankingData)
+    var temp = [...East]
+    var count = 0
+    for (var i = 0; i &lt; 15; i++) {
+        for (var j = 0; j &lt; teamData.length; j++) {
+            if (temp[i] == (teamData[j].TEAM_ID)) {
+                EastTeam.push(teamData[j].NICKNAME)
+            }
+        }
+    }
+    return EastTeam
+}
+
+/**
+ * Makes html table given data
+ * @param {Array.&lt;string>} myArray
+ * @param {string} conference
+ * @returns {HTML_Table} result
+ */
+function makeTable(myArray, conference) {
+    var result = "&lt;link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 
+    "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">&lt;/link>"
+    result += "&lt;table class=\"table\" border=1>"
+    result += "&lt;thead class=\"thead-dark\">"
+
+    result += "&lt;th scope=\"col\">" + conference + "&lt;/th>"
+    result += "&lt;/thead>"
+    for(var i=0; i&lt;myArray.length; i++) {
+        result += "&lt;tr>"
+        result += "&lt;td>"+myArray[i]+"&lt;/td>"
+        result += "&lt;/tr>"
+    }
+    result += "&lt;/table>"
+    result +=   "&lt;form method=\"get\" action=\"/back\">"
+    result +=   "&lt;button class=\"btn btn-primary btn-lg\" id=\"save-button\" type=\"submit\" text-align=\"center\">Back&lt;/button>"
+    result +=   "&lt;/form>"
+    return result;
+}
+
+module.exports = {router, WesternConferenceArray, EasternConferenceArray}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

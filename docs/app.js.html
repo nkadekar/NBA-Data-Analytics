@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Express router providing user related routes
+ * @module routers/users
+ * @requires express
+ */ 
+
+/**
+ * express module
+ * @const
+ */
+const express = require('express');
+
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace usersRouter
+ */
+//router in all JS files
+
+const app = express();
+const port = 3000;
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const path = require('path');
+const fs = require('fs')
+
+// const funcs = require('./public/js/fileHandler')
+
+const playerDataFileName = __dirname + "/data/csv/players.csv"
+const teamDataFileName = __dirname + "/data/csv/teams.csv"
+const rankingDataFileName = __dirname + "/data/csv/ranking.csv"
+
+const playerDataBackupFolder = __dirname + "/data/backup/players/"
+const teamDataBackupFolder = __dirname + "/data/backup/teams/"
+const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
+
+app
+	.route('/public/css/main.css')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/css/main.css'));
+	});
+
+app
+	.route('/public/css/bootstrap.min.css')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/css/bootstrap.min.css'));
+	});
+
+app
+	.route('/public/js/ManipulateData/insertData.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/insertData.js'));
+	});
+
+app
+	.route('/public/js/ManipulateData/updateData.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/updateData.js'));
+	});
+
+app
+	.route('/public/js/ManipulateData/deleteData.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/ManipulateData/deleteData.js'));
+	});
+
+app
+	.route('/public/js/Analytics/pointsPerPlayerAnalytics.js')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/js/Analytics/pointsPerPlayerAnalytics.js'));
+	});
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+ extended: true})); 
+app.use(cors())
+
+/**
+ * Route serving main page of website.
+ * @name get/index.html
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+app
+	.route('/')
+	.get((req, res) => {
+    	res.sendFile(path.join(__dirname , 'public/html/index.html'));
+	});
+
+/**
+ * Route serving Save Data button.
+ * @name get/saveButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+app.
+	route('/saveButton')
+	.get((req, res) => {
+		var files = require("./public/js/parser.js")
+		var playersCSV = fs.readFileSync("./data/csv/players.csv")
+		var teamsCSV = fs.readFileSync("./data/csv/teams.csv")
+		var rankingsCSV = fs.readFileSync('./data/csv/ranking.csv')
+		// 1. get the last added csv file, and put it in the backlog folder
+		var numOfFilesInPlayers = fs.readdirSync(path.join(playerDataBackupFolder)).length
+		var numOfFilesInTeams = fs.readdirSync(path.join(teamDataBackupFolder)).length
+		var numOfFilesInRankings = fs.readdirSync(path.join(rankingDataBackupFolder)).length
+		var versionPlayers = numOfFilesInPlayers++;
+		var versionTeams = numOfFilesInTeams++;
+		var versionRankings = numOfFilesInRankings++;
+
+		fs.writeFile(path.join(playerDataBackupFolder, 'backup-' + versionPlayers), playersCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(playerDataBackupFolder, 'backup'+ versionPlayers));
+		});
+		fs.writeFile(path.join(teamDataBackupFolder, 'backup-'+ versionTeams), teamsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(teamDataBackupFolder, 'backup'+ versionTeams));
+		});
+		fs.writeFile(path.join(rankingDataBackupFolder, 'backup-' + versionRankings), rankingsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + path.join(rankingDataBackupFolder, 'backup'+ versionRankings));
+		})
+		// 2. get the current json object, turn it into csv and push it into the data folder
+		var playersData = files.playerData
+		var teamsData = files.teamsData
+		var rankingsData = files.rankingData
+
+		playersCSV = files.jsonCSV(playersData)
+		fs.writeFile(playerDataFileName, playersCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + playerDataFileName);
+		})
+
+		teamCSV = files.jsonCSV(teamsData)
+		fs.writeFile(teamDataFileName, teamsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + teamDataFileName);
+		})
+
+		rankingsCSV = files.jsonCSV(rankingsData)
+		fs.writeFile(rankingDataFileName, rankingsCSV, (err) => {
+			if(err) return console.log(err)
+			console.log('writing to ' + rankingDataFileName);
+		})
+	});
+
+/**
+ * Route serving back buttons.
+ * @name get/back
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+app
+	.route('/back')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/html/index.html'));
+	});
+
+const players = require('./public/js/SelectQuery/players')
+app.use('/players', players.router)
+
+const teams = require('./public/js/SelectQuery/teams')
+app.use('/teams', teams.router)
+
+const teamWins = require('./public/js/SelectQuery/wins')
+app.use('/wins', teamWins.router)
+
+const home = require('./public/js/SelectQuery/homeRecord')
+app.use('/home', home.router)
+
+const deleteData = require('./public/js/ManipulateData/deleteData')
+app.use('/deleteButton', deleteData)
+
+const updateData = require('./public/js/ManipulateData/updateData')
+app.use('/updateButton', updateData)
+
+const insertData = require('./public/js/ManipulateData/insertData')
+app.use('/insertButton', insertData.router)
+
+const pointsPerPlayerAnalytics = require("./public/js/Analytics/pointsPerPlayerAnalytics")
+app.use('/pointsPerPlayerAnalytics', pointsPerPlayerAnalytics.router)
+
+const pointsDifferenceAnalytics = require('./public/js/Analytics/PointsDifferenceAnalytics')
+app.use('/pointsDifferenceAnalytics', pointsDifferenceAnalytics.router)
+
+const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
+app.use('/headToHeadAnalytics', headToHeadAnalytics)
+
+const averageFGAnalytics = require("./public/js/Analytics/averageFGAnalytics")
+app.use("/averageFGAnalytics", averageFGAnalytics.router)
+
+const FTandThreePointerAnalytics = require("./public/js/Analytics/FTandThreePointerAnalytics")
+app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics.router)
+
+const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
+app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics.router)
+
+const MostHomeAndAwayWinsAnalyticsIncremental = require("./public/js/IncrementalAnalytics/homeAwayWinsIncremental")
+app.use("/homeAwayWinsIncremental", MostHomeAndAwayWinsAnalyticsIncremental.router)
+
+const totalRecordIncremental = require("./public/js/IncrementalAnalytics/totalRecordIncremental")
+app.use("/totalRecordIncremental", totalRecordIncremental.router)
+
+app
+	.route('/saveButton')
+	. get((req, res) => {
+		res.sendFile(path.join(__dirname, 'public/html/index.html'));
+	});
+
+app.listen(3000, () => {
+	console.log(`Example app listening on port ${port}!`)
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

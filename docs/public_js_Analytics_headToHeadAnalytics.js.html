@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/Analytics/headToHeadAnalytics.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/Analytics/headToHeadAnalytics.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path')
+var gamesData = require("../parser").gamesData
+var teamsData = require("../parser").teamsData
+const alert = require('alert');
+
+/**
+ * Route serving the head to head analytic.
+ * @name get/headToHeadAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
+    });
+
+/**
+ * Route compiling stats information
+ * @name get/headToHeadAnalytics/headToHeadQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/headToHeadQuery')
+    .post((req, res) => {
+        if(parseInt(req.body.season) &lt; 2004 || parseInt(req.body.season) > 2020){
+            alert("Invalid Season")
+            res.sendFile(path.join(__dirname , '../../html/Analytics/headToHeadAnalytics.html'))
+        }
+        else {
+            var obj = computeHeadToHeadQuery(gamesData, teamsData, req.body.season, req.body.team1, req.body.team2)
+            var numOfGames = []
+            for(var i = 0; i &lt; obj.team1Scores.length; i++){
+                numOfGames.push(`Game ${i + 1}`)
+            } 
+            res.send(makeGraph(req.body.team1, req.body.team2, obj.team1Counter, obj.team2Counter, numOfGames, obj.team1Scores, obj.team2Scores, req.body.season))
+        }
+
+    });
+
+/**
+ * Computations for all statistics for head to head records
+ * @param {Array.&lt;Object>} gamesData
+ * @param {Array.&lt;Object>} teamsData
+ * @param {string} season
+ * @param {string} team1
+ * @param {string} team2
+ * @returns {Object} obj
+ */
+function computeHeadToHeadQuery(gamesData, teamsData, season, team1, team2){
+    var team1ID, team2ID;
+    var team1Counter = team2Counter = 0
+    for (var i = 0; i &lt; teamsData.length; ++i){
+        if (teamsData[i].NICKNAME == team1){
+            team1ID = teamsData[i].TEAM_ID
+        }
+        else if (teamsData[i].NICKNAME == team2){
+            team2ID = teamsData[i].TEAM_ID
+        }
+    }
+
+    var team1Scores = []
+    var team2Scores = []
+
+    for (var i = 0; i &lt; gamesData.length; ++i){
+        if ((parseInt(gamesData[i].SEASON) == season) &amp;&amp; 
+        (gamesData[i].HOME_TEAM_ID == team1ID || 
+            gamesData[i].HOME_TEAM_ID == team2ID) 
+            &amp;&amp; (gamesData[i].VISITOR_TEAM_ID == team1ID || 
+                gamesData[i].VISITOR_TEAM_ID == team2ID)) {
+
+            if (parseInt(gamesData[i].HOME_TEAM_WINS)){
+                if (team1ID == gamesData[i].HOME_TEAM_ID){
+                    team1Scores.push(gamesData[i].PTS_home)
+                    team2Scores.push(gamesData[i].PTS_away)
+                    team1Counter++
+                }
+                else {
+                    team1Scores.push(gamesData[i].PTS_away)
+                    team2Scores.push(gamesData[i].PTS_home)
+                    team2Counter++
+                }
+            }
+            else {
+                if (team1ID == gamesData[i].VISITOR_TEAM_ID){
+                    team1Scores.push(gamesData[i].PTS_away)
+                    team2Scores.push(gamesData[i].PTS_home)
+                    team1Counter++
+                }
+                else {
+                    team1Scores.push(gamesData[i].PTS_home)
+                    team2Scores.push(gamesData[i].PTS_away)
+                    team2Counter++
+                }
+            }
+        }
+    }
+
+    var obj = {
+        "team1Counter" : team1Counter,
+        "team2Counter" : team2Counter,
+        "team1Scores": team1Scores,
+        "team2Scores": team2Scores
+    }
+
+    return obj
+}
+
+/**
+ * Creates html for graph visualization
+ * @param {string} team1
+ * @param {string} team2
+ * @param {int} team1Counter
+ * @param {int} team2Counter
+ * @param {int} numOfGames
+ * @param {int} team1Scores
+ * @param {int} team2Scores
+ * @param {int} season
+ * @returns {string} sendData
+ */
+function makeGraph(team1, team2, team1Counter, team2Counter, numOfGames, team1Scores, team2Scores,season){
+    var result = ""
+    result += "&lt;script src=\"https://cdn.plot.ly/plotly-2.4.2.min.js\">&lt;/script>"
+    result += "&lt;link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" 
+    result += "integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">" 
+    result += "&lt;link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/main.css\">" 
+    result += "&lt;link rel=\"stylesheet\" href=\"http://localhost:3000/public/css/bootstrap.min.css\">&lt;/link>" 
+    result += "&lt;nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">" 
+    result += "&lt;a class=\"navbar-brand\" href=\"#\">NBA Analytics - XYZ Coders&lt;/a>" 
+    result += "&lt;button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\"" 
+    result += "aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">" 
+    result += "&lt;span class=\"navbar-toggler-icon\">&lt;/span>" 
+    result += "&lt;/button>" 
+    result += "&lt;div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">" 
+    result += "&lt;ul class=\"navbar-nav mr-auto\">" 
+    result += "&lt;li class=\"nav-item active\">" 
+    result += "&lt;/li>" 
+    result += "&lt;/ul>" 
+    result += "&lt;/div>" 
+    result += "&lt;/nav>" 
+    result += "&lt;h4 style=\"position:relative; left:90px; top:20px;\" > "
+    result += team1 
+    result += " vs "
+    result += team2
+    result += ": "
+    result += team1Counter
+    result += " - "
+    result += team2Counter
+    result += "&lt;/h4>"
+    result += "&lt;div style=\"position:relative; top:12px;\" id=\"myDiv\">&lt;/div>"
+    result += "&lt;script>"
+    result += "var trace1 = {\n"
+    result += "x: ["
+    for(var i = 0; i &lt; numOfGames.length; i++){
+        result += "\'"
+        result += numOfGames[i]
+        result += "\'"
+        if(i != numOfGames.length -1){
+            result += ","
+        }
+    }
+    result += "],\n"
+    result += "y: ["
+    result += team1Scores
+    result += "],\n"
+    result += "name: \'"
+    result += team1
+    result += "\',\n"
+    result += "type: 'bar'\n"
+    result += "};\n"
+    result += "var trace2 = {\n"
+    result += "x: ["
+    for(var i = 0; i &lt; numOfGames.length; i++){
+        result += "\'"
+        result += numOfGames[i]
+        result += "\'"
+        if(i != numOfGames.length -1){
+            result += ","
+        }
+    }
+    result += "],\n"
+        result += "y: ["
+    result += team2Scores
+    result += "],\n"
+    result += "name: \'"
+    result += team2
+    result += "\',\n"
+    result += "type: 'bar'\n"
+    result += "};\n"
+    result += "var data = [trace1, trace2];\n"
+    result += "var layout = {barmode: 'group', title: 'Head to Head Record between "
+    result += team1 
+    result += " and "
+    result += team2
+    result += " during the "
+    result += season
+    result += " season"
+    result += "\'};\n"
+    result += "Plotly.newPlot('myDiv', data, layout);\n"
+    result += "&lt;/script>\n"
+    result += "&lt;form method=\"get\" action=\"/back\">" 
+    result += "&lt;button style=\"position:relative; left:90px; top:2px;\" class=\"btn btn-primary\" type=\"submit\">Back&lt;/button>" 
+    result += "&lt;/form>" 
+
+    return result
+}
+
+module.exports = {router, computeHeadToHeadQuery}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

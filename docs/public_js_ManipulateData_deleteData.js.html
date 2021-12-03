@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/ManipulateData/deleteData.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/ManipulateData/deleteData.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path')
+const alert = require('alert')
+
+/**
+ * Route serving delete manipulation.
+ * @name get/deleteButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname , '../../html/ManipulateData/deleteData.html'))
+    });
+
+/**
+ * Route serving player deletes
+ * @name get/deleteButton/deletePlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/deletePlayerQuery')
+    .post((req, res) => {
+        var playerData = require('../parser').playerData;
+        const playerName = req.body.PlayerName
+        const index = playerData.findIndex(x => x.PLAYER_NAME === playerName)
+        if (index !== undefined) playerData.splice(index, 1);
+        alert('Successfully deleted player')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+    });
+
+/**
+ * Route serving team deletes
+ * @name get/deleteButton/deleteTeamQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/deleteTeamQuery')
+    .post((req, res) => {
+        const teamData = require('../parser').teamData
+        const teamName = req.body.TeamName
+        const index = teamData.findIndex(x => x.NICKNAME === teamName)
+        if (index !== undefined) teamData.splice(index, 1);
+        alert('Successfully deleted a team')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+});
+
+/**
+ * Route serving ranking deletes
+ * @name get/deleteButton/deleteRankingQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/deleteRankingQuery')
+    .post((req, res) => {
+        const rankingData = require('../parser').rankingData
+        var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
+        var cachedDataJSON2 = require("../IncrementalAnalytics/totalRecordIncremental").cachedtotalWinsJSON
+        const teamName = req.body.TeamName
+        const season = req.body.Season
+        for(var i = 0; i &lt; rankingData.length; i++){
+            if((rankingData[i].TEAM == teamName) &amp;&amp; (rankingData[i].SEASON_ID.substring(1) == season) &amp;&amp; (rankingData[i].G == '82')) {
+                rankingData.splice(i, 1)
+            }
+        }
+        if(Object.keys(cachedDataJSON).length != 0) {
+            // look for it 
+            // if found --> delete
+            // if not --> skip
+            if(cachedDataJSON[season][teamName] != undefined)
+                cachedDataJSON[season - 2004].splice(teamName, 1)
+
+        }
+        if(Object.keys(cachedDataJSON2).length != 0) {
+            // look for it 
+            // if found --> delete
+            // if not --> skip
+            if(cachedDataJSON2[season][teamName] != undefined)
+                cachedDataJSON2[season - 2004].splice(teamName, 1)
+
+        }
+        alert('Successfully deleted a team')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+    });
+
+/**
+ * Called on click to visualize correct form for "Delete" data manipulation
+ */
+function CheckVal(){
+    var val = document.getElementById("deleteSelect").value
+    if (val == "Players") {
+        document.getElementById("userInput").innerHTML = 
+        "&lt;div class=\"form-group\">" + 
+        "&lt;label>Enter a player name to delete from the player dataset&lt;/label>  &lt;input class=\"form-control\" name=\"PlayerName\" >&lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\"> &lt;/input>" 
+        document.getElementById("userInput2").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
+    }
+    else if (val == "Teams") {
+        document.getElementById("userInput2").innerHTML = 
+         "&lt;div class=\"form-group\">" + 
+        "Enter a team name to delete from the teams dataset &lt;input class=\"form-control\" name=\"TeamName\" > &lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\" onClick=getTeam()> &lt;/input>" 
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
+    }
+    else if (val == "Ranking") {
+        document.getElementById("userInput3").innerHTML = 
+        "Enter a team name and season to update from the ranking dataset &lt;br>&lt;br>" +
+        "&lt;div class=\"form-group\">" + 
+        "Team Name: &lt;input class=\"form-control\" name=\"TeamName\" > &lt;/input>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Season: &lt;input class=\"form-control\" name=\"Season\">&lt;/input>&lt;br>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\" onClick=getRanking()> &lt;/input>" 
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput2").innerHTML = ""
+    }
+}
+    
+module.exports = router</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

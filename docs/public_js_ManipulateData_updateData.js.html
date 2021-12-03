@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/ManipulateData/updateData.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/ManipulateData/updateData.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express')
+const router = express.Router()
+const path = require('path');
+const { teamsData } = require('../parser');
+const alert = require('alert')
+
+/**
+ * Route serving update manipulation
+ * @name get/updateButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname , '../../html/ManipulateData/updateData.html'));
+});
+
+/**
+ * Route serving player updates
+ * @name get/updateButton/updatePlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/updatePlayerQuery')
+    .post((req, res) => {
+        var playerData = require("../parser").playerData
+        const oldPlayerName = req.body.oldPlayerName
+        const newPlayerName = req.body.newPlayerName
+        const teamID = req.body.TeamID
+        const playerID = req.body.PlayerID
+        const seasonPlayed = req.body.SeasonPlayed
+        const index = playerData.findIndex(x => x.PLAYER_NAME === oldPlayerName);
+        if (index !== undefined) {
+            playerData.splice(index, 1);
+            var playerJSON = 
+            {
+                "PLAYER_NAME": newPlayerName,
+                "TEAM_ID": teamID,
+                "SEASON": seasonPlayed,
+                "PLAYER_ID": playerID
+            }
+            playerData.push(playerJSON)
+        alert('Successfully updated player')
+        }
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+    });
+
+/**
+ * Route serving team updates
+ * @name get/updateButton/updateTeamQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/updateTeamQuery')
+    .post((req, res) => {
+        var teamData = require("../parser").teamsData
+        const oldTeamName = req.body.oldTeamName
+        const newTeamName = req.body.newTeamName
+        const teamAbbreviation = req.body.teamAbbreviation
+        const yearFounded = req.body.yearFounded
+        const city = req.body.city
+        const index = teamData.findIndex(x => x.NICKNAME === oldTeamName);
+        if (index !== undefined) {
+            teamData[index].NICKNAME = newTeamName
+            teamData[index].ABBREVIATION = teamAbbreviation
+            teamData[index].YEARFOUNDED = yearFounded
+            teamData[index].CITY = city
+        }
+        alert('Successfully updated team')
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+    });
+
+/**
+ * Route serving ranking updates
+ * @name get/updateButton/updateRankingQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router
+    .route('/updateRankingQuery')
+    .post((req, res) => {
+        var rankingData = require("../parser").rankingData
+        var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
+        var cachedDataJSON2 = require("../IncrementalAnalytics/totalRecordIncremental").cachedtotalWinsJSON
+        const teamName = req.body.teamName
+        const season = req.body.season
+        const wins = req.body.wins
+        const loses = req.body.loses 
+        const homeRecord = req.body.homeRecord
+        const awayRecord = req.body.awayRecord
+        var index = rankingData.findIndex(x => (x.TEAM === teamName &amp;&amp; x.SEASON_ID === season));
+        if (index !== undefined) {
+        rankingData.splice(index, 1);
+        var rankingJSON = 
+            {
+                "TEAM": teamName, 
+                "TEAM_ID": "46565456",  
+                "LEAGUE_ID": '',
+                "STANDINGSDATE": '',
+                "W_PCT": '',
+                "RETURNTOPLAY": '',
+                "CONFERENCE": '',
+                "ROAD_RECORD": awayRecord,
+                "HOME_RECORD": homeRecord,
+                "SEASON_ID": "2" + season, 
+                "G": '82',
+                "W": wins,
+                "L": loses
+            }
+            rankingData.push(rankingJSON)
+        }
+        if(Object.keys(cachedDataJSON).length != 0) {
+            var index = season - 2004
+            for(var idx = 0; idx &lt; cachedDataJSON[index].length; idx++) {
+                if (teamName == cachedDataJSON[index][idx].TEAMNAME) {
+                    var homeWins = parseInt(homeRecord.substr(0, homeRecord.indexOf('-')))
+                    var awayWins = parseInt(awayRecord.substr(0, awayRecord.indexOf('-')))
+                    cachedDataJSON[index][idx].HOMEWINS = homeWins
+                    cachedDataJSON[index][idx].AWAYWINS = awayWins
+                }
+            }
+        }
+        if(Object.keys(cachedDataJSON2).length != 0) {
+            for(var idx = 0; idx &lt; cachedDataJSON2.length; idx++) {
+                if (teamName == cachedDataJSON2[idx].TEAMNAME) {
+                    cachedDataJSON2[idx].WINS = wins
+                }
+            }
+        }
+        alert('Successfully added ranking')
+        // check if cached data is empty
+        res.sendFile(path.join(__dirname, '../../html/index.html'))
+    });
+
+/**
+ * Called on click to visualize correct form for "Delete" data manipulation
+ */
+function CheckVal(){
+    var val = document.getElementById("updateSelect").value 
+    if (val == "Players") {
+        document.getElementById("userInput").innerHTML = 
+        "&lt;div class=\"form-group\">" + 
+        "Enter a player name to update from the player dataset &lt;input class=\"form-control\" name=\"oldPlayerName\" > &lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "New PlayerID &lt;input class=\"form-control\" name=\"PlayerID\" required > &lt;/input> &lt;br>" + 
+        "&lt;/div>" +
+         "&lt;div class=\"form-group\">" + 
+        "New TeamID &lt;input class=\"form-control\" name=\"TeamID\" required > &lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+         "&lt;div class=\"form-group\">" + 
+        "New PlayerName &lt;input class=\"form-control\" name=\"newPlayerName\" required> &lt;/input> &lt;br>" +
+        "&lt;/div>" +
+         "&lt;div class=\"form-group\">" + 
+        "Season Played &lt;input class=\"form-control\" name = \"SeasonPlayed\" required>&lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\"> &lt;/input>"  
+        document.getElementById("userInput2").innerHTML  = ""
+        document.getElementById("userInput3").innerHTML =  ""
+    }
+    else if (val == "Teams") {
+        document.getElementById("userInput2").innerHTML =
+        "&lt;div class=\"form-group\">" + 
+        "Enter a team name to update &lt;input class=\"form-control\" name=\"oldTeamName\" > &lt;/input> &lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Team Name &lt;input class=\"form-control\" name=\"newTeamName\" > &lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Team Abbreviation &lt;input class=\"form-control\" name=\"teamAbbreviation\">&lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Year Founded &lt;input class=\"form-control\" name=\"yearFounded\">&lt;/input>&lt;br>" + 
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "City &lt;input class=\"form-control\" name=\"city\" >&lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\"> &lt;/input>"
+        document.getElementById("userInput").innerHTML = ""
+        document.getElementById("userInput3").innerHTML = ""
+    }
+    else if (val == "Ranking") {
+        document.getElementById("userInput3").innerHTML =
+        "Enter a team name and season to update from the ranking dataset &lt;br> &lt;br>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Team Name &lt;input class=\"form-control\" name=\"teamName\" > &lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Season &lt;input class=\"form-control\" name=\"season\">&lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Wins &lt;input class=\"form-control\" name=\"wins\" > &lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Losses &lt;input class=\"form-control\" name=\"losses\">&lt;/input>&lt;br>" +
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Home Record &lt;input class=\"form-control\" name=\"homeRecord\">&lt;/input>&lt;br>" + 
+        "&lt;/div>" + 
+        "&lt;div class=\"form-group\">" + 
+        "Away Record &lt;input class=\"form-control\" name=\"awayRecord\" >&lt;/input>&lt;br>" +
+        "&lt;/div>" +
+        "&lt;input class=\"btn btn-primary\" type=\"Submit\"> &lt;/input>"
+         document.getElementById("userInput").innerHTML = ""
+         document.getElementById("userInput2").innerHTML = ""
+    }
+}
+
+module.exports = router</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_users.html">routers/users</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_users-usersRouter.html">usersRouter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backup">backup</a></li><li><a href="global.html#backupAndPush">backupAndPush</a></li><li><a href="global.html#calcWins">calcWins</a></li><li><a href="global.html#checkInsertDropdown">checkInsertDropdown</a></li><li><a href="global.html#checkLengthOfPlayerData">checkLengthOfPlayerData</a></li><li><a href="global.html#CheckVal">CheckVal</a></li><li><a href="global.html#computeAverageFGQuery">computeAverageFGQuery</a></li><li><a href="global.html#computeFTandThreePointerQuery">computeFTandThreePointerQuery</a></li><li><a href="global.html#computeHeadToHeadQuery">computeHeadToHeadQuery</a></li><li><a href="global.html#createJSON">createJSON</a></li><li><a href="global.html#createJSON2">createJSON2</a></li><li><a href="global.html#csvJSON">csvJSON</a></li><li><a href="global.html#EasternConferenceArray">EasternConferenceArray</a></li><li><a href="global.html#EasternConferencePrint">EasternConferencePrint</a></li><li><a href="global.html#filterplayerData">filterplayerData</a></li><li><a href="global.html#findAwayName">findAwayName</a></li><li><a href="global.html#findHomeName">findHomeName</a></li><li><a href="global.html#findPlayerIndex">findPlayerIndex</a></li><li><a href="global.html#getHomeWinsPerTeam">getHomeWinsPerTeam</a></li><li><a href="global.html#getRecordPerTeam">getRecordPerTeam</a></li><li><a href="global.html#getWinsPerTeam">getWinsPerTeam</a></li><li><a href="global.html#jsonCSV">jsonCSV</a></li><li><a href="global.html#makeGraph">makeGraph</a></li><li><a href="global.html#makeTable">makeTable</a></li><li><a href="global.html#outOfBounds">outOfBounds</a></li><li><a href="global.html#PrintHomeTeamWins">PrintHomeTeamWins</a></li><li><a href="global.html#PrintTeamWins">PrintTeamWins</a></li><li><a href="global.html#WesternConferenceArray">WesternConferenceArray</a></li><li><a href="global.html#WesternConferencePrint">WesternConferencePrint</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 13:36:14 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
