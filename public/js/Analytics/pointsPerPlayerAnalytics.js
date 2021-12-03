@@ -4,12 +4,30 @@ const path = require('path')
 var gameDetailsData = require("../parser").gamesDetailsData
 const alert = require('alert')
 
+/**
+ * Route serving player stats analytic.
+ * @name get/pointsPerPlayerAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/pointsPerPlayerAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/pointsPerPlayerAnalytics/pointsPerPlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/pointsPerPlayerQuery')
     .post((req, res) => {
@@ -46,7 +64,6 @@ router
             res.sendFile(path.join(__dirname , '../../html/Analytics/pointsPerPlayerAnalytics.html'))
         }
         else{
-            var sendData = gameDetailsData[playerIndex].PLAYER_NAME + " has scored: " + totalPoints.toString() + " points."
             res.send(makeGraph(gameDetailsData[playerIndex].PLAYER_NAME, totalPoints, totalRebounds, totalAssists, totalSteals, totalBlocks))
         }
     });

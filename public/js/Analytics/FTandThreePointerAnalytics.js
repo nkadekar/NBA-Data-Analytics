@@ -4,41 +4,67 @@ const path = require('path')
 var gamesData = require("../parser").gamesData
 const alert = require('alert');
 
+/**
+ * Route serving average stats for home vs away team analytic.
+ * @name get/FTandThreePointerAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
-    .route('/')
-    .get((req, res) => {
+    .get('./', (req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
-router
-    .route('/FTandThreePointerQuery')
-    .post((req, res) => {
+
+
+
+function computeFTandThreePointerQuery(gamesData, season){
         var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
         var totalGames = 0
+        for (var i = 0; i < gamesData.length; ++i){
+            if (parseInt(gamesData[i].SEASON) == season){
+                homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
+                awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
+                homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
+                awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
+                totalGames++
+            }
+    }
+    var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
+    var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
+    var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
+    var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
+    var obj = {
+        "avgHomeFreeThrow": avgHomeFreeThrow.toPrecision(4),
+        "avgHomeThreePoint": avgHomeThreePoint.toPrecision(4),
+        "avgAwayFreeThrow": avgAwayFreeThrow.toPrecision(4),
+        "avgAwayThreePoint": avgAwayThreePoint.toPrecision(4)
+    }
+        return obj
+}
+
+/**
+ * Route compiling stats information
+ * @name get/FTandThreePointerAnalytics/FTandThreePointerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.route('/FTandThreePointerQuery')
+    .post((req, res) => {
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
             res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
         }
         else {
-            for (var i = 0; i < gamesData.length; ++i){
-                if (parseInt(gamesData[i].SEASON) == req.body.season){
-                    homeFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_home)
-                    awayFreeThrowCounter += parseFloat(gamesData[i].FT_PCT_away)
-                    homeThreePointCounter += parseFloat(gamesData[i].FG3_PCT_home)
-                    awayThreePointCounter += parseFloat(gamesData[i].FG3_PCT_away)
-                    totalGames++
-                }
-            }
+            var obj = computeFTandThreePointerQuery(gamesData, req.body.season)
+            res.send(makeGraph(obj.avgHomeFreeThrow, obj.avgAwayFreeThrow, obj.avgHomeThreePoint, obj.avgAwayThreePoint, req.body.season))
         }
-
-        var avgHomeFreeThrow = (homeFreeThrowCounter / totalGames) * 100
-        var avgHomeThreePoint = (homeThreePointCounter / totalGames) * 100
-        var avgAwayFreeThrow = (awayFreeThrowCounter / totalGames) * 100
-        var avgAwayThreePoint = (awayThreePointCounter / totalGames) * 100
-
-        var outputString = "Average Home FT Percentage: " + avgHomeFreeThrow.toPrecision(4) + "%<br> Average Away FT Percentage: " + avgAwayFreeThrow.toPrecision(4) + "%<br> Average Home 3 PT Percentage: " + avgHomeThreePoint.toPrecision(4) + "%<br> Average Away 3 PT Percentage: " + avgAwayThreePoint.toPrecision(4) + "%"
-        // res.send(outputString)
-        res.send(makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwayThreePoint, req.body.season))
     });
 
 /**
@@ -89,4 +115,4 @@ function makeGraph(avgHomeFreeThrow, avgAwayFreeThrow, avgHomeThreePoint, avgAwa
     return sendData
 }
 
-module.exports = router
+module.exports = {router, computeFTandThreePointerQuery}

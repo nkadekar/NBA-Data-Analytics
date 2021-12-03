@@ -4,14 +4,30 @@ const path = require('path');
 const { teamsData } = require('../parser');
 const alert = require('alert')
 
-// var cachedDataJSON = require("../IncrementalAnalytics/homeAwayWinsIncremental").cachedDataJSON
-
+/**
+ * Route serving update manipulation
+ * @name get/updateButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/ManipulateData/updateData.html'));
 });
 
+/**
+ * Route serving player updates
+ * @name get/updateButton/updatePlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/updatePlayerQuery')
     .post((req, res) => {
@@ -37,6 +53,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+/**
+ * Route serving team updates
+ * @name get/updateButton/updateTeamQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/updateTeamQuery')
     .post((req, res) => {
@@ -57,6 +82,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+/**
+ * Route serving ranking updates
+ * @name get/updateButton/updateRankingQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/updateRankingQuery')
     .post((req, res) => {

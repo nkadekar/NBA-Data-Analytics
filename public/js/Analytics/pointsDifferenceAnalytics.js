@@ -5,12 +5,30 @@ var gameData = require("../parser").gamesData
 var teamData = require("../parser").teamsData
 const alert = require('alert');
 
+/**
+ * Route serving largest points difference analytic.
+ * @name get/pointsDifferenceAnalytics
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/pointsDifferenceAnalytics.html'))
     });
 
+/**
+ * Route compiling stats information
+ * @name get/pointsDifferenceAnalytics/pointsDifferenceQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/pointsDifferenceQuery')
     .post((req, res) => {

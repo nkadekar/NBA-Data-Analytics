@@ -4,12 +4,30 @@ const path = require('path')
 var playerData = require("../parser").playerData
 const alert = require('alert')
 
+/**
+ * Route serving players request.
+ * @name get/players
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
     });
 
+/**
+ * Route serving players query computation.
+ * @name get/players/playersQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/playersQuery')
     .post((req, res) => {
@@ -17,7 +35,6 @@ router
         if(checkLengthOfPlayerData(playerData, req.body.numberOfPlayers)){
                 res.sendFile(path.join(__dirname, '../../html/SelectQuery/players.html'))
         }
-
         else {
             var players = filterplayerData(playerData, numberOfPlayers)
             res.send(makeTable(players))
@@ -26,9 +43,9 @@ router
 
 /**
  * Gets a certain number of player names from playerData
- * @param {Array[JSON Object]} playerData
+ * @param {Array.<Object>} playerData
  * @param {string} value
- * @returns {Array[string]} res
+ * @returns {Array.<string>} res
  */
 function filterplayerData(playerData, value) { 
     let res = []
@@ -40,7 +57,7 @@ function filterplayerData(playerData, value) {
 
 /**
  * Verifies that the value passed in is less than the length of the playerData array
- * @param {Array[JSON Object]} playerData
+ * @param {Array.<Object>} playerData
  * @param {string} value
  * @returns {boolean}
  */
@@ -55,8 +72,8 @@ function checkLengthOfPlayerData(playerData, value){
 
 /**
  * Makes html table given data
- * @param {Array[string]} myArray
- * @returns {HTML Table} result
+ * @param {Array.<string>} myArray
+ * @returns {HTML_Table} result
  */
 function makeTable(myArray) {
     var result = "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"" + 

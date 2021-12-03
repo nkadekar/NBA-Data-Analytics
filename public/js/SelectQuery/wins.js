@@ -2,14 +2,31 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 var rankingData = require("../parser").rankingData
-const alert = require('alert')
 
+/**
+ * Route serving wins request.
+ * @name get/wins
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/SelectQuery/wins.html'))
     });
 
+/**
+ * Route serving wins query computation.
+ * @name get/wins/winsQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/winsQuery')
     .post((req, res) => {
@@ -20,10 +37,10 @@ router
 
 /**
  * Retrieves rankings for the end of a specific season
- * @param {Array[JSON Object]} rankingData
+ * @param {Array.<Object>} rankingData
  * @param {string} season
  * @param {int} games
- * @returns {Array[JSON Object]} arr: Rankings formatted in JSON
+ * @returns {Array.<Object>} arr: Rankings formatted in JSON
  */
 function getWinsPerTeam(rankingData, season, games) {
     var visited = []
@@ -41,9 +58,9 @@ function getWinsPerTeam(rankingData, season, games) {
 
 /**
  * Formats strings for output. Retrieves wins per team as well.
- * @param {Array[JSON Object]} rankingData
+ * @param {Array.<Object>} rankingData
  * @param {string} season 
- * @returns {Array[string]} res
+ * @returns {Array.<string>} res
  */
 function PrintTeamWins(rankingData, season){
     if (season == 2011) {
@@ -67,9 +84,9 @@ function PrintTeamWins(rankingData, season){
 
 /**
  * Makes html table given data
- * @param {Array[string]} myArray
+ * @param {Array.<string>} myArray
  * @param {string} conference
- * @returns {HTML Table} result
+ * @returns {HTML_Table} result
  */
 function makeTable(myArray, year) {
 

@@ -3,12 +3,30 @@ const router = express.Router()
 const path = require('path')
 const alert = require('alert')
 
+/**
+ * Route serving insert manipulation.
+ * @name get/insertButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/')
     .get((req, res) => {
         res.sendFile(path.join(__dirname, '../../html/ManipulateData/insertData.html'));
     });
 
+/**
+ * Route serving player inserts
+ * @name get/insertButton/insertPlayerQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/insertPlayerQuery')
     .post((req, res) => {
@@ -23,6 +41,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
+/**
+ * Route serving team inserts
+ * @name get/insertButton/insertTeamQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/insertTeamQuery')
     .post((req, res) => {
@@ -54,7 +81,15 @@ router
         res.sendFile(path.join(__dirname, '../../html/index.html'))
     });
 
-
+/**
+ * Route serving ranking inserts
+ * @name get/insertButton/insertRankingQuery
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router
     .route('/insertRankingQuery')
     .post((req, res) => {

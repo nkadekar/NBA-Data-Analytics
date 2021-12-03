@@ -1,4 +1,22 @@
+/** Express router providing user related routes
+ * @module routers/users
+ * @requires express
+ */ 
+
+/**
+ * express module
+ * @const
+ */
 const express = require('express');
+
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace usersRouter
+ */
+//router in all JS files
+
 const app = express();
 const port = 3000;
 const cors = require('cors')
@@ -6,7 +24,7 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const fs = require('fs')
 
-const funcs = require('./public/js/fileHandler')
+// const funcs = require('./public/js/fileHandler')
 
 const playerDataFileName = __dirname + "/data/csv/players.csv"
 const teamDataFileName = __dirname + "/data/csv/teams.csv"
@@ -15,9 +33,6 @@ const rankingDataFileName = __dirname + "/data/csv/ranking.csv"
 const playerDataBackupFolder = __dirname + "/data/backup/players/"
 const teamDataBackupFolder = __dirname + "/data/backup/teams/"
 const rankingDataBackupFolder = __dirname + "/data/backup/rankings/"
-
-// var cachedHomeAwayWinsJSON = [];
-
 
 app
 	.route('/public/css/main.css')
@@ -30,8 +45,6 @@ app
 	. get((req, res) => {
 		res.sendFile(path.join(__dirname, 'public/css/bootstrap.min.css'));
 	});
-
-
 
 app
 	.route('/public/js/ManipulateData/insertData.js')
@@ -62,12 +75,30 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  extended: true})); 
 app.use(cors())
 
+/**
+ * Route serving main page of website.
+ * @name get/index.html
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app
 	.route('/')
 	.get((req, res) => {
     	res.sendFile(path.join(__dirname , 'public/html/index.html'));
 	});
 
+/**
+ * Route serving Save Data button.
+ * @name get/saveButton
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app.
 	route('/saveButton')
 	.get((req, res) => {
@@ -119,6 +150,15 @@ app.
 		})
 	});
 
+/**
+ * Route serving back buttons.
+ * @name get/back
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 app
 	.route('/back')
 	. get((req, res) => {
@@ -156,10 +196,10 @@ const headToHeadAnalytics = require('./public/js/Analytics/headToHeadAnalytics')
 app.use('/headToHeadAnalytics', headToHeadAnalytics)
 
 const averageFGAnalytics = require("./public/js/Analytics/averageFGAnalytics")
-app.use("/averageFGAnalytics", averageFGAnalytics)
+app.use("/averageFGAnalytics", averageFGAnalytics.router)
 
 const FTandThreePointerAnalytics = require("./public/js/Analytics/FTandThreePointerAnalytics")
-app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics)
+app.use("/FTandThreePointerAnalytics", FTandThreePointerAnalytics.router)
 
 const MostHomeAndAwayWinsAnalytics = require("./public/js/Analytics/MostHomeAndAwayWinsAnalytics")
 app.use("/MostHomeAndAwayWinsAnalytics", MostHomeAndAwayWinsAnalytics.router)
@@ -179,5 +219,3 @@ app
 app.listen(3000, () => {
 	console.log(`Example app listening on port ${port}!`)
 });
-
-// module.exports = {cachedHomeAwayWinsJSON}
