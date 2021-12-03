@@ -14,7 +14,8 @@ const alert = require('alert');
  * @param {callback} middleware - Express middleware.
  */
 router
-    .get('./', (req, res) => {
+    .route('/')
+    .get((req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
@@ -27,7 +28,8 @@ router
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware.
  */
-router.route('/FTandThreePointerQuery')
+router
+    .route('/FTandThreePointerQuery')
     .post((req, res) => {
         if(parseInt(req.body.season) < 2004 || parseInt(req.body.season) > 2020){
             alert("Invalid Season")
