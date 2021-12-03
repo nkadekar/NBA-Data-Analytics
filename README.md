@@ -26,3 +26,8 @@ Authored by: Nikhil Kadekar, Edward Zhu, Arya Faramarzi, Jorge Peng, Aramis Masa
    ![alt test](https://i.gyazo.com/2e2dd806e431c44b959a616ae399d7c6.png)
 
 # How To View Documentation
+## Instructions
+1. Make sure the repository is cloned on your local machine from the steps above. 
+2. Through the file system, open up the folder "cs180project-022-xyzcoders."
+3. Once in the folder, open up the docs folder and click on the index.html file.
+4. A browser with the documentation for our code should open up and you can view the documentation for our code there.
