@@ -1,0 +1,16 @@
+{
+    "source": {
+      "include": ["app.js", "public", "public/js/Analytics", "public/js/IncrementalAnalytics", "public/js/ManipulateData", "public/js/SelectQuery"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+      "cleverLinks": true,
+      "monospaceLinks": true
+    },
+    "opts": {
+      "recurse": true,
+      "destination": "./docs/"
+    }
+  }

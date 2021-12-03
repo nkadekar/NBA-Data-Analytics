@@ -3,7 +3,7 @@ const fs = require("fs");
 /**
  * Converts a given csv string into a JSON Object Array
  * @param {string} csv csv file converted to a string
- * @returns {Array[JSON Objects]} result
+ * @returns {Array.<Object>} result
  */
 function csvJSON(csv){
     var lines = csv.split("\n");
@@ -23,7 +23,7 @@ function csvJSON(csv){
 
 /**
  * Converts array of JSON Objects to a csv string
- * @param {Array[JSON Objects]} json
+ * @param {Array.<Object>} json
  * @returns {string} csv
  */
 function jsonCSV(json){

@@ -14,8 +14,7 @@ const alert = require('alert');
  * @param {callback} middleware - Express middleware.
  */
 router
-    .route('/')
-    .get((req, res) => {
+    .get('./', (req, res) => {
         res.sendFile(path.join(__dirname , '../../html/Analytics/FTandThreePointerAnalytics.html'))
     });
 
@@ -28,8 +27,7 @@ router
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware.
  */
-router
-    .route('/FTandThreePointerQuery')
+router.route('/FTandThreePointerQuery')
     .post((req, res) => {
         var homeFreeThrowCounter = awayFreeThrowCounter = homeThreePointCounter = awayThreePointCounter = 0
         var totalGames = 0
